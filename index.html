@@ -1,0 +1,1946 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Купоны Любви</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+    :root {
+      --bg-cream: #FFF7F9;
+      --card-bg: #FFFFFF;
+      --accent-rose: #E75480;
+      --accent-gold: #C5A059;
+      --wine-dark: #3F1D2C;
+      --wine-light: #643147;
+      --text-muted: #8E7A82;
+      --border-dash: #E3D1D7;
+      --green-stamp: #27AE60;
+      --shadow-soft: 0 8px 24px rgba(63, 29, 44, 0.06);
+      --shadow-hover: 0 14px 32px rgba(63, 29, 44, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: radial-gradient(circle at top, #FFF0F5 0%, #FFF7F9 100%);
+      color: var(--wine-dark);
+      min-height: 100vh;
+      overflow-x: hidden;
+      padding-bottom: 70px;
+    }
+
+    /* Falling Petals */
+    .petals-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .petal {
+      position: absolute;
+      background: linear-gradient(135deg, rgba(255, 183, 197, 0.8) 0%, rgba(255, 166, 185, 0.4) 100%);
+      border-radius: 150% 0 150% 0;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+      will-change: transform, opacity;
+    }
+    @keyframes fall1 {
+      0% { transform: translate3d(0, -10vh, 0) rotate(0deg) scale(0.7); opacity: 0; }
+      10% { opacity: 0.75; }
+      50% { transform: translate3d(28px, 50vh, 0) rotate(190deg) scale(0.95); }
+      90% { opacity: 0.65; }
+      100% { transform: translate3d(-18px, 108vh, 0) rotate(360deg) scale(1.05); opacity: 0; }
+    }
+    @keyframes fall2 {
+      0% { transform: translate3d(0, -10vh, 0) rotate(40deg) scale(0.8); opacity: 0; }
+      10% { opacity: 0.75; }
+      50% { transform: translate3d(-26px, 50vh, 0) rotate(220deg) scale(1); }
+      90% { opacity: 0.65; }
+      100% { transform: translate3d(20px, 108vh, 0) rotate(410deg) scale(0.9); opacity: 0; }
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 24px 16px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Utility Bar */
+    .utility-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    .sound-toggle, .partner-badge {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(8px);
+      border: 1px solid #EEDCE2;
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--wine-light);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .sound-toggle:hover, .partner-badge:hover {
+      background: #FFF;
+      border-color: var(--accent-rose);
+      transform: translateY(-1px);
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 6px 16px;
+      background: rgba(231, 84, 128, 0.12);
+      color: var(--accent-rose);
+      font-size: 12px;
+      font-weight: 700;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 10px;
+    }
+    h1 {
+      font-family: 'Caveat', cursive;
+      font-size: clamp(34px, 7vw, 48px);
+      color: var(--wine-dark);
+      margin-bottom: 8px;
+      line-height: 1.1;
+    }
+    p.subtitle {
+      font-size: 14px;
+      color: var(--text-muted);
+      max-width: 540px;
+      margin: 0 auto 18px;
+      line-height: 1.5;
+    }
+
+    /* Balance / Limits Infobox */
+    .balance-box {
+      max-width: 480px;
+      margin: 0 auto 20px;
+      background: #FFFFFF;
+      padding: 14px 18px;
+      border-radius: 18px;
+      box-shadow: 0 4px 16px rgba(63, 29, 44, 0.05);
+      border: 1px solid #F3E5EA;
+    }
+    .balance-stats {
+      display: flex;
+      justify-content: space-around;
+      text-align: center;
+      margin-bottom: 10px;
+      font-size: 12px;
+    }
+    .stat-number {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--accent-rose);
+      display: block;
+    }
+    .stat-label {
+      color: var(--text-muted);
+      font-size: 11px;
+    }
+    .progress-bar-bg {
+      width: 100%;
+      height: 8px;
+      background: #F4E8EC;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #E75480, #C5A059);
+      border-radius: 8px;
+      transition: width 0.4s ease;
+    }
+
+    /* Actions */
+    .top-actions {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+    .btn-secondary {
+      background: #FFF;
+      border: 1px solid #E8D6DC;
+      color: var(--wine-light);
+      padding: 9px 18px;
+      border-radius: 24px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .btn-secondary:hover {
+      background: #FFF0F4;
+      border-color: var(--accent-rose);
+      transform: translateY(-1px);
+    }
+    .btn-secondary:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      border-color: #E8D6DC;
+      background: #FDF9FA;
+    }
+
+    /* Category Filter Tabs */
+    .filters-wrapper {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+    .filter-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .filter-btn.active {
+      background: var(--wine-dark);
+      color: #FFF;
+    }
+    .filter-btn:not(.active):hover {
+      background: rgba(231, 84, 128, 0.08);
+      color: var(--wine-dark);
+    }
+
+    /* Coupons Grid */
+    .coupons-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(285px, 1fr));
+      gap: 22px;
+    }
+
+    /* Card */
+    .ticket-card {
+      background: var(--card-bg);
+      border-radius: 18px;
+      position: relative;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid #F3E5EA;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s;
+    }
+    .ticket-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .ticket-card::before, .ticket-card::after {
+      content: '';
+      position: absolute;
+      top: 145px;
+      width: 22px;
+      height: 22px;
+      background: var(--bg-cream);
+      border-radius: 50%;
+      z-index: 5;
+    }
+    .ticket-card::before { left: -11px; box-shadow: inset -2px 0 3px rgba(0,0,0,0.06); }
+    .ticket-card::after { right: -11px; box-shadow: inset 2px 0 3px rgba(0,0,0,0.06); }
+
+    /* Scratch Area */
+    .scratch-area {
+      height: 145px;
+      position: relative;
+      background: linear-gradient(180deg, #FFF9FA 0%, #FFF2F6 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      text-align: center;
+      border-bottom: 2px dashed var(--border-dash);
+      overflow: hidden;
+    }
+    .scratch-icon {
+      font-size: 34px;
+      margin-bottom: 6px;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.06));
+    }
+    .scratch-title {
+      font-family: 'Caveat', cursive;
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--accent-rose);
+      line-height: 1.15;
+    }
+
+    .scratch-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 4;
+      touch-action: none;
+      transition: opacity 0.4s ease;
+      pointer-events: none; /* Защита от случайных смахиваний при скролле */
+    }
+    
+    /* Активный режим стирания */
+    .ticket-card.scratching-active {
+      border-color: var(--accent-gold);
+      box-shadow: 0 0 0 3px rgba(197, 160, 89, 0.32), var(--shadow-hover);
+    }
+    .ticket-card.scratching-active .scratch-canvas {
+      pointer-events: auto;
+      cursor: crosshair;
+    }
+
+    /* Плашка разблокировки стирания */
+    .scratch-lock-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 240, 245, 0.15);
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.2s ease;
+    }
+    .scratch-lock-overlay:hover {
+      background: rgba(255, 240, 245, 0.35);
+    }
+    .scratch-lock-pill {
+      background: rgba(63, 29, 44, 0.88);
+      color: #FFF;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 4px 14px rgba(63, 29, 44, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      animation: pulsePill 2.5s infinite;
+      transition: transform 0.2s;
+    }
+    @keyframes pulsePill {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.04); box-shadow: 0 6px 18px rgba(231, 84, 128, 0.35); }
+    }
+    .scratch-lock-overlay:active .scratch-lock-pill {
+      transform: scale(0.96);
+    }
+
+    /* Body */
+    .ticket-body {
+      padding: 18px 20px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      justify-content: space-between;
+    }
+    .ticket-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+    .badge-pill {
+      font-size: 10px;
+      padding: 2px 8px;
+      border-radius: 12px;
+      background: #F7EDF1;
+      color: var(--wine-light);
+    }
+    .badge-pill.custom-pill {
+      background: #FFF0D6;
+      color: #9E6A17;
+    }
+    .ticket-desc {
+      font-size: 13px;
+      line-height: 1.5;
+      color: #554049;
+      margin-bottom: 16px;
+    }
+    .ticket-desc.mystery {
+      color: var(--text-muted);
+      background: #FFF5F8;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px dashed #F0D5DF;
+      font-style: italic;
+    }
+
+    .ticket-footer {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: auto;
+    }
+
+    /* Buttons */
+    .btn-action {
+      width: 100%;
+      padding: 11px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .btn-quick-reveal {
+      background: #F8EDF1;
+      color: var(--wine-light);
+    }
+    .btn-quick-reveal:hover {
+      background: #F1E2E8;
+    }
+    .btn-activate {
+      background: linear-gradient(135deg, #E75480 0%, #D13E6B 100%);
+      color: #FFF;
+      box-shadow: 0 4px 14px rgba(231, 84, 128, 0.28);
+    }
+    .btn-activate:hover {
+      box-shadow: 0 6px 18px rgba(231, 84, 128, 0.38);
+      transform: translateY(-1px);
+    }
+    .btn-tg {
+      background: #2AABEE;
+      color: #FFF;
+      text-decoration: none;
+      box-shadow: 0 4px 12px rgba(42, 171, 238, 0.25);
+    }
+    .btn-tg:hover {
+      background: #2299d6;
+      box-shadow: 0 6px 16px rgba(42, 171, 238, 0.35);
+    }
+
+    .btn-copy {
+      background: #FFF;
+      border: 1px solid #E8D6DC;
+      color: var(--wine-light);
+    }
+    .btn-copy:hover {
+      background: #FFF0F4;
+      border-color: var(--accent-rose);
+      transform: translateY(-1px);
+    }
+
+    .btn-cancel-activation {
+      background: #FFF7F9;
+      border: 1px dashed #E8B4C8;
+      color: #8E7A82;
+      font-size: 12px;
+      padding: 9px;
+      border-radius: 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .btn-cancel-activation:hover {
+      background: #FFF0F4;
+      border-color: var(--accent-rose);
+      color: var(--wine-dark);
+      transform: translateY(-1px);
+    }
+
+    .btn-delete-custom {
+      background: transparent;
+      border: none;
+      color: #B59FA7;
+      font-size: 11px;
+      cursor: pointer;
+      text-decoration: underline;
+      align-self: center;
+      padding: 4px;
+    }
+    .btn-delete-custom:hover {
+      color: #C0392B;
+    }
+
+    .stamp {
+      border: 3px solid;
+      border-radius: 8px;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 800;
+      text-align: center;
+      text-transform: uppercase;
+      transform: rotate(-5deg);
+      letter-spacing: 1px;
+      margin: 8px 0;
+      animation: stampPop 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .stamp-activated {
+      border-color: var(--green-stamp);
+      color: var(--green-stamp);
+      background: rgba(39, 174, 96, 0.06);
+    }
+    .stamp-date {
+      display: block;
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      margin-top: 2px;
+      opacity: 0.85;
+    }
+    @keyframes stampPop {
+      0% { transform: scale(1.4) rotate(-14deg); opacity: 0; }
+      100% { transform: scale(1) rotate(-5deg); opacity: 1; }
+    }
+
+    /* Modals */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(63, 29, 44, 0.45);
+      backdrop-filter: blur(5px);
+      z-index: 100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    .modal-overlay.active {
+      display: flex;
+    }
+    .modal {
+      background: #FFF;
+      width: 100%;
+      max-width: 440px;
+      border-radius: 22px;
+      padding: 24px;
+      box-shadow: 0 20px 48px rgba(0,0,0,0.18);
+      position: relative;
+      animation: modalUp 0.25s ease;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    @keyframes modalUp {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    .modal h2 {
+      font-family: 'Caveat', cursive;
+      font-size: 32px;
+      color: var(--wine-dark);
+      margin-bottom: 6px;
+    }
+    .modal p.lead {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 18px;
+      line-height: 1.5;
+    }
+    .form-group {
+      margin-bottom: 16px;
+    }
+    .form-group label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: var(--wine-dark);
+    }
+    .form-group input, .form-group textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #E8D6DC;
+      border-radius: 12px;
+      font-family: inherit;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .form-group input:focus, .form-group textarea:focus {
+      border-color: var(--accent-rose);
+      box-shadow: 0 0 0 3px rgba(231, 84, 128, 0.15);
+    }
+    .form-group textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    /* Аккуратная симметричная сетка 4×2 для иконок без обрезаний и скролла */
+    .emoji-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .emoji-btn {
+      background: #FFF5F8;
+      border: 1.5px solid #F0D5DF;
+      border-radius: 12px;
+      padding: 10px 4px;
+      font-size: 22px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+    .emoji-btn.active {
+      background: #FFE8F0;
+      border-color: var(--accent-rose);
+      box-shadow: 0 0 0 2px rgba(231, 84, 128, 0.25);
+    }
+    .emoji-btn:hover {
+      background: #FFDEE9;
+      border-color: var(--accent-rose);
+    }
+
+    /* Симметричный аккуратный блок с полной мягкой обводкой со всех сторон */
+    .soft-notice {
+      background: #FFF7F9;
+      border-radius: 14px;
+      padding: 14px 16px;
+      font-size: 12px;
+      color: #6E4453;
+      margin-bottom: 18px;
+      line-height: 1.5;
+      border: 1.5px solid #F2D2DE;
+      box-shadow: 0 2px 8px rgba(231, 84, 128, 0.04);
+    }
+
+    .rules-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 22px;
+    }
+    .rules-list li {
+      font-size: 13px;
+      line-height: 1.5;
+      padding-left: 30px;
+      position: relative;
+    }
+    .rules-list li::before {
+      content: '✨';
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+
+    /* Custom Toast */
+    .toast-container {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      pointer-events: none;
+    }
+    .toast {
+      background: rgba(63, 29, 44, 0.95);
+      color: #FFF;
+      padding: 12px 20px;
+      border-radius: 30px;
+      font-size: 13px;
+      font-weight: 500;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      backdrop-filter: blur(8px);
+      animation: toastIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      pointer-events: auto;
+      text-align: center;
+      max-width: 90vw;
+    }
+    @keyframes toastIn {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    @keyframes toastOut {
+      from { transform: translateY(0); opacity: 1; }
+      to { transform: translateY(15px); opacity: 0; }
+    }
+
+    .page-footer {
+      text-align: center;
+      margin-top: 36px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .btn-text-reset {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 12px;
+      text-decoration: underline;
+      margin-top: 6px;
+    }
+    .btn-text-reset:hover {
+      color: var(--wine-dark);
+    }
+  </style>
+  </head>
+  <body>
+    <!-- Floating Falling Petals Background -->
+    <div class="petals-container" id="petals">
+    </div>
+    <div class="container">
+      <!-- Utility header bar -->
+      <div class="utility-bar">
+        <button class="partner-badge" onclick="openPartnerModal()" id="partnerBadge">
+          💌 Любимый: <span id="partnerBadgeText">Не указан</span> ✏️
+        </button>
+        <button class="sound-toggle" onclick="toggleSound()" id="soundToggleBtn">
+          🔊 Звук: <span id="soundStatusText">Вкл</span>
+        </button>
+      </div>
+      <!-- Header Content -->
+      <header>
+        <div class="badge">Для самой любимой</div>
+        <h1>Купоны Любви</h1>
+        <p class="subtitle">Стирай защитный слой пальчиком и выбирай то, чего хочется прямо сейчас ✨</p>
+        <!-- Monthly Balance Tracker -->
+        <div class="balance-box">
+          <div class="balance-stats">
+            <div>
+              <span class="stat-number" id="usedCountText">0 / 8</span>
+              <span class="stat-label">Использовано в этом месяце</span>
+            </div>
+            <div>
+              <span class="stat-number" id="customCountText">0 / 3</span>
+              <span class="stat-label">Своих капризов создано</span>
+            </div>
+          </div>
+          <div class="progress-bar-bg">
+            <div class="progress-bar-fill" id="progressBar">
+            </div>
+          </div>
+        </div>
+        <div class="top-actions">
+          <button class="btn-secondary" onclick="openRulesModal()">
+            📜 Правила
+          </button>
+          <button class="btn-secondary" onclick="openCustomWishModal()" id="customWishBtn">
+            🪄 Загадать свой каприз (<span id="customSlotsLeft">3</span>/3)
+          </button>
+        </div>
+        <!-- Filters -->
+        <div class="filters-wrapper">
+          <button class="filter-btn active" onclick="setFilter('all', this)">Все купоны</button>
+          <button class="filter-btn" onclick="setFilter('available', this)">Доступные</button>
+          <button class="filter-btn" onclick="setFilter('activated', this)">Использованные</button>
+          <button class="filter-btn" onclick="setFilter('custom', this)">Мои капризы</button>
+        </div>
+      </header>
+      <!-- Coupons Grid -->
+      <div class="coupons-grid" id="couponsGrid">
+      </div>
+      <div class="page-footer">
+        <div>8 особенных поводов для улыбки в месяц ❤️</div>
+        <button class="btn-text-reset" onclick="openResetConfirmModal()">Начать новый месяц (сбросить)</button>
+      </div>
+    </div>
+    <!-- Modal: Reveal Surprise Celebration -->
+    <div class="modal-overlay" id="revealModal">
+      <div class="modal" style="text-align: center;">
+        <div id="revealModalIcon" style="font-size: 52px; margin-bottom: 8px;">🎉</div>
+        <h2 id="revealModalTitle" style="font-size: 34px;">Сюрприз раскрыт!</h2>
+        <p id="revealModalDesc" class="lead" style="font-size: 14px; color: var(--wine-dark); margin-bottom: 22px;">
+        </p>
+        <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 16px;">
+          Хочешь использовать этот купон прямо сейчас или приберечь для идеального вечера?
+        </p>
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <button class="btn-action btn-activate" id="revealModalActivateBtn">💖 Использовать прямо сейчас</button>
+          <button class="btn-action btn-quick-reveal" onclick="closeRevealModal()">Приберечь на потом</button>
+        </div>
+      </div>
+    </div>
+    <!-- Modal: Custom Wish -->
+    <div class="modal-overlay" id="wishModal">
+      <div class="modal">
+        <h2>Твой персональный каприз 🪄</h2>
+        <p class="lead">У тебя есть ровно 3 особых желания на этот месяц, которые ты можешь придумать сама!</p>
+        <div class="form-group">
+          <label>Выбери иконку настроения:</label>
+          <div class="emoji-row" id="emojiRow">
+            <button type="button" class="emoji-btn active" onclick="selectEmoji('💖', this)">💖</button>
+            <button type="button" class="emoji-btn" onclick="selectEmoji('🥂', this)">🥂</button>
+            <button type="button" class="emoji-btn" onclick="selectEmoji('🍕', this)">🍕</button>
+            <button type="button" class="emoji-btn" onclick="selectEmoji('🚗', this)">🚗</button>
+            <button type="button" class="emoji-btn" onclick="selectEmoji('🛁', this)">🛁</button>
+            <button type="button" class="emoji-btn" onclick="selectEmoji('🎁', this)">🎁</button>
+            <button type="button" class="emoji-btn" onclick="selectEmoji('☕', this)">☕</button>
+            <button type="button" class="emoji-btn" onclick="selectEmoji('🍓', this)">🍓</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="wishTitle">Чего тебе хочется?</label>
+          <textarea id="wishTitle" placeholder="Например: Поехать смотреть на ночной город / Приготовить вместе пиццу...">
+          </textarea>
+        </div>
+        <div class="soft-notice">
+          💬 <strong>Свобода выбора:</strong> Ты можешь активировать купоны в любом темпе — хоть несколько дней подряд, когда душе хочется праздника!
+        </div>
+        <div style="display: flex; gap: 10px;">
+          <button class="btn-action btn-quick-reveal" style="flex:1;" onclick="closeWishModal()">Отмена</button>
+          <button class="btn-action btn-activate" style="flex:2;" onclick="saveCustomWish()">💫 Добавить каприз</button>
+        </div>
+      </div>
+    </div>
+    <!-- Modal: Telegram Username Settings -->
+    <div class="modal-overlay" id="partnerModal">
+      <div class="modal">
+        <h2>Telegram любимого 💌</h2>
+        <p class="lead">Укажи никнейм в Telegram (без @), чтобы купоны отправлялись сразу в личный диалог с ним!</p>
+        <div class="form-group">
+          <label for="partnerTgInput">Telegram Username любимого:</label>
+          <input type="text" id="partnerTgInput" placeholder="например: alex_love">
+        </div>
+        <div class="soft-notice">
+          💡 Если оставить поле пустым, при активации купона откроется стандартный выбор чата в Telegram.
+        </div>
+        <div style="display: flex; gap: 10px;">
+          <button class="btn-action btn-quick-reveal" style="flex:1;" onclick="closePartnerModal()">Закрыть</button>
+          <button class="btn-action btn-activate" style="flex:2;" onclick="savePartnerTg()">Сохранить</button>
+        </div>
+      </div>
+    </div>
+    <!-- Modal: Direct Telegram Send & Helper -->
+    <div class="modal-overlay" id="telegramSendModal">
+      <div class="modal">
+        <h2>Отправить в Telegram 💌</h2>
+        <p class="lead" id="tgModalLeadText">Чтобы купон прилетел прямо в личный чат к любимому, укажи его никнейм в Telegram:</p>
+        <div class="form-group">
+          <label for="tgModalNickInput">Telegram любимого (без @):</label>
+          <input type="text" id="tgModalNickInput" placeholder="например: alex_love">
+        </div>
+        <div class="soft-notice">
+          💡 Ник сохранится навсегда, и все последующие купоны будут сразу открывать диалог с ним!
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <button type="button" class="btn-action btn-activate" onclick="confirmTgAndOpen()">
+            🚀 Открыть чат в Telegram
+          </button>
+          <button type="button" class="btn-action btn-tg" onclick="openTgGeneralShare()" style="font-size: 12px; padding: 10px;">
+            📤 Выбрать контакт из списка Telegram
+          </button>
+          <button type="button" class="btn-action btn-copy" onclick="copyFromTgModal()">
+            📋 Скопировать готовый текст
+          </button>
+          <button type="button" class="btn-action btn-quick-reveal" onclick="closeTelegramModal()">
+            Закрыть
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- Modal: Rules (Customized for 8/Month + 3 Custom) -->
+    <div class="modal-overlay" id="rulesModal">
+      <div class="modal">
+        <h2>Правила купонов 📜</h2>
+        <p class="lead">Простые законы заботы и уюта:</p>
+        <ul class="rules-list">
+          <li>
+            <strong>Всё по любви и взаимности:</strong> Купоны созданы для радости, поэтому каждое желание делается искренне и с заботой друг о друге.</li>
+            <li>
+              <strong>1 желание в день:</strong> Чтобы каждое желание приносило максимум удовольствия и внимания, в один день активируется только один купон. Если активировала случайно или передумала — внизу купона всегда есть кнопка «↩️ Отменить активацию», чтобы вернуть его или выбрать другое желание!</li>
+              <li>
+                <strong>Всегда найдём альтернативу:</strong> Если любимый занят, нет сил и ресурсов или желание не по душе — без проблем, мы в любом случае перенесём его на потом или вместе подберём классную замену.</li>
+                <li>
+                  <strong>Срок действия желаний:</strong> Обычные купоны действуют сегодня до 00:00. Но для желаний, которые физически невозможно исполнить прямо сегодня (например, <strong>«Завтрак в постель»</strong>, утренний кофе или любые похожие утренние капризы 🥐) — купон действует на следующее утро! А <strong>поездки</strong>, приключения и масштабные планы мы спокойно планируем на удобный совместный день или выходные 🚗.</li>
+                  <li>
+                    <strong>В пределах реальности:</strong> Капризы должны быть осуществимы в реальной жизни (полёт на Марс или достать звезду с неба пока отложим ✨).</li>
+                    <li>
+                      <strong>8 купонов на месяц:</strong> Всего в твоём распоряжении 8 купонов в месяц (5 готовых сюрпризов + 3 твоих личных каприза).</li>
+                      <li>
+                        <strong>В твоём темпе:</strong> Никаких ограничений по дням недели! Ты можешь тратить их хоть несколько дней подряд, когда душе хочется тепла и праздника.</li>
+                        <li>
+                          <strong>3 личных каприза:</strong> Ты можешь придумать любые 3 своих желания через кнопку «Загадать свой каприз».</li>
+                          <li>
+                            <strong>Без спешки с выбором:</strong> Не обязательно тратить купоны сразу — каждый купон спокойно дождётся своего уютного дня.</li>
+                          </ul>
+                          <button class="btn-action btn-activate" onclick="closeRulesModal()">Всё понятно, я согласна 🥰</button>
+                        </div>
+                      </div>
+                      <!-- Modal: Confirm Reset -->
+                      <div class="modal-overlay" id="confirmResetModal">
+                        <div class="modal">
+                          <h2>Начать новый месяц? 🔄</h2>
+                          <p class="lead">Все 8 купонов снова будут скрыты защитным слоем, а счётчик месяца обнулится. Готова к новой порции заботы?</p>
+                          <div style="display: flex; gap: 10px;">
+                            <button class="btn-action btn-quick-reveal" style="flex:1;" onclick="closeResetConfirmModal()">Отмена</button>
+                            <button class="btn-action btn-activate" style="flex:1; background: #C0392B;" onclick="confirmResetAll()">Начать заново</button>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- Toast Notification Container -->
+                      <div class="toast-container" id="toastContainer">
+                      </div>
+                      <script>
+    const MAX_TOTAL_COUPONS = 8;
+    const MAX_CUSTOM_WISHES = 3;
+
+    /* 5 готовых сбалансированных желаний */
+    const PRESET_COUPONS = [
+      {
+        id: "p1",
+        code: "LOVE-001",
+        title: "Массаж и полный релакс",
+        desc: "Заботливый массаж спины, плеч или ножек под спокойную музыку до полного расслабления.",
+        icon: "💆‍♀️",
+        isCustom: false,
+        isRevealed: false,
+        status: "available",
+        activatedDate: null,
+        activatedDateRaw: null
+      },
+      {
+        id: "p2",
+        code: "LOVE-002",
+        title: "Завтрак и кофе в постель",
+        desc: "Твой любимый горячий напиток и утренние вкусняшки с подачей прямо под одеяло.",
+        icon: "🥐",
+        isCustom: false,
+        isRevealed: false,
+        status: "available",
+        activatedDate: null,
+        activatedDateRaw: null
+      },
+      {
+        id: "p3",
+        code: "LOVE-003",
+        title: "Вечер твоего кино",
+        desc: "Ты выбираешь абсолютно любой фильм или сериал. Я смотрю с тобой, обнимаю и не комментирую сюжет!",
+        icon: "🎬",
+        isCustom: false,
+        isRevealed: false,
+        status: "available",
+        activatedDate: null,
+        activatedDateRaw: null
+      },
+      {
+        id: "p4",
+        code: "LOVE-004",
+        title: "Ванна при свечах и спа-релакс",
+        desc: "Я наберу для тебя горячую ванну с ароматной пеной, зажгу свечи, включу расслабляющую музыку и принесу любимый напиток или фрукты.",
+        icon: "🛁",
+        isCustom: false,
+        isRevealed: false,
+        status: "available",
+        activatedDate: null,
+        activatedDateRaw: null
+      },
+      {
+        id: "p5",
+        code: "LOVE-005",
+        title: "Сладкий каприз",
+        desc: "Твой любимый десерт, шоколад или эклеры с доставкой прямо в твои ручки в любое время.",
+        icon: "🍰",
+        isCustom: false,
+        isRevealed: false,
+        status: "available",
+        activatedDate: null,
+        activatedDateRaw: null
+      }
+    ];
+
+    let coupons = [];
+    let currentFilter = 'all';
+    let selectedEmoji = '💖';
+    let partnerTelegram = "";
+    let isSoundEnabled = true;
+    let audioCtx = null;
+    const scratchTimers = {};
+    let pendingCouponIdForTg = null;
+
+    function getTodayKey() {
+      const now = new Date();
+      return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+    }
+
+    function getTodayDisplayDate() {
+      return new Date().toLocaleDateString('ru-RU', { day: 'numeric', month: 'short' });
+    }
+
+    /* Audio system */
+    function initAudio() {
+      if (!audioCtx) {
+        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        if (AudioContextClass) audioCtx = new AudioContextClass();
+      }
+      if (audioCtx && audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+    }
+
+    function toggleSound() {
+      isSoundEnabled = !isSoundEnabled;
+      localStorage.setItem("love_coupons_sound", isSoundEnabled ? "true" : "false");
+      updateSoundUI();
+      showToast(isSoundEnabled ? "🔊 Звуки включены" : "🔇 Звуки выключены");
+    }
+
+    function updateSoundUI() {
+      const text = document.getElementById("soundStatusText");
+      const btn = document.getElementById("soundToggleBtn");
+      if (text && btn) {
+        text.innerText = isSoundEnabled ? "Вкл" : "Выкл";
+        btn.style.opacity = isSoundEnabled ? "1" : "0.7";
+      }
+    }
+
+    function playScratchSound() {
+      if (!isSoundEnabled) return;
+      initAudio();
+      if (!audioCtx) return;
+      try {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(140 + Math.random() * 80, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.015, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.04);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.04);
+      } catch (e) {}
+    }
+
+    function playRevealSound() {
+      if (!isSoundEnabled) return;
+      initAudio();
+      if (!audioCtx) return;
+      try {
+        const now = audioCtx.currentTime;
+        const notes = [523.25, 659.25, 783.99, 1046.50];
+        notes.forEach((freq, idx) => {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(freq, now + idx * 0.07);
+          gain.gain.setValueAtTime(0.05, now + idx * 0.07);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + idx * 0.07 + 0.35);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(now + idx * 0.07);
+          osc.stop(now + idx * 0.07 + 0.4);
+        });
+      } catch (e) {}
+    }
+
+    function playCelebrationSound() {
+      if (!isSoundEnabled) return;
+      initAudio();
+      if (!audioCtx) return;
+      try {
+        const now = audioCtx.currentTime;
+        const chord = [392.00, 493.88, 587.33, 783.99, 987.77];
+        chord.forEach((freq, idx) => {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(freq, now + idx * 0.06);
+          gain.gain.setValueAtTime(0.08, now + idx * 0.06);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + idx * 0.06 + 0.6);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(now + idx * 0.06);
+          osc.stop(now + idx * 0.06 + 0.7);
+        });
+      } catch (e) {}
+    }
+
+    function showToast(message) {
+      const container = document.getElementById("toastContainer");
+      if (!container) return;
+      const toast = document.createElement("div");
+      toast.className = "toast";
+      toast.innerText = message;
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.style.animation = "toastOut 0.3s ease forwards";
+        setTimeout(() => toast.remove(), 300);
+      }, 2600);
+    }
+
+    /* Storage */
+    function loadAppData() {
+      const soundPref = localStorage.getItem("love_coupons_sound");
+      if (soundPref !== null) isSoundEnabled = soundPref === "true";
+      updateSoundUI();
+
+      partnerTelegram = localStorage.getItem("love_coupons_tg") || "";
+      updatePartnerUI();
+
+      const saved = localStorage.getItem("love_coupons_v8");
+      if (saved) {
+        try {
+          coupons = JSON.parse(saved);
+        } catch(e) {
+          coupons = JSON.parse(JSON.stringify(PRESET_COUPONS));
+        }
+      } else {
+        coupons = JSON.parse(JSON.stringify(PRESET_COUPONS));
+      }
+
+      if (!Array.isArray(coupons) || coupons.length === 0) {
+        coupons = JSON.parse(JSON.stringify(PRESET_COUPONS));
+      }
+    }
+
+    function saveToStorage() {
+      localStorage.setItem("love_coupons_v8", JSON.stringify(coupons));
+      updateBalanceUI();
+    }
+
+    function updatePartnerUI() {
+      const badgeText = document.getElementById("partnerBadgeText");
+      if (badgeText) badgeText.innerText = partnerTelegram ? `@${partnerTelegram}` : "Не указан";
+      const input = document.getElementById("partnerTgInput");
+      if (input) input.value = partnerTelegram;
+    }
+
+    function updateBalanceUI() {
+      const totalActivated = coupons.filter(c => c.status === 'activated').length;
+      const customCreated = coupons.filter(c => c.isCustom).length;
+      const slotsLeft = MAX_CUSTOM_WISHES - customCreated;
+
+      const usedCountEl = document.getElementById("usedCountText");
+      if (usedCountEl) usedCountEl.innerText = `${totalActivated} / ${MAX_TOTAL_COUPONS}`;
+
+      const customCountEl = document.getElementById("customCountText");
+      if (customCountEl) customCountEl.innerText = `${customCreated} / ${MAX_CUSTOM_WISHES}`;
+
+      const progressBar = document.getElementById("progressBar");
+      if (progressBar) {
+        const percent = (totalActivated / MAX_TOTAL_COUPONS) * 100;
+        progressBar.style.width = `${Math.min(percent, 100)}%`;
+      }
+
+      const slotsLeftEl = document.getElementById("customSlotsLeft");
+      if (slotsLeftEl) slotsLeftEl.innerText = Math.max(0, slotsLeft);
+
+      const customWishBtn = document.getElementById("customWishBtn");
+      if (customWishBtn) {
+        if (slotsLeft <= 0) {
+          customWishBtn.disabled = true;
+          customWishBtn.title = "Все 3 персональных каприза уже добавлены!";
+        } else {
+          customWishBtn.disabled = false;
+          customWishBtn.title = "";
+        }
+      }
+    }
+
+    /* Filters & Rendering */
+    function setFilter(filter, el) {
+      currentFilter = filter;
+      document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+      if (el) el.classList.add('active');
+      renderCoupons();
+    }
+
+    function renderCoupons() {
+      const grid = document.getElementById("couponsGrid");
+      if (!grid) return;
+      grid.innerHTML = "";
+
+      let filtered = coupons;
+      if (currentFilter === 'available') {
+        filtered = coupons.filter(c => c.status === 'available');
+      } else if (currentFilter === 'activated') {
+        filtered = coupons.filter(c => c.status === 'activated');
+      } else if (currentFilter === 'custom') {
+        filtered = coupons.filter(c => c.isCustom);
+      }
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div style="grid-column: 1 / -1; text-align: center; padding: 40px 16px; color: var(--text-muted);">
+            <div style="font-size: 36px; margin-bottom: 8px;">🌸</div>
+            <p style="font-size: 14px;">В этой категории пока пусто</p>
+          </div>
+        `;
+        return;
+      }
+
+      filtered.forEach((coupon) => {
+        const card = document.createElement("div");
+        card.className = "ticket-card";
+        card.id = `card-${coupon.id}`;
+
+        let statusBadge = "";
+        let actionButtons = "";
+
+        const displayIcon = coupon.isRevealed ? coupon.icon : "🎁";
+        const displayTitle = coupon.isRevealed ? escapeHtml(coupon.title) : "Купон-сюрприз 💫";
+        const displayDesc = coupon.isRevealed 
+          ? `<p class="ticket-desc">${escapeHtml(coupon.desc)}</p>` 
+          : `<p class="ticket-desc mystery">🔒 Желание засекречено! Сотри защитный слой пальчиком, чтобы узнать сюрприз...</p>`;
+        
+        const badgeClass = coupon.isCustom ? 'badge-pill custom-pill' : 'badge-pill';
+        const displayBadge = coupon.isRevealed 
+          ? (coupon.isCustom ? 'МОЙ КАПРИЗ ⭐' : 'ОФИЦИАЛЬНЫЙ БИЛЕТ') 
+          : 'ТАЙНОЕ ЖЕЛАНИЕ 🔒';
+
+        if (coupon.status === "activated") {
+          const expiry = getCouponExpiryInfo(coupon);
+          const dateStr = coupon.activatedDate ? `<span class="stamp-date">${coupon.activatedDate} • ${expiry.stamp}</span>` : '';
+          statusBadge = `<div class="stamp stamp-activated">✓ АКТИВИРОВАНО${dateStr}</div>`;
+          actionButtons = renderCouponActionButtons(coupon);
+        } else {
+          if (!coupon.isRevealed) {
+            actionButtons = `<button class="btn-action btn-quick-reveal" onclick="quickReveal('${coupon.id}')">⚡ Стереть сразу</button>`;
+          } else {
+            actionButtons = `<button class="btn-action btn-activate" onclick="activateCoupon('${coupon.id}')">💖 Использовать купон</button>`;
+          }
+        }
+
+        const deleteButton = coupon.isCustom && coupon.status !== 'activated' ? 
+          `<button class="btn-delete-custom" onclick="deleteCustomWish('${coupon.id}')">Удалить этот каприз (вернётся слот)</button>` : '';
+
+        card.innerHTML = `
+          <div class="scratch-area" id="scratch-area-${coupon.id}">
+            <div class="scratch-content">
+              <div class="scratch-icon">${displayIcon}</div>
+              <div class="scratch-title">${displayTitle}</div>
+            </div>
+            ${!coupon.isRevealed ? `
+              <canvas class="scratch-canvas" id="canvas-${coupon.id}"></canvas>
+              <div class="scratch-lock-overlay" id="lock-overlay-${coupon.id}" onclick="unlockScratch('${coupon.id}')">
+                <div class="scratch-lock-pill">
+                  <span>👆</span>
+                  <span>Нажми, чтобы стереть</span>
+                </div>
+              </div>
+            ` : ''}
+          </div>
+          <div class="ticket-body">
+            <div>
+              <div class="ticket-meta">
+                <span>№ ${coupon.code}</span>
+                <span class="${badgeClass}">${displayBadge}</span>
+              </div>
+              ${displayDesc}
+            </div>
+            <div class="ticket-footer" id="footer-${coupon.id}">
+              ${statusBadge}
+              ${actionButtons}
+              ${deleteButton}
+            </div>
+          </div>
+        `;
+
+        grid.appendChild(card);
+
+        if (!coupon.isRevealed) {
+          initScratchCanvas(coupon.id);
+        }
+      });
+
+      updateBalanceUI();
+    }
+
+    /* Scratch Lock Management */
+    function unlockScratch(couponId) {
+      initAudio();
+      Object.keys(scratchTimers).forEach(id => {
+        if (id !== couponId) lockScratch(id);
+      });
+
+      const card = document.getElementById(`card-${couponId}`);
+      const overlay = document.getElementById(`lock-overlay-${couponId}`);
+
+      if (card) card.classList.add('scratching-active');
+      if (overlay) overlay.style.display = 'none';
+
+      if (navigator.vibrate) {
+        try { navigator.vibrate(25); } catch (e) {}
+      }
+
+      showToast("Стирай защитный слой пальчиком 👆");
+      resetScratchTimer(couponId);
+    }
+
+    function lockScratch(couponId, e) {
+      if (e) e.stopPropagation();
+      if (scratchTimers[couponId]) {
+        clearTimeout(scratchTimers[couponId]);
+        delete scratchTimers[couponId];
+      }
+
+      const card = document.getElementById(`card-${couponId}`);
+      const overlay = document.getElementById(`lock-overlay-${couponId}`);
+
+      if (card) card.classList.remove('scratching-active');
+      if (overlay) overlay.style.display = 'flex';
+    }
+
+    function resetScratchTimer(couponId) {
+      if (scratchTimers[couponId]) {
+        clearTimeout(scratchTimers[couponId]);
+      }
+      scratchTimers[couponId] = setTimeout(() => {
+        lockScratch(couponId);
+      }, 7000);
+    }
+
+    /* Определение срока действия конкретного купона */
+    function getCouponExpiryInfo(coupon) {
+      const lower = ((coupon.title || '') + ' ' + (coupon.desc || '')).toLowerCase();
+
+      // Утренние желания или то, что невозможно исполнить сегодня вечером
+      if (
+        lower.includes('завтрак') || 
+        lower.includes('утр') || 
+        lower.includes('на завтра') || 
+        lower.includes('пробужден') || 
+        lower.includes('проснут') || 
+        lower.includes('следующ')
+      ) {
+        return {
+          stamp: 'на след. утро',
+          textPhrase: 'Он действует на следующее утро (или следующий день)'
+        };
+      }
+
+      // Поездки, выезды, события по договорённости
+      if (
+        lower.includes('поездк') || 
+        lower.includes('за город') || 
+        lower.includes('прогулк') || 
+        lower.includes('путешеств') || 
+        lower.includes('поход') || 
+        lower.includes('выезд') || 
+        lower.includes('свидани')
+      ) {
+        return {
+          stamp: 'по договорённости',
+          textPhrase: 'Он действует по договорённости (планируем на удобный день)'
+        };
+      }
+
+      return {
+        stamp: 'до 00:00',
+        textPhrase: 'Он действует сегодня до 00:00'
+      };
+    }
+
+    function getCouponMessage(coupon) {
+      const expiry = getCouponExpiryInfo(coupon);
+      return `Любимый! Я активировала купон: «${coupon.title}»! ${expiry.textPhrase}, жду исполнения! 🥰✨`;
+    }
+
+    function buildTelegramUrl(coupon) {
+      const message = getCouponMessage(coupon);
+      if (partnerTelegram) {
+        const cleanNick = partnerTelegram.replace(/^@/, '').trim();
+        return `https://t.me/${cleanNick}?text=${encodeURIComponent(message)}`;
+      }
+      return `https://t.me/share/url?url=https%3A%2F%2Ft.me&text=${encodeURIComponent(message)}`;
+    }
+
+    function renderCouponActionButtons(coupon) {
+      const tgUrl = buildTelegramUrl(coupon);
+      return `
+        <a href="${tgUrl}" target="_blank" rel="noopener noreferrer" class="btn-action btn-tg" onclick="handleTelegramClick(event, '${coupon.id}')">💌 Отправить в Telegram</a>
+        <button type="button" class="btn-action btn-copy" onclick="copyCouponText('${coupon.id}')">📋 Скопировать текст</button>
+        <button type="button" class="btn-cancel-activation" onclick="cancelActivation('${coupon.id}')">↩️ Отменить активацию (выбрать другое)</button>
+      `;
+    }
+
+    function copyTextToClipboard(text) {
+      try {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        textArea.style.position = "fixed";
+        textArea.style.left = "-9999px";
+        textArea.style.top = "-9999px";
+        textArea.style.opacity = "0";
+        textArea.setAttribute("readonly", "");
+        document.body.appendChild(textArea);
+        textArea.select();
+        textArea.setSelectionRange(0, 99999);
+        const successful = document.execCommand('copy');
+        document.body.removeChild(textArea);
+        return successful;
+      } catch (err) {
+        return false;
+      }
+    }
+
+    function handleTelegramClick(event, couponId) {
+      initAudio();
+      const coupon = coupons.find(c => c.id === couponId);
+      if (!coupon) return;
+
+      const message = getCouponMessage(coupon);
+      copyTextToClipboard(message);
+
+      // Если никнейм любимого ещё не сохранён — открываем окно настройки
+      if (!partnerTelegram) {
+        if (event) event.preventDefault();
+        openTelegramModal(couponId);
+        return;
+      }
+
+      showToast("Текст скопирован! Открываю Telegram 💌");
+
+      // Для локальных файлов (file://) на смартфонах дублируем запуск через системную схему tg://
+      if (window.location.protocol === 'file:') {
+        const cleanNick = partnerTelegram.replace(/^@/, '').trim();
+        setTimeout(() => {
+          window.location.href = `tg://resolve?domain=${cleanNick}`;
+        }, 250);
+      }
+    }
+
+    function openTelegramModal(couponId) {
+      pendingCouponIdForTg = couponId;
+      const input = document.getElementById('tgModalNickInput');
+      if (input) input.value = partnerTelegram || "";
+      const modal = document.getElementById('telegramSendModal');
+      if (modal) modal.classList.add('active');
+    }
+
+    function closeTelegramModal() {
+      const modal = document.getElementById('telegramSendModal');
+      if (modal) modal.classList.remove('active');
+    }
+
+    function confirmTgAndOpen() {
+      const input = document.getElementById('tgModalNickInput');
+      const raw = input ? input.value.trim() : "";
+      if (raw) {
+        partnerTelegram = raw.replace(/^@/, '').trim();
+        localStorage.setItem("love_coupons_tg", partnerTelegram);
+        updatePartnerUI();
+      }
+
+      const coupon = coupons.find(c => c.id === pendingCouponIdForTg);
+      const message = coupon ? getCouponMessage(coupon) : "Любимый, я активировала купон!";
+      copyTextToClipboard(message);
+      closeTelegramModal();
+      renderCoupons();
+
+      if (partnerTelegram) {
+        const cleanNick = partnerTelegram.replace(/^@/, '').trim();
+        showToast("Ник сохранён! Открываю чат с любимым 💌");
+        navigateToTelegram(
+          `https://t.me/${cleanNick}?text=${encodeURIComponent(message)}`,
+          `tg://resolve?domain=${cleanNick}`
+        );
+      } else {
+        openTgGeneralShare();
+      }
+    }
+
+    function openTgGeneralShare() {
+      const coupon = coupons.find(c => c.id === pendingCouponIdForTg);
+      const message = coupon ? getCouponMessage(coupon) : "Любимый, я активировала купон!";
+      copyTextToClipboard(message);
+      closeTelegramModal();
+      showToast("Текст скопирован! Открываю Telegram 💌");
+      navigateToTelegram(
+        `https://t.me/share/url?url=https%3A%2F%2Ft.me&text=${encodeURIComponent(message)}`,
+        `tg://msg_url?url=https%3A%2F%2Ft.me&text=${encodeURIComponent(message)}`
+      );
+    }
+
+    function copyFromTgModal() {
+      const coupon = coupons.find(c => c.id === pendingCouponIdForTg);
+      const message = coupon ? getCouponMessage(coupon) : "Любимый, я активировала купон!";
+      if (copyTextToClipboard(message)) {
+        showToast("Текст скопирован в буфер обмена! 📋✨");
+      }
+    }
+
+    function navigateToTelegram(webUrl, appUrl) {
+      // 1. Попытка открыть ссылку стандартным способом
+      const a = document.createElement('a');
+      a.href = webUrl;
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+
+      // 2. Гарантированный фолбэк для локальных файлов (file://) на смартфонах
+      if (window.location.protocol === 'file:') {
+        setTimeout(() => {
+          if (appUrl) {
+            window.location.href = appUrl;
+          } else {
+            window.location.href = webUrl;
+          }
+        }, 200);
+      }
+    }
+
+    function copyCouponText(couponId) {
+      const coupon = coupons.find(c => c.id === couponId);
+      if (!coupon) return;
+      const text = getCouponMessage(coupon);
+
+      if (copyTextToClipboard(text)) {
+        showToast("Текст скопирован в буфер обмена! 📋✨");
+      } else {
+        showToast("Не удалось скопировать текст 🙁");
+      }
+    }
+
+    /* Scratch Canvas Logic */
+    function initScratchCanvas(couponId) {
+      requestAnimationFrame(() => {
+        const canvas = document.getElementById(`canvas-${couponId}`);
+        const area = document.getElementById(`scratch-area-${couponId}`);
+        if (!canvas || !area) return;
+
+        const rect = area.getBoundingClientRect();
+        if (rect.width === 0 || rect.height === 0) {
+          setTimeout(() => initScratchCanvas(couponId), 50);
+          return;
+        }
+
+        const dpr = window.devicePixelRatio || 1;
+        canvas.width = rect.width * dpr;
+        canvas.height = rect.height * dpr;
+        const ctx = canvas.getContext('2d');
+        ctx.scale(dpr, dpr);
+
+        const grad = ctx.createLinearGradient(0, 0, rect.width, rect.height);
+        grad.addColorStop(0, '#EBB5C7');
+        grad.addColorStop(0.3, '#FEE3EC');
+        grad.addColorStop(0.6, '#DC9CB3');
+        grad.addColorStop(1, '#F3CAD9');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, rect.width, rect.height);
+
+        ctx.fillStyle = "rgba(255, 255, 255, 0.4)";
+        for (let i = 0; i < 35; i++) {
+          const sx = (Math.sin(i * 99) * 0.5 + 0.5) * rect.width;
+          const sy = (Math.cos(i * 33) * 0.5 + 0.5) * rect.height;
+          ctx.beginPath();
+          ctx.arc(sx, sy, 1.5, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        ctx.fillStyle = "#6E384D";
+        ctx.font = "bold 13px Montserrat, sans-serif";
+        ctx.textAlign = "center";
+        ctx.fillText("✨ СОТРИ ЗАЩИТНЫЙ СЛОЙ ✨", rect.width / 2, rect.height / 2 + 5);
+
+        let isDrawing = false;
+        let lastPoint = null;
+        let scratchCount = 0;
+
+        function getPos(e) {
+          const r = canvas.getBoundingClientRect();
+          const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+          const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+          return { x: clientX - r.left, y: clientY - r.top };
+        }
+
+        function erase(p1, p2) {
+          ctx.globalCompositeOperation = 'destination-out';
+          ctx.lineWidth = 42;
+          ctx.lineCap = 'round';
+          ctx.lineJoin = 'round';
+          ctx.beginPath();
+          if (p2) {
+            ctx.moveTo(p1.x, p1.y);
+            ctx.lineTo(p2.x, p2.y);
+          } else {
+            ctx.arc(p1.x, p1.y, 21, 0, Math.PI * 2);
+          }
+          ctx.stroke();
+          ctx.fill();
+
+          scratchCount++;
+          if (scratchCount % 4 === 0) playScratchSound();
+        }
+
+        function checkProgress() {
+          try {
+            const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            let transparent = 0;
+            const step = 24;
+            for (let i = 3; i < imgData.data.length; i += step * 4) {
+              if (imgData.data[i] === 0) transparent++;
+            }
+            const ratio = transparent / (imgData.data.length / (step * 4));
+            if (ratio > 0.35) completeReveal(couponId);
+          } catch (err) {}
+        }
+
+        canvas.addEventListener('mousedown', (e) => {
+          initAudio();
+          resetScratchTimer(couponId);
+          isDrawing = true;
+          lastPoint = getPos(e);
+          erase(lastPoint, null);
+        });
+        window.addEventListener('mouseup', () => {
+          if (isDrawing) {
+            isDrawing = false;
+            lastPoint = null;
+            checkProgress();
+          }
+        });
+        canvas.addEventListener('mousemove', (e) => {
+          if (!isDrawing) return;
+          resetScratchTimer(couponId);
+          const currentPoint = getPos(e);
+          erase(lastPoint, currentPoint);
+          lastPoint = currentPoint;
+        });
+
+        canvas.addEventListener('touchstart', (e) => {
+          initAudio();
+          resetScratchTimer(couponId);
+          lastPoint = getPos(e);
+          isDrawing = true;
+          erase(lastPoint, null);
+        }, { passive: true });
+
+        window.addEventListener('touchend', () => {
+          if (isDrawing) {
+            isDrawing = false;
+            lastPoint = null;
+            checkProgress();
+          }
+        });
+
+        canvas.addEventListener('touchmove', (e) => {
+          if (!isDrawing) return;
+          if (e.cancelable) e.preventDefault();
+          resetScratchTimer(couponId);
+          const currentPoint = getPos(e);
+          erase(lastPoint, currentPoint);
+          lastPoint = currentPoint;
+        }, { passive: false });
+      });
+    }
+
+    function quickReveal(couponId) {
+      initAudio();
+      completeReveal(couponId);
+    }
+
+    function completeReveal(couponId) {
+      if (scratchTimers[couponId]) {
+        clearTimeout(scratchTimers[couponId]);
+        delete scratchTimers[couponId];
+      }
+
+      const coupon = coupons.find(c => c.id === couponId);
+      if (!coupon || coupon.isRevealed) return;
+
+      coupon.isRevealed = true;
+      saveToStorage();
+      playRevealSound();
+
+      confetti({
+        particleCount: 50,
+        spread: 60,
+        origin: { y: 0.6 },
+        colors: ['#E75480', '#FFA6B9', '#C5A059']
+      });
+
+      renderCoupons();
+      openRevealModal(coupon);
+    }
+
+    function openRevealModal(coupon) {
+      const modal = document.getElementById("revealModal");
+      const icon = document.getElementById("revealModalIcon");
+      const title = document.getElementById("revealModalTitle");
+      const desc = document.getElementById("revealModalDesc");
+      const actBtn = document.getElementById("revealModalActivateBtn");
+
+      if (modal && icon && title && desc && actBtn) {
+        icon.innerText = coupon.icon;
+        title.innerText = coupon.title;
+        desc.innerText = coupon.desc;
+        actBtn.onclick = () => {
+          closeRevealModal();
+          activateCoupon(coupon.id);
+        };
+        modal.classList.add("active");
+      }
+    }
+
+    function closeRevealModal() {
+      const modal = document.getElementById("revealModal");
+      if (modal) modal.classList.remove("active");
+    }
+
+    function activateCoupon(couponId) {
+      initAudio();
+      const coupon = coupons.find(c => c.id === couponId);
+      if (!coupon) return;
+
+      const todayKey = getTodayKey();
+      const todayDisplay = getTodayDisplayDate();
+
+      const alreadyActiveToday = coupons.find(c => 
+        c.status === "activated" && 
+        c.id !== couponId && 
+        (c.activatedDateRaw === todayKey || c.activatedDate === todayDisplay)
+      );
+
+      if (alreadyActiveToday) {
+        showToast(`На сегодня уже активирован купон «${alreadyActiveToday.title}»! Отмени его внизу карточки, если хочешь поменять 🌸`);
+        return;
+      }
+
+      coupon.activatedDateRaw = todayKey;
+      coupon.activatedDate = todayDisplay;
+      coupon.status = "activated";
+      saveToStorage();
+
+      playCelebrationSound();
+
+      confetti({
+        particleCount: 85,
+        spread: 70,
+        origin: { y: 0.65 },
+        colors: ['#E75480', '#FFB7C5', '#C5A059', '#27AE60']
+      });
+
+      const expiry = getCouponExpiryInfo(coupon);
+      showToast(`Купон «${coupon.title}» активирован (${expiry.stamp})! 💖`);
+
+      const footer = document.getElementById(`footer-${couponId}`);
+      if (footer) {
+        footer.innerHTML = `
+          <div class="stamp stamp-activated">✓ АКТИВИРОВАНО <span class="stamp-date">${todayDisplay} • ${expiry.stamp}</span></div>
+          ${renderCouponActionButtons(coupon)}
+        `;
+      }
+      updateBalanceUI();
+    }
+
+    function cancelActivation(couponId) {
+      initAudio();
+      const coupon = coupons.find(c => c.id === couponId);
+      if (!coupon) return;
+
+      coupon.status = "available";
+      coupon.activatedDate = null;
+      coupon.activatedDateRaw = null;
+      saveToStorage();
+
+      renderCoupons();
+      showToast(`Активация «${coupon.title}» отменена! Можно выбрать любое другое желание 🌸`);
+    }
+
+    /* Custom Wish Management (Max 3) */
+    function openCustomWishModal() {
+      const customCount = coupons.filter(c => c.isCustom).length;
+      if (customCount >= MAX_CUSTOM_WISHES) {
+        showToast("Ты уже использовала все 3 личных каприза на этот месяц! ⭐");
+        return;
+      }
+      document.getElementById('wishModal').classList.add('active');
+      document.getElementById('wishTitle').focus();
+    }
+    function closeWishModal() {
+      document.getElementById('wishModal').classList.remove('active');
+    }
+
+    function selectEmoji(emoji, btn) {
+      selectedEmoji = emoji;
+      document.querySelectorAll('#emojiRow .emoji-btn').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+    }
+
+    function saveCustomWish() {
+      const customCount = coupons.filter(c => c.isCustom).length;
+      if (customCount >= MAX_CUSTOM_WISHES) {
+        showToast("Лимит в 3 каприза на этот месяц исчерпан ✨");
+        closeWishModal();
+        return;
+      }
+
+      const input = document.getElementById('wishTitle');
+      const title = input.value.trim();
+
+      if (!title) {
+        showToast("Пожалуйста, напиши своё желание ✨");
+        input.focus();
+        return;
+      }
+
+      const newCoupon = {
+        id: "custom_" + Date.now(),
+        code: "WISH-00" + (customCount + 1),
+        title: title,
+        desc: "Персональное пожелание любимой. Обсуждаем вместе и выбираем идеальный момент!",
+        icon: selectedEmoji || "💖",
+        isCustom: true,
+        isRevealed: true,
+        status: "available",
+        activatedDate: null,
+        activatedDateRaw: null
+      };
+
+      coupons.unshift(newCoupon);
+      saveToStorage();
+      renderCoupons();
+      closeWishModal();
+
+      input.value = "";
+      showToast(`Каприз добавлен в начало! (Осталось слотов: ${MAX_CUSTOM_WISHES - customCount - 1}) ⭐`);
+
+      const grid = document.getElementById('couponsGrid');
+      if (grid) {
+        grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    function deleteCustomWish(couponId) {
+      coupons = coupons.filter(c => c.id !== couponId);
+      saveToStorage();
+      renderCoupons();
+      showToast("Каприз удалён. Слот снова свободен! 🔄");
+    }
+
+    /* Partner Modal */
+    function openPartnerModal() {
+      document.getElementById('partnerModal').classList.add('active');
+      const input = document.getElementById('partnerTgInput');
+      input.value = partnerTelegram;
+      input.focus();
+    }
+    function closePartnerModal() {
+      document.getElementById('partnerModal').classList.remove('active');
+    }
+
+    function savePartnerTg() {
+      const raw = document.getElementById('partnerTgInput').value.trim();
+      partnerTelegram = raw.replace(/^@/, '');
+      localStorage.setItem("love_coupons_tg", partnerTelegram);
+      updatePartnerUI();
+      closePartnerModal();
+      renderCoupons();
+      showToast(partnerTelegram ? `Любимый сохранён: @${partnerTelegram} 💌` : "Стандартный диалог Telegram");
+    }
+
+    /* Rules & Reset */
+    function openRulesModal() {
+      document.getElementById('rulesModal').classList.add('active');
+    }
+    function closeRulesModal() {
+      document.getElementById('rulesModal').classList.remove('active');
+    }
+
+    function openResetConfirmModal() {
+      document.getElementById('confirmResetModal').classList.add('active');
+    }
+    function closeResetConfirmModal() {
+      document.getElementById('confirmResetModal').classList.remove('active');
+    }
+
+    function confirmResetAll() {
+      coupons = JSON.parse(JSON.stringify(PRESET_COUPONS));
+      saveToStorage();
+      closeResetConfirmModal();
+      renderCoupons();
+      showToast("Новый месяц открыт! Все купоны обновлены 🌸");
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    }
+
+    function createPetals() {
+      const container = document.getElementById('petals');
+      if (!container) return;
+      container.innerHTML = '';
+      const count = 22;
+      for (let i = 0; i < count; i++) {
+        const petal = document.createElement('div');
+        petal.className = 'petal';
+        const size = Math.random() * 11 + 9;
+        const duration = Math.random() * 8 + 8; // от 8 до 16 секунд
+        // Отрицательная задержка: анимация мгновенно оказывается на произвольной секунде полёта
+        const delay = -Math.random() * duration;
+        const animName = Math.random() > 0.5 ? 'fall1' : 'fall2';
+
+        petal.style.width = size + 'px';
+        petal.style.height = (size * 1.35) + 'px';
+        petal.style.left = (Math.random() * 104 - 2) + 'vw';
+        petal.style.animationName = animName;
+        petal.style.animationDuration = duration + 's';
+        petal.style.animationDelay = delay + 's';
+        petal.style.opacity = (Math.random() * 0.4 + 0.35).toFixed(2);
+        container.appendChild(petal);
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      loadAppData();
+      renderCoupons();
+      createPetals();
+
+      window.addEventListener('click', () => initAudio(), { once: true });
+      window.addEventListener('touchstart', () => initAudio(), { once: true });
+    });
+  </script>
+                    </body>
+                  </html>
