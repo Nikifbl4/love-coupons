@@ -1391,17 +1391,33 @@
       const encoded = encodeURIComponent(message);
 
       if (partnerTelegram) {
-        const cleanNick = partnerTelegram.replace(/^@/, '').trim();
-        window.location.href = `tg://resolve?domain=${cleanNick}`;
+        // Очищаем никнейм от лишних знаков @ или ссылок
+        const cleanNick = partnerTelegram.replace(/.*t\.me\//, '').replace(/^@/, '').replace(/[^a-zA-Z0-9_]/g, '').trim();
+        
+        // Передаём текст в сам запрос к Telegram
+        const tgDeepLink = `tg://resolve?domain=${cleanNick}&text=${encoded}`;
+        const tgWebLink = `https://t.me/${cleanNick}?text=${encoded}`;
+
+        window.location.href = tgDeepLink;
+
+        // Если приложение не открылось в течение 1.2 сек, открываем web-ссылку
         setTimeout(() => {
-          window.open(`https://t.me/${cleanNick}`, '_blank');
-        }, 500);
+          if (!document.hidden) {
+            window.location.href = tgWebLink;
+          }
+        }, 1200);
       } else {
-        // Делимся чистым текстом: url оставляем пустым, чтобы Telegram не приписывал https://t.me к сообщению
-        window.location.href = `tg://msg_url?url=&text=${encoded}`;
+        // Если ник любимого не указан — открываем выбор чата с чистым текстом (без лишних ссылок https://t.me)
+        const tgShareDeep = `tg://msg_url?text=${encoded}`;
+        const tgShareWeb = `https://t.me/share/url?text=${encoded}`;
+
+        window.location.href = tgShareDeep;
+
         setTimeout(() => {
-          window.open(`https://t.me/share/url?url=&text=${encoded}`, '_blank');
-        }, 500);
+          if (!document.hidden) {
+            window.location.href = tgShareWeb;
+          }
+        }, 1200);
       }
     }
 
@@ -1767,7 +1783,7 @@
 
     function savePartnerTg() {
       const raw = document.getElementById('partnerTgInput').value.trim();
-      partnerTelegram = raw.replace(/^@/, '');
+      partnerTelegram = raw.replace(/.*t\.me\//, '').replace(/^@/, '').replace(/[^a-zA-Z0-9_]/g, '').trim();
       localStorage.setItem("love_coupons_tg", partnerTelegram);
       updatePartnerUI();
       closePartnerModal();
