@@ -1,16 +1,20 @@
+
 <!DOCTYPE html>
 <html lang="ru">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Купоны Любви</title>
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Canvas Confetti -->
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    <style>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Купоны Любви</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <style>
     :root {
       --bg-cream: #FFF7F9;
       --card-bg: #FFFFFF;
@@ -320,10 +324,9 @@
       z-index: 4;
       touch-action: none;
       transition: opacity 0.4s ease;
-      pointer-events: none; /* Защита от случайных смахиваний при скролле */
+      pointer-events: none;
     }
     
-    /* Активный режим стирания */
     .ticket-card.scratching-active {
       border-color: var(--accent-gold);
       box-shadow: 0 0 0 3px rgba(197, 160, 89, 0.32), var(--shadow-hover);
@@ -333,7 +336,6 @@
       cursor: crosshair;
     }
 
-    /* Плашка разблокировки стирания */
     .scratch-lock-overlay {
       position: absolute;
       inset: 0;
@@ -615,7 +617,7 @@
       min-height: 80px;
     }
 
-    /* Аккуратная симметричная сетка 4×2 для иконок без обрезаний и скролла */
+    /* Сетка 4×2 для иконок */
     .emoji-row {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -644,7 +646,7 @@
       border-color: var(--accent-rose);
     }
 
-    /* Симметричный аккуратный блок с полной мягкой обводкой со всех сторон */
+    /* Симметричная мягкая плашка */
     .soft-notice {
       background: #FFF7F9;
       border-radius: 14px;
@@ -731,204 +733,189 @@
       color: var(--wine-dark);
     }
   </style>
-  </head>
-  <body>
-    <!-- Floating Falling Petals Background -->
-    <div class="petals-container" id="petals">
+</head>
+<body>
+
+  <!-- Floating Falling Petals Background -->
+  <div class="petals-container" id="petals"></div>
+
+  <div class="container">
+    <!-- Utility header bar -->
+    <div class="utility-bar">
+      <button class="partner-badge" onclick="openPartnerModal()" id="partnerBadge">
+        💌 Любимый: <span id="partnerBadgeText">Не указан</span> ✏️
+      </button>
+
+      <button class="sound-toggle" onclick="toggleSound()" id="soundToggleBtn">
+        🔊 Звук: <span id="soundStatusText">Вкл</span>
+      </button>
     </div>
-    <div class="container">
-      <!-- Utility header bar -->
-      <div class="utility-bar">
-        <button class="partner-badge" onclick="openPartnerModal()" id="partnerBadge">
-          💌 Любимый: <span id="partnerBadgeText">Не указан</span> ✏️
+
+    <!-- Header Content -->
+    <header>
+      <div class="badge">Для самой любимой</div>
+      <h1>Купоны Любви</h1>
+      <p class="subtitle">Стирай защитный слой пальчиком и выбирай то, чего хочется прямо сейчас ✨</p>
+
+      <!-- Monthly Balance Tracker -->
+      <div class="balance-box">
+        <div class="balance-stats">
+          <div>
+            <span class="stat-number" id="usedCountText">0 / 8</span>
+            <span class="stat-label">Использовано в этом месяце</span>
+          </div>
+          <div>
+            <span class="stat-number" id="customCountText">0 / 3</span>
+            <span class="stat-label">Своих капризов создано</span>
+          </div>
+        </div>
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" id="progressBar"></div>
+        </div>
+      </div>
+      
+      <div class="top-actions">
+        <button class="btn-secondary" onclick="openRulesModal()">
+          📜 Правила
         </button>
-        <button class="sound-toggle" onclick="toggleSound()" id="soundToggleBtn">
-          🔊 Звук: <span id="soundStatusText">Вкл</span>
+        <button class="btn-secondary" onclick="openCustomWishModal()" id="customWishBtn">
+          🪄 Загадать свой каприз (<span id="customSlotsLeft">3</span>/3)
         </button>
       </div>
-      <!-- Header Content -->
-      <header>
-        <div class="badge">Для самой любимой</div>
-        <h1>Купоны Любви</h1>
-        <p class="subtitle">Стирай защитный слой пальчиком и выбирай то, чего хочется прямо сейчас ✨</p>
-        <!-- Monthly Balance Tracker -->
-        <div class="balance-box">
-          <div class="balance-stats">
-            <div>
-              <span class="stat-number" id="usedCountText">0 / 8</span>
-              <span class="stat-label">Использовано в этом месяце</span>
-            </div>
-            <div>
-              <span class="stat-number" id="customCountText">0 / 3</span>
-              <span class="stat-label">Своих капризов создано</span>
-            </div>
-          </div>
-          <div class="progress-bar-bg">
-            <div class="progress-bar-fill" id="progressBar">
-            </div>
-          </div>
-        </div>
-        <div class="top-actions">
-          <button class="btn-secondary" onclick="openRulesModal()">
-            📜 Правила
-          </button>
-          <button class="btn-secondary" onclick="openCustomWishModal()" id="customWishBtn">
-            🪄 Загадать свой каприз (<span id="customSlotsLeft">3</span>/3)
-          </button>
-        </div>
-        <!-- Filters -->
-        <div class="filters-wrapper">
-          <button class="filter-btn active" onclick="setFilter('all', this)">Все купоны</button>
-          <button class="filter-btn" onclick="setFilter('available', this)">Доступные</button>
-          <button class="filter-btn" onclick="setFilter('activated', this)">Использованные</button>
-          <button class="filter-btn" onclick="setFilter('custom', this)">Мои капризы</button>
-        </div>
-      </header>
-      <!-- Coupons Grid -->
-      <div class="coupons-grid" id="couponsGrid">
+
+      <!-- Filters -->
+      <div class="filters-wrapper">
+        <button class="filter-btn active" onclick="setFilter('all', this)">Все купоны</button>
+        <button class="filter-btn" onclick="setFilter('available', this)">Доступные</button>
+        <button class="filter-btn" onclick="setFilter('activated', this)">Использованные</button>
+        <button class="filter-btn" onclick="setFilter('custom', this)">Мои капризы</button>
       </div>
-      <div class="page-footer">
-        <div>8 особенных поводов для улыбки в месяц ❤️</div>
-        <button class="btn-text-reset" onclick="openResetConfirmModal()">Начать новый месяц (сбросить)</button>
+    </header>
+
+    <!-- Coupons Grid -->
+    <div class="coupons-grid" id="couponsGrid"></div>
+
+    <div class="page-footer">
+      <div>8 особенных поводов для улыбки в месяц ❤️</div>
+      <button class="btn-text-reset" onclick="openResetConfirmModal()">Начать новый месяц (сбросить)</button>
+    </div>
+  </div>
+
+  <!-- Modal: Reveal Surprise Celebration -->
+  <div class="modal-overlay" id="revealModal">
+    <div class="modal" style="text-align: center;">
+      <div id="revealModalIcon" style="font-size: 52px; margin-bottom: 8px;">🎉</div>
+      <h2 id="revealModalTitle" style="font-size: 34px;">Сюрприз раскрыт!</h2>
+      <p id="revealModalDesc" class="lead" style="font-size: 14px; color: var(--wine-dark); margin-bottom: 22px;"></p>
+      
+      <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 16px;">
+        Хочешь использовать этот купон прямо сейчас или приберечь для идеального вечера?
+      </p>
+
+      <div style="display: flex; flex-direction: column; gap: 10px;">
+        <button class="btn-action btn-activate" id="revealModalActivateBtn">💖 Использовать прямо сейчас</button>
+        <button class="btn-action btn-quick-reveal" onclick="closeRevealModal()">Приберечь на потом</button>
       </div>
     </div>
-    <!-- Modal: Reveal Surprise Celebration -->
-    <div class="modal-overlay" id="revealModal">
-      <div class="modal" style="text-align: center;">
-        <div id="revealModalIcon" style="font-size: 52px; margin-bottom: 8px;">🎉</div>
-        <h2 id="revealModalTitle" style="font-size: 34px;">Сюрприз раскрыт!</h2>
-        <p id="revealModalDesc" class="lead" style="font-size: 14px; color: var(--wine-dark); margin-bottom: 22px;">
-        </p>
-        <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 16px;">
-          Хочешь использовать этот купон прямо сейчас или приберечь для идеального вечера?
-        </p>
-        <div style="display: flex; flex-direction: column; gap: 10px;">
-          <button class="btn-action btn-activate" id="revealModalActivateBtn">💖 Использовать прямо сейчас</button>
-          <button class="btn-action btn-quick-reveal" onclick="closeRevealModal()">Приберечь на потом</button>
+  </div>
+
+  <!-- Modal: Custom Wish -->
+  <div class="modal-overlay" id="wishModal">
+    <div class="modal">
+      <h2>Твой персональный каприз 🪄</h2>
+      <p class="lead">У тебя есть ровно 3 особых желания на этот месяц, которые ты можешь придумать сама!</p>
+
+      <div class="form-group">
+        <label>Выбери иконку настроения:</label>
+        <div class="emoji-row" id="emojiRow">
+          <button type="button" class="emoji-btn active" onclick="selectEmoji('💖', this)">💖</button>
+          <button type="button" class="emoji-btn" onclick="selectEmoji('🥂', this)">🥂</button>
+          <button type="button" class="emoji-btn" onclick="selectEmoji('🍕', this)">🍕</button>
+          <button type="button" class="emoji-btn" onclick="selectEmoji('🚗', this)">🚗</button>
+          <button type="button" class="emoji-btn" onclick="selectEmoji('🛁', this)">🛁</button>
+          <button type="button" class="emoji-btn" onclick="selectEmoji('🎁', this)">🎁</button>
+          <button type="button" class="emoji-btn" onclick="selectEmoji('☕', this)">☕</button>
+          <button type="button" class="emoji-btn" onclick="selectEmoji('🍓', this)">🍓</button>
         </div>
       </div>
-    </div>
-    <!-- Modal: Custom Wish -->
-    <div class="modal-overlay" id="wishModal">
-      <div class="modal">
-        <h2>Твой персональный каприз 🪄</h2>
-        <p class="lead">У тебя есть ровно 3 особых желания на этот месяц, которые ты можешь придумать сама!</p>
-        <div class="form-group">
-          <label>Выбери иконку настроения:</label>
-          <div class="emoji-row" id="emojiRow">
-            <button type="button" class="emoji-btn active" onclick="selectEmoji('💖', this)">💖</button>
-            <button type="button" class="emoji-btn" onclick="selectEmoji('🥂', this)">🥂</button>
-            <button type="button" class="emoji-btn" onclick="selectEmoji('🍕', this)">🍕</button>
-            <button type="button" class="emoji-btn" onclick="selectEmoji('🚗', this)">🚗</button>
-            <button type="button" class="emoji-btn" onclick="selectEmoji('🛁', this)">🛁</button>
-            <button type="button" class="emoji-btn" onclick="selectEmoji('🎁', this)">🎁</button>
-            <button type="button" class="emoji-btn" onclick="selectEmoji('☕', this)">☕</button>
-            <button type="button" class="emoji-btn" onclick="selectEmoji('🍓', this)">🍓</button>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="wishTitle">Чего тебе хочется?</label>
-          <textarea id="wishTitle" placeholder="Например: Поехать смотреть на ночной город / Приготовить вместе пиццу...">
-          </textarea>
-        </div>
-        <div class="soft-notice">
-          💬 <strong>Свобода выбора:</strong> Ты можешь активировать купоны в любом темпе — хоть несколько дней подряд, когда душе хочется праздника!
-        </div>
-        <div style="display: flex; gap: 10px;">
-          <button class="btn-action btn-quick-reveal" style="flex:1;" onclick="closeWishModal()">Отмена</button>
-          <button class="btn-action btn-activate" style="flex:2;" onclick="saveCustomWish()">💫 Добавить каприз</button>
-        </div>
+
+      <div class="form-group">
+        <label for="wishTitle">Чего тебе хочется?</label>
+        <textarea id="wishTitle" placeholder="Например: Поехать смотреть на ночной город / Приготовить вместе пиццу..."></textarea>
+      </div>
+
+      <div class="soft-notice">
+        💬 <strong>Свобода выбора:</strong> Ты можешь активировать купоны в любом темпе — хоть несколько дней подряд, когда душе хочется праздника!
+      </div>
+
+      <div style="display: flex; gap: 10px;">
+        <button class="btn-action btn-quick-reveal" style="flex:1;" onclick="closeWishModal()">Отмена</button>
+        <button class="btn-action btn-activate" style="flex:2;" onclick="saveCustomWish()">💫 Добавить каприз</button>
       </div>
     </div>
-    <!-- Modal: Telegram Username Settings -->
-    <div class="modal-overlay" id="partnerModal">
-      <div class="modal">
-        <h2>Telegram любимого 💌</h2>
-        <p class="lead">Укажи никнейм в Telegram (без @), чтобы купоны отправлялись сразу в личный диалог с ним!</p>
-        <div class="form-group">
-          <label for="partnerTgInput">Telegram Username любимого:</label>
-          <input type="text" id="partnerTgInput" placeholder="например: alex_love">
-        </div>
-        <div class="soft-notice">
-          💡 Если оставить поле пустым, при активации купона откроется стандартный выбор чата в Telegram.
-        </div>
-        <div style="display: flex; gap: 10px;">
-          <button class="btn-action btn-quick-reveal" style="flex:1;" onclick="closePartnerModal()">Закрыть</button>
-          <button class="btn-action btn-activate" style="flex:2;" onclick="savePartnerTg()">Сохранить</button>
-        </div>
+  </div>
+
+  <!-- Modal: Telegram Username Settings -->
+  <div class="modal-overlay" id="partnerModal">
+    <div class="modal">
+      <h2>Telegram любимого 💌</h2>
+      <p class="lead">Укажи никнейм в Telegram (без @), чтобы купоны отправлялись сразу в личный диалог с ним!</p>
+
+      <div class="form-group">
+        <label for="partnerTgInput">Telegram Username любимого:</label>
+        <input type="text" id="partnerTgInput" placeholder="например: alex_love">
+      </div>
+
+      <div class="soft-notice">
+        💡 Если оставить поле пустым, при активации купона откроется стандартный выбор чата в Telegram.
+      </div>
+
+      <div style="display: flex; gap: 10px;">
+        <button class="btn-action btn-quick-reveal" style="flex:1;" onclick="closePartnerModal()">Закрыть</button>
+        <button class="btn-action btn-activate" style="flex:2;" onclick="savePartnerTg()">Сохранить</button>
       </div>
     </div>
-    <!-- Modal: Direct Telegram Send & Helper -->
-    <div class="modal-overlay" id="telegramSendModal">
-      <div class="modal">
-        <h2>Отправить в Telegram 💌</h2>
-        <p class="lead" id="tgModalLeadText">Чтобы купон прилетел прямо в личный чат к любимому, укажи его никнейм в Telegram:</p>
-        <div class="form-group">
-          <label for="tgModalNickInput">Telegram любимого (без @):</label>
-          <input type="text" id="tgModalNickInput" placeholder="например: alex_love">
-        </div>
-        <div class="soft-notice">
-          💡 Ник сохранится навсегда, и все последующие купоны будут сразу открывать диалог с ним!
-        </div>
-        <div style="display: flex; flex-direction: column; gap: 10px;">
-          <button type="button" class="btn-action btn-activate" onclick="confirmTgAndOpen()">
-            🚀 Открыть чат в Telegram
-          </button>
-          <button type="button" class="btn-action btn-tg" onclick="openTgGeneralShare()" style="font-size: 12px; padding: 10px;">
-            📤 Выбрать контакт из списка Telegram
-          </button>
-          <button type="button" class="btn-action btn-copy" onclick="copyFromTgModal()">
-            📋 Скопировать готовый текст
-          </button>
-          <button type="button" class="btn-action btn-quick-reveal" onclick="closeTelegramModal()">
-            Закрыть
-          </button>
-        </div>
+  </div>
+
+  <!-- Modal: Rules -->
+  <div class="modal-overlay" id="rulesModal">
+    <div class="modal">
+      <h2>Правила купонов 📜</h2>
+      <p class="lead">Простые законы заботы и уюта:</p>
+
+      <ul class="rules-list">
+        <li><strong>Всё по любви и взаимности:</strong> Купоны созданы для радости, поэтому каждое желание делается искренне и с заботой друг о друге.</li>
+        <li><strong>1 желание в день:</strong> Чтобы каждое желание приносило максимум удовольствия и внимания, в один день активируется только один купон. Если активировала случайно или передумала — внизу купона всегда есть кнопка «↩️ Отменить активацию», чтобы вернуть его или выбрать другое желание!</li>
+        <li><strong>Всегда найдём альтернативу:</strong> Если любимый занят, нет сил и ресурсов или желание не по душе — без проблем, мы в любом случае перенесём его на потом или вместе подберём классную замену.</li>
+        <li><strong>Срок действия желаний:</strong> Обычные купоны действуют сегодня до 00:00. Но для желаний, которые физически невозможно исполнить прямо сегодня (например, <strong>«Завтрак в постель»</strong>, утренний кофе или любые похожие утренние капризы 🥐) — купон действует на следующее утро! А <strong>поездки</strong>, приключения и масштабные планы мы спокойно планируем на удобный совместный день или выходные 🚗.</li>
+        <li><strong>В пределах реальности:</strong> Капризы должны быть осуществимы в реальной жизни (полёт на Марс или достать звезду с неба пока отложим ✨).</li>
+        <li><strong>8 купонов на месяц:</strong> Всего в твоём распоряжении 8 купонов в месяц (5 готовых сюрпризов + 3 твоих личных каприза).</li>
+        <li><strong>В твоём темпе:</strong> Никаких ограничений по дням недели! Ты можешь тратить их хоть несколько дней подряд, когда душе хочется тепла и праздника.</li>
+        <li><strong>3 личных каприза:</strong> Ты можешь придумать любые 3 своих желания через кнопку «Загадать свой каприз».</li>
+        <li><strong>Без спешки с выбором:</strong> Не обязательно тратить купоны сразу — каждый купон спокойно дождётся своего уютного дня.</li>
+      </ul>
+
+      <button class="btn-action btn-activate" onclick="closeRulesModal()">Всё понятно, я согласна 🥰</button>
+    </div>
+  </div>
+
+  <!-- Modal: Confirm Reset -->
+  <div class="modal-overlay" id="confirmResetModal">
+    <div class="modal">
+      <h2>Начать новый месяц? 🔄</h2>
+      <p class="lead">Все 8 купонов снова будут скрыты защитным слоем, а счётчик месяца обнулится. Готова к новой порции заботы?</p>
+
+      <div style="display: flex; gap: 10px;">
+        <button class="btn-action btn-quick-reveal" style="flex:1;" onclick="closeResetConfirmModal()">Отмена</button>
+        <button class="btn-action btn-activate" style="flex:1; background: #C0392B;" onclick="confirmResetAll()">Начать заново</button>
       </div>
     </div>
-    <!-- Modal: Rules (Customized for 8/Month + 3 Custom) -->
-    <div class="modal-overlay" id="rulesModal">
-      <div class="modal">
-        <h2>Правила купонов 📜</h2>
-        <p class="lead">Простые законы заботы и уюта:</p>
-        <ul class="rules-list">
-          <li>
-            <strong>Всё по любви и взаимности:</strong> Купоны созданы для радости, поэтому каждое желание делается искренне и с заботой друг о друге.</li>
-            <li>
-              <strong>1 желание в день:</strong> Чтобы каждое желание приносило максимум удовольствия и внимания, в один день активируется только один купон. Если активировала случайно или передумала — внизу купона всегда есть кнопка «↩️ Отменить активацию», чтобы вернуть его или выбрать другое желание!</li>
-              <li>
-                <strong>Всегда найдём альтернативу:</strong> Если любимый занят, нет сил и ресурсов или желание не по душе — без проблем, мы в любом случае перенесём его на потом или вместе подберём классную замену.</li>
-                <li>
-                  <strong>Срок действия желаний:</strong> Обычные купоны действуют сегодня до 00:00. Но для желаний, которые физически невозможно исполнить прямо сегодня (например, <strong>«Завтрак в постель»</strong>, утренний кофе или любые похожие утренние капризы 🥐) — купон действует на следующее утро! А <strong>поездки</strong>, приключения и масштабные планы мы спокойно планируем на удобный совместный день или выходные 🚗.</li>
-                  <li>
-                    <strong>В пределах реальности:</strong> Капризы должны быть осуществимы в реальной жизни (полёт на Марс или достать звезду с неба пока отложим ✨).</li>
-                    <li>
-                      <strong>8 купонов на месяц:</strong> Всего в твоём распоряжении 8 купонов в месяц (5 готовых сюрпризов + 3 твоих личных каприза).</li>
-                      <li>
-                        <strong>В твоём темпе:</strong> Никаких ограничений по дням недели! Ты можешь тратить их хоть несколько дней подряд, когда душе хочется тепла и праздника.</li>
-                        <li>
-                          <strong>3 личных каприза:</strong> Ты можешь придумать любые 3 своих желания через кнопку «Загадать свой каприз».</li>
-                          <li>
-                            <strong>Без спешки с выбором:</strong> Не обязательно тратить купоны сразу — каждый купон спокойно дождётся своего уютного дня.</li>
-                          </ul>
-                          <button class="btn-action btn-activate" onclick="closeRulesModal()">Всё понятно, я согласна 🥰</button>
-                        </div>
-                      </div>
-                      <!-- Modal: Confirm Reset -->
-                      <div class="modal-overlay" id="confirmResetModal">
-                        <div class="modal">
-                          <h2>Начать новый месяц? 🔄</h2>
-                          <p class="lead">Все 8 купонов снова будут скрыты защитным слоем, а счётчик месяца обнулится. Готова к новой порции заботы?</p>
-                          <div style="display: flex; gap: 10px;">
-                            <button class="btn-action btn-quick-reveal" style="flex:1;" onclick="closeResetConfirmModal()">Отмена</button>
-                            <button class="btn-action btn-activate" style="flex:1; background: #C0392B;" onclick="confirmResetAll()">Начать заново</button>
-                          </div>
-                        </div>
-                      </div>
-                      <!-- Toast Notification Container -->
-                      <div class="toast-container" id="toastContainer">
-                      </div>
-                      <script>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script>
     const MAX_TOTAL_COUPONS = 8;
     const MAX_CUSTOM_WISHES = 3;
 
@@ -1384,22 +1371,38 @@
       return `Любимый! Я активировала купон: «${coupon.title}»! ${expiry.textPhrase}, жду исполнения! 🥰✨`;
     }
 
-    function buildTelegramUrl(coupon) {
-      const message = getCouponMessage(coupon);
-      if (partnerTelegram) {
-        const cleanNick = partnerTelegram.replace(/^@/, '').trim();
-        return `https://t.me/${cleanNick}?text=${encodeURIComponent(message)}`;
-      }
-      return `https://t.me/share/url?url=https%3A%2F%2Ft.me&text=${encodeURIComponent(message)}`;
-    }
-
     function renderCouponActionButtons(coupon) {
-      const tgUrl = buildTelegramUrl(coupon);
       return `
-        <a href="${tgUrl}" target="_blank" rel="noopener noreferrer" class="btn-action btn-tg" onclick="handleTelegramClick(event, '${coupon.id}')">💌 Отправить в Telegram</a>
+        <button type="button" class="btn-action btn-tg" onclick="handleTelegramClick(event, '${coupon.id}')">💌 Отправить в Telegram</button>
         <button type="button" class="btn-action btn-copy" onclick="copyCouponText('${coupon.id}')">📋 Скопировать текст</button>
         <button type="button" class="btn-cancel-activation" onclick="cancelActivation('${coupon.id}')">↩️ Отменить активацию (выбрать другое)</button>
       `;
+    }
+
+    function handleTelegramClick(event, couponId) {
+      if (event) event.preventDefault();
+      initAudio();
+      const coupon = coupons.find(c => c.id === couponId);
+      if (!coupon) return;
+
+      const message = getCouponMessage(coupon);
+      showToast("Открываю Telegram 💌");
+
+      const encoded = encodeURIComponent(message);
+
+      if (partnerTelegram) {
+        const cleanNick = partnerTelegram.replace(/^@/, '').trim();
+        window.location.href = `tg://resolve?domain=${cleanNick}`;
+        setTimeout(() => {
+          window.open(`https://t.me/${cleanNick}`, '_blank');
+        }, 500);
+      } else {
+        // Делимся чистым текстом: url оставляем пустым, чтобы Telegram не приписывал https://t.me к сообщению
+        window.location.href = `tg://msg_url?url=&text=${encoded}`;
+        setTimeout(() => {
+          window.open(`https://t.me/share/url?url=&text=${encoded}`, '_blank');
+        }, 500);
+      }
     }
 
     function copyTextToClipboard(text) {
@@ -1419,114 +1422,6 @@
         return successful;
       } catch (err) {
         return false;
-      }
-    }
-
-    function handleTelegramClick(event, couponId) {
-      initAudio();
-      const coupon = coupons.find(c => c.id === couponId);
-      if (!coupon) return;
-
-      const message = getCouponMessage(coupon);
-      copyTextToClipboard(message);
-
-      // Если никнейм любимого ещё не сохранён — открываем окно настройки
-      if (!partnerTelegram) {
-        if (event) event.preventDefault();
-        openTelegramModal(couponId);
-        return;
-      }
-
-      showToast("Текст скопирован! Открываю Telegram 💌");
-
-      // Для локальных файлов (file://) на смартфонах дублируем запуск через системную схему tg://
-      if (window.location.protocol === 'file:') {
-        const cleanNick = partnerTelegram.replace(/^@/, '').trim();
-        setTimeout(() => {
-          window.location.href = `tg://resolve?domain=${cleanNick}`;
-        }, 250);
-      }
-    }
-
-    function openTelegramModal(couponId) {
-      pendingCouponIdForTg = couponId;
-      const input = document.getElementById('tgModalNickInput');
-      if (input) input.value = partnerTelegram || "";
-      const modal = document.getElementById('telegramSendModal');
-      if (modal) modal.classList.add('active');
-    }
-
-    function closeTelegramModal() {
-      const modal = document.getElementById('telegramSendModal');
-      if (modal) modal.classList.remove('active');
-    }
-
-    function confirmTgAndOpen() {
-      const input = document.getElementById('tgModalNickInput');
-      const raw = input ? input.value.trim() : "";
-      if (raw) {
-        partnerTelegram = raw.replace(/^@/, '').trim();
-        localStorage.setItem("love_coupons_tg", partnerTelegram);
-        updatePartnerUI();
-      }
-
-      const coupon = coupons.find(c => c.id === pendingCouponIdForTg);
-      const message = coupon ? getCouponMessage(coupon) : "Любимый, я активировала купон!";
-      copyTextToClipboard(message);
-      closeTelegramModal();
-      renderCoupons();
-
-      if (partnerTelegram) {
-        const cleanNick = partnerTelegram.replace(/^@/, '').trim();
-        showToast("Ник сохранён! Открываю чат с любимым 💌");
-        navigateToTelegram(
-          `https://t.me/${cleanNick}?text=${encodeURIComponent(message)}`,
-          `tg://resolve?domain=${cleanNick}`
-        );
-      } else {
-        openTgGeneralShare();
-      }
-    }
-
-    function openTgGeneralShare() {
-      const coupon = coupons.find(c => c.id === pendingCouponIdForTg);
-      const message = coupon ? getCouponMessage(coupon) : "Любимый, я активировала купон!";
-      copyTextToClipboard(message);
-      closeTelegramModal();
-      showToast("Текст скопирован! Открываю Telegram 💌");
-      navigateToTelegram(
-        `https://t.me/share/url?url=https%3A%2F%2Ft.me&text=${encodeURIComponent(message)}`,
-        `tg://msg_url?url=https%3A%2F%2Ft.me&text=${encodeURIComponent(message)}`
-      );
-    }
-
-    function copyFromTgModal() {
-      const coupon = coupons.find(c => c.id === pendingCouponIdForTg);
-      const message = coupon ? getCouponMessage(coupon) : "Любимый, я активировала купон!";
-      if (copyTextToClipboard(message)) {
-        showToast("Текст скопирован в буфер обмена! 📋✨");
-      }
-    }
-
-    function navigateToTelegram(webUrl, appUrl) {
-      // 1. Попытка открыть ссылку стандартным способом
-      const a = document.createElement('a');
-      a.href = webUrl;
-      a.target = '_blank';
-      a.rel = 'noopener noreferrer';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-
-      // 2. Гарантированный фолбэк для локальных файлов (file://) на смартфонах
-      if (window.location.protocol === 'file:') {
-        setTimeout(() => {
-          if (appUrl) {
-            window.location.href = appUrl;
-          } else {
-            window.location.href = webUrl;
-          }
-        }, 200);
       }
     }
 
@@ -1788,7 +1683,7 @@
       showToast(`Активация «${coupon.title}» отменена! Можно выбрать любое другое желание 🌸`);
     }
 
-    /* Custom Wish Management (Max 3) */
+    /* Custom Wish Management */
     function openCustomWishModal() {
       const customCount = coupons.filter(c => c.isCustom).length;
       if (customCount >= MAX_CUSTOM_WISHES) {
@@ -1917,8 +1812,7 @@
         const petal = document.createElement('div');
         petal.className = 'petal';
         const size = Math.random() * 11 + 9;
-        const duration = Math.random() * 8 + 8; // от 8 до 16 секунд
-        // Отрицательная задержка: анимация мгновенно оказывается на произвольной секунде полёта
+        const duration = Math.random() * 8 + 8;
         const delay = -Math.random() * duration;
         const animName = Math.random() > 0.5 ? 'fall1' : 'fall2';
 
@@ -1942,5 +1836,4 @@
       window.addEventListener('touchstart', () => initAudio(), { once: true });
     });
   </script>
-                    </body>
-                  </html>
+</body>
