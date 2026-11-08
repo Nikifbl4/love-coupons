@@ -1245,20 +1245,14 @@
 
     <div class="page-footer">
       <div id="footerSubtitle" class="footer-subtitle">Особенные поводы для улыбки ❤️</div>
-      <button class="btn-text-reset" onclick="openResetConfirmModal()" id="btnResetPeriod">🔄 Начать новый период (обновить)</button>
 
       <!-- Вирусный блок для публичного релиза (виден получателю подарка) -->
-      <div id="viralPromoBlock" style="display: none; margin-top: 24px; padding: 16px; background: var(--card-bg); border: 1.5px dashed var(--border-dash); border-radius: 18px; text-align: center;">
-        <div style="font-size: 13px; font-weight: 700; color: var(--wine-dark); margin-bottom: 4px;">Понравились купоны? 🎁</div>
-        <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px;">Создай такой же романтический сюрприз для своей половинки за 1 минуту</div>
-        <button type="button" class="btn-action btn-activate" style="width: auto; margin: 0 auto; padding: 9px 22px; font-size: 12px; border-radius: 20px;" onclick="startNewGiftCreation()">
+      <div id="viralPromoBlock" style="display: none; margin-top: 24px; padding: 18px 16px; background: var(--card-bg); border: 1.5px dashed var(--border-dash); border-radius: 18px; text-align: center; max-width: 440px; margin-left: auto; margin-right: auto;">
+        <div style="font-size: 14px; font-weight: 700; color: var(--wine-dark); margin-bottom: 4px;">Понравились купоны? 🎁</div>
+        <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 14px; line-height: 1.45;">Создай такой же романтический сюрприз для своей половинки за 1 минуту</div>
+        <button type="button" class="btn-action btn-activate" style="width: auto; margin: 0 auto; padding: 10px 24px; font-size: 13px; border-radius: 20px;" onclick="startNewGiftCreation()">
           ✨ Создать свои купоны
         </button>
-      </div>
-
-      <!-- Дополнительная ссылка в футере для создателя -->
-      <div id="creatorFooterLink" style="display: none; margin-top: 4px;">
-        <button class="btn-text-reset" onclick="openAdminModal()">🪄 Редактировать или создать новые купоны</button>
       </div>
     </div>
   </div>
@@ -1325,22 +1319,6 @@
       <div style="display: flex; flex-direction: column; gap: 10px;">
         <button class="btn-action btn-activate" onclick="saveCustomWish()">✨ Добавить в мои купоны</button>
         <button class="btn-action btn-quick-reveal" onclick="closeWishModal()">Отмена</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal: Reset Confirmation -->
-  <div class="modal-overlay" id="confirmResetModal">
-    <div class="modal" style="text-align: center;">
-      <div style="font-size: 42px; margin-bottom: 10px;">🔄</div>
-      <h2>Начать заново?</h2>
-      <p class="lead" id="resetModalLeadText" style="margin-bottom: 24px;">
-        Все купоны снова будут скрыты защитным слоем, а счётчик периода обнулится. Начать заново?
-      </p>
-
-      <div style="display: flex; flex-direction: column; gap: 10px;">
-        <button class="btn-action btn-activate" onclick="confirmResetAll()">Да, обновить период</button>
-        <button class="btn-action btn-quick-reveal" onclick="closeResetConfirmModal()">Отмена</button>
       </div>
     </div>
   </div>
@@ -1796,7 +1774,7 @@
       showToast(`Тема: ${names[targetTheme] || targetTheme}`);
     }
 
-    /* Распаковка ультракоротких ссылок (?c=p1,p2...&to=b&th=w) + обратная совместимость + защита прогресса */
+    /* Распаковка ссылок + строгое разделение ролей (Создатель vs Получатель) */
     function checkAdminMode() {
       const searchParams = new URLSearchParams(window.location.search);
       let hashStr = window.location.hash;
@@ -1805,7 +1783,6 @@
       if (hashStr.startsWith('?')) hashStr = hashStr.slice(1);
       const hashParams = new URLSearchParams(hashStr);
 
-      // Получение параметра из search (?) или hash (#)
       const getParam = (key) => searchParams.get(key) || hashParams.get(key);
 
       const cfgParam = getParam('cfg');
@@ -1821,9 +1798,9 @@
       const isGiftLink = !!(cParam || cfgParam || (toParam && toParam !== 'admin') || custParam);
 
       if (isGiftLink) {
+        // Режим ПОЛУЧАТЕЛЯ: Мастерская полностью заблокирована
         isAdminMode = false;
         try {
-          // Уникальная сигнатура подарка для сохранения прогресса стирания и активации
           const giftSignature = cParam 
             ? `c_${cParam}_to_${toParam || 'g'}_th_${thParam || ''}_tg_${tgParam || ''}_cust_${custParam || ''}`
             : (cfgParam ? `cfg_${computeGiftHash(cfgParam)}` : 'gift_received');
@@ -1839,7 +1816,6 @@
           let targetTitle = "";
 
           if (cParam || toParam || thParam || custParam) {
-            // Новый ультракороткий формат с чистыми параметрами URL
             targetRecipient = (toParam === 'b' || toParam === 'him') ? 'him' : 'her';
 
             if (thParam === 'w' || thParam === 'passion') {
@@ -1861,7 +1837,6 @@
               if (!isNaN(parsedMx) && parsedMx >= 0) targetMaxCustom = parsedMx;
             }
 
-            // Парсим стандартные купоны по ID через запятую
             if (cParam) {
               const ids = cParam.split(',').map(s => s.trim()).filter(Boolean);
               ids.forEach((id, idx) => {
@@ -1880,7 +1855,6 @@
               });
             }
 
-            // Парсим кастомные добавленные купоны при их наличии
             if (custParam) {
               try {
                 const decodedCust = JSON.parse(decodeURIComponent(escape(atob(custParam))));
@@ -1906,7 +1880,6 @@
               }
             }
           } else if (cfgParam) {
-            // Обратная совместимость с ранее сформированными Base64 ссылками
             const decoded = JSON.parse(decodeURIComponent(escape(atob(cfgParam))));
             if (decoded && typeof decoded === 'object') {
               targetRecipient = decoded.r || decoded.recipient || "her";
@@ -1954,7 +1927,6 @@
             }
           }
 
-          // Применяем настройки и загружаем купоны
           if (incomingBaseCoupons.length > 0) {
             appConfig = {
               ...appConfig,
@@ -1967,12 +1939,18 @@
               maxCustom: targetMaxCustom,
               maxTotal: incomingBaseCoupons.length + targetMaxCustom
             };
-            localStorage.setItem("love_coupons_config", JSON.stringify(appConfig));
+            localStorage.setItem("love_coupons_gift_config", JSON.stringify(appConfig));
 
             // Защита прогресса получателя: если ссылка открывается повторно, сохраняем стёртые и использованные купоны
-            if (lastSavedSignature === giftSignature && coupons && coupons.length > 0) {
+            const savedRecipientCoupons = localStorage.getItem("love_coupons_gift_data");
+            let prevCoupons = [];
+            if (savedRecipientCoupons) {
+              try { prevCoupons = JSON.parse(savedRecipientCoupons); } catch(e) {}
+            }
+
+            if (lastSavedSignature === giftSignature && Array.isArray(prevCoupons) && prevCoupons.length > 0) {
               const existingMap = {};
-              coupons.forEach(c => { existingMap[c.id] = c; });
+              prevCoupons.forEach(c => { existingMap[c.id] = c; });
 
               const mergedBase = incomingBaseCoupons.map(inc => {
                 const prev = existingMap[inc.id];
@@ -1988,23 +1966,21 @@
                 }
                 return inc;
               });
-              const currentCustom = coupons.filter(c => c.isCustom);
+              const currentCustom = prevCoupons.filter(c => c.isCustom);
               coupons = [...currentCustom, ...mergedBase];
             } else {
-              // Новый подарок — сохраняем сигнатуру и инициализируем купоны
-              const currentCustom = (coupons || []).filter(c => c.isCustom);
-              coupons = [...currentCustom, ...incomingBaseCoupons];
+              coupons = [...incomingBaseCoupons];
               localStorage.setItem("love_coupons_gift_hash", giftSignature);
             }
 
-            localStorage.setItem("love_coupons_v8", JSON.stringify(coupons));
+            localStorage.setItem("love_coupons_gift_data", JSON.stringify(coupons));
           }
         } catch(e) {
           console.error("Ошибка парсинга ссылки подарка", e);
         }
       } else {
-        const hasReceivedGift = !!localStorage.getItem("love_coupons_gift_hash");
-        isAdminMode = !hasReceivedGift;
+        // Чистый URL — режим СОЗДАТЕЛЯ
+        isAdminMode = true;
       }
 
       if (getParam('admin') === '1' || window.location.hash === '#admin') {
@@ -2017,29 +1993,35 @@
     function updateAdminUI() {
       const adminBanner = document.getElementById("adminBanner");
       const viralBlock = document.getElementById("viralPromoBlock");
-      const creatorLink = document.getElementById("creatorFooterLink");
 
       if (isAdminMode) {
-        if (adminBanner) adminBanner.classList.add("visible");
+        if (adminBanner) {
+          adminBanner.classList.add("visible");
+          adminBanner.style.display = "flex";
+        }
         if (viralBlock) viralBlock.style.display = "none";
-        if (creatorLink) creatorLink.style.display = "none";
       } else {
-        if (adminBanner) adminBanner.classList.remove("visible");
+        if (adminBanner) {
+          adminBanner.classList.remove("visible");
+          adminBanner.style.display = "none";
+        }
         if (viralBlock) viralBlock.style.display = "block";
-        if (creatorLink) creatorLink.style.display = "block";
       }
     }
 
     function startNewGiftCreation() {
-      localStorage.removeItem("love_coupons_gift_hash");
-      window.history.replaceState({}, document.title, window.location.pathname);
-      isAdminMode = true;
-      updateAdminUI();
-      openAdminModal();
-      showToast("✨ Добро пожаловать в Мастерскую желаний!");
+      // Открываем чистый конструктор подарка в новой вкладке
+      const cleanUrl = window.location.origin + window.location.pathname;
+      const newWin = window.open(cleanUrl, '_blank');
+      if (!newWin || newWin.closed || typeof newWin.closed === 'undefined') {
+        window.location.href = cleanUrl;
+      }
     }
 
     function handleTitleTap() {
+      // Для получателя подарка доступ в мастерскую полностью заблокирован
+      if (!isAdminMode) return;
+
       titleTapCount++;
       clearTimeout(titleTapTimeout);
       titleTapTimeout = setTimeout(() => {
@@ -2048,9 +2030,6 @@
 
       if (titleTapCount >= 3) {
         titleTapCount = 0;
-        isAdminMode = true;
-        updateAdminUI();
-        showToast("✨ Мастерская желаний открыта");
         openAdminModal();
       }
     }
@@ -2061,29 +2040,45 @@
       if (soundPref !== null) isSoundEnabled = soundPref === "true";
       updateSoundUI();
 
-      const savedConfig = localStorage.getItem("love_coupons_config");
-      if (savedConfig) {
-        try {
-          appConfig = { ...appConfig, ...JSON.parse(savedConfig) };
-        } catch(e) {}
-      }
+      checkAdminMode();
 
-      const savedCoupons = localStorage.getItem("love_coupons_v8");
-      if (savedCoupons) {
-        try {
-          coupons = JSON.parse(savedCoupons);
-        } catch(e) {
+      if (isAdminMode) {
+        const savedConfig = localStorage.getItem("love_coupons_creator_config") || localStorage.getItem("love_coupons_config");
+        if (savedConfig) {
+          try {
+            appConfig = { ...appConfig, ...JSON.parse(savedConfig) };
+          } catch(e) {}
+        }
+
+        const savedCoupons = localStorage.getItem("love_coupons_creator_data") || localStorage.getItem("love_coupons_v8");
+        if (savedCoupons) {
+          try {
+            coupons = JSON.parse(savedCoupons);
+          } catch(e) {
+            coupons = makePresetInstances(PRESET_HER, 5);
+          }
+        } else {
+          coupons = makePresetInstances(PRESET_HER, 5);
+        }
+
+        if (!Array.isArray(coupons) || coupons.length === 0) {
           coupons = makePresetInstances(PRESET_HER, 5);
         }
       } else {
-        coupons = makePresetInstances(PRESET_HER, 5);
+        const savedConfig = localStorage.getItem("love_coupons_gift_config");
+        if (savedConfig) {
+          try {
+            appConfig = { ...appConfig, ...JSON.parse(savedConfig) };
+          } catch(e) {}
+        }
+        const savedCoupons = localStorage.getItem("love_coupons_gift_data");
+        if (savedCoupons) {
+          try {
+            coupons = JSON.parse(savedCoupons);
+          } catch(e) {}
+        }
       }
 
-      if (!Array.isArray(coupons) || coupons.length === 0) {
-        coupons = makePresetInstances(PRESET_HER, 5);
-      }
-
-      checkAdminMode();
       applyThemeUI();
       updateDynamicTexts();
     }
@@ -2096,7 +2091,12 @@
     }
 
     function saveToStorage() {
-      localStorage.setItem("love_coupons_v8", JSON.stringify(coupons));
+      if (isAdminMode) {
+        localStorage.setItem("love_coupons_creator_data", JSON.stringify(coupons));
+        localStorage.setItem("love_coupons_v8", JSON.stringify(coupons));
+      } else {
+        localStorage.setItem("love_coupons_gift_data", JSON.stringify(coupons));
+      }
       updateBalanceUI();
     }
 
@@ -2127,12 +2127,6 @@
       if (rulesAgreeBtn) {
         rulesAgreeBtn.innerText = isHim ? "Понятно и согласен 😎" : "Понятно и согласна 🥰";
       }
-
-      const resetLead = document.getElementById("resetModalLeadText");
-      if (resetLead) resetLead.innerText = `Все купоны снова будут скрыты защитным слоем, а счётчик ${isWeek ? 'недели' : 'месяца'} обнулится. Начать заново?`;
-
-      const btnReset = document.getElementById("btnResetPeriod");
-      if (btnReset) btnReset.innerText = `🔄 Начать новый ${isWeek ? 'недельный' : 'месячный'} период (обновить)`;
 
       const footerSub = document.getElementById("footerSubtitle");
       const povodWord = pluralize(appConfig.maxTotal, "особенный повод", "особенных повода", "особенных поводов");
@@ -2835,34 +2829,13 @@
       showToast("Каприз удалён. Слот снова свободен! 🔄");
     }
 
-    /* Модалки правил и сброса */
+    /* Модалка правил */
     function openRulesModal() {
       renderRulesList();
       document.getElementById('rulesModal').classList.add('active');
     }
     function closeRulesModal() {
       document.getElementById('rulesModal').classList.remove('active');
-    }
-
-    function openResetConfirmModal() {
-      document.getElementById('confirmResetModal').classList.add('active');
-    }
-    function closeResetConfirmModal() {
-      document.getElementById('confirmResetModal').classList.remove('active');
-    }
-
-    function confirmResetAll() {
-      coupons.forEach(c => {
-        c.isRevealed = false;
-        c.status = "available";
-        c.activatedDate = null;
-        c.activatedDateRaw = null;
-      });
-      coupons = coupons.filter(c => !c.isCustom);
-      saveToStorage();
-      closeResetConfirmModal();
-      renderCoupons();
-      showToast("Новый период открыт! Все купоны снова скрыты и готовы ✨");
     }
 
     /* Переключение получателя и тем в Мастерской */
@@ -3478,6 +3451,7 @@
       }
 
       appConfig = { ...appConfig, ...form };
+      localStorage.setItem("love_coupons_creator_config", JSON.stringify(appConfig));
       localStorage.setItem("love_coupons_config", JSON.stringify(appConfig));
       applyThemeUI();
       updateAdminUI();
@@ -3570,6 +3544,7 @@
       }
 
       appConfig = { ...appConfig, ...cfg };
+      localStorage.setItem("love_coupons_creator_config", JSON.stringify(appConfig));
       localStorage.setItem("love_coupons_config", JSON.stringify(appConfig));
       saveToStorage();
       applyThemeUI();
