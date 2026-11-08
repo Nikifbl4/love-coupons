@@ -1126,6 +1126,52 @@
       position: relative;
       color: var(--wine-dark);
     }
+
+    .page-footer {
+      text-align: center;
+      margin-top: 48px;
+      padding-top: 24px;
+      border-top: 1.5px dashed var(--border-dash);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+    .footer-subtitle {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-muted);
+      letter-spacing: 0.3px;
+    }
+    .btn-text-reset {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 600;
+      font-family: inherit;
+      padding: 8px 18px;
+      border-radius: 20px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: var(--shadow-soft);
+      outline: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn-text-reset:hover {
+      color: var(--wine-dark);
+      border-color: var(--accent-rose);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-hover);
+    }
+    .btn-text-reset:focus, .btn-text-reset:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 3px var(--Focus-ring);
+    }
   </style>
 </head>
 <body>
@@ -1198,8 +1244,8 @@
     <div class="coupons-grid" id="couponsGrid"></div>
 
     <div class="page-footer">
-      <div id="footerSubtitle">Особенные поводы для улыбки ❤️</div>
-      <button class="btn-text-reset" onclick="openResetConfirmModal()" id="btnResetPeriod">Начать новый период (обновить)</button>
+      <div id="footerSubtitle" class="footer-subtitle">Особенные поводы для улыбки ❤️</div>
+      <button class="btn-text-reset" onclick="openResetConfirmModal()" id="btnResetPeriod">🔄 Начать новый период (обновить)</button>
 
       <!-- Вирусный блок для публичного релиза (виден получателю подарка) -->
       <div id="viralPromoBlock" style="display: none; margin-top: 24px; padding: 16px; background: var(--card-bg); border: 1.5px dashed var(--border-dash); border-radius: 18px; text-align: center;">
@@ -1211,7 +1257,7 @@
       </div>
 
       <!-- Дополнительная ссылка в футере для создателя -->
-      <div id="creatorFooterLink" style="display: none; margin-top: 12px;">
+      <div id="creatorFooterLink" style="display: none; margin-top: 4px;">
         <button class="btn-text-reset" onclick="openAdminModal()">🪄 Редактировать или создать новые купоны</button>
       </div>
     </div>
@@ -1750,44 +1796,79 @@
       showToast(`Тема: ${names[targetTheme] || targetTheme}`);
     }
 
-    /* Распаковка как компактного (#cfg=...), так и старого формата ссылки + защита прогресса! */
+    /* Распаковка ультракоротких ссылок (?c=p1,p2...&to=b&th=w) + обратная совместимость + защита прогресса */
     function checkAdminMode() {
-      const params = new URLSearchParams(window.location.search);
-      const hash = window.location.hash;
+      const searchParams = new URLSearchParams(window.location.search);
+      let hashStr = window.location.hash;
+      if (hashStr.startsWith('#')) hashStr = hashStr.slice(1);
+      if (hashStr.startsWith('/')) hashStr = hashStr.slice(1);
+      if (hashStr.startsWith('?')) hashStr = hashStr.slice(1);
+      const hashParams = new URLSearchParams(hashStr);
 
-      const cfgParam = params.get('cfg') || (hash.startsWith('#cfg=') ? hash.slice(5) : null);
+      // Получение параметра из search (?) или hash (#)
+      const getParam = (key) => searchParams.get(key) || hashParams.get(key);
 
-      if (cfgParam) {
+      const cfgParam = getParam('cfg');
+      const cParam = getParam('c');
+      const toParam = getParam('to');
+      const thParam = getParam('th');
+      const tgParam = getParam('tg');
+      const tParam = getParam('t');
+      const peParam = getParam('pe');
+      const mxParam = getParam('mx');
+      const custParam = getParam('cust');
+
+      const isGiftLink = !!(cParam || cfgParam || (toParam && toParam !== 'admin') || custParam);
+
+      if (isGiftLink) {
         isAdminMode = false;
         try {
-          const giftHash = computeGiftHash(cfgParam);
-          const lastSavedGiftHash = localStorage.getItem("love_coupons_gift_hash");
-          const decoded = JSON.parse(decodeURIComponent(escape(atob(cfgParam))));
+          // Уникальная сигнатура подарка для сохранения прогресса стирания и активации
+          const giftSignature = cParam 
+            ? `c_${cParam}_to_${toParam || 'g'}_th_${thParam || ''}_tg_${tgParam || ''}_cust_${custParam || ''}`
+            : (cfgParam ? `cfg_${computeGiftHash(cfgParam)}` : 'gift_received');
+          
+          const lastSavedSignature = localStorage.getItem("love_coupons_gift_hash");
 
-          if (decoded && typeof decoded === 'object') {
-            // Восстанавливаем настройки (компактные ключи или полные)
-            const newConfig = {
-              recipient: decoded.r || decoded.recipient || "her",
-              theme: decoded.th || decoded.theme || ((decoded.r === 'him') ? 'male' : 'romantic'),
-              period: decoded.pe || decoded.period || "month",
-              maxCoupons: decoded.mc !== undefined ? decoded.mc : (decoded.maxCoupons !== undefined ? decoded.maxCoupons : 5),
-              maxCustom: decoded.mx !== undefined ? decoded.mx : (decoded.maxCustom !== undefined ? decoded.maxCustom : 3),
-              partnerTg: decoded.tg !== undefined ? decoded.tg : (decoded.partnerTg || ""),
-              girlTitle: decoded.gt || decoded.girlTitle || ((decoded.r === 'him') ? "Для самого любимого" : "Для самой любимой")
-            };
-            newConfig.maxTotal = newConfig.maxCoupons + newConfig.maxCustom;
-            appConfig = { ...appConfig, ...newConfig };
-            localStorage.setItem("love_coupons_config", JSON.stringify(appConfig));
+          let incomingBaseCoupons = [];
+          let targetRecipient = "her";
+          let targetTheme = "romantic";
+          let targetPeriod = "month";
+          let targetMaxCustom = 3;
+          let targetPartnerTg = "";
+          let targetTitle = "";
 
-            // Собираем базовые купоны из компактных ID (`p`) и кастомных/изменённых (`c`)
-            let incomingBaseCoupons = [];
-            if (Array.isArray(decoded.p) || Array.isArray(decoded.c)) {
-              const pIds = decoded.p || [];
-              const cItems = decoded.c || [];
-              pIds.forEach(id => {
+          if (cParam || toParam || thParam || custParam) {
+            // Новый ультракороткий формат с чистыми параметрами URL
+            targetRecipient = (toParam === 'b' || toParam === 'him') ? 'him' : 'her';
+
+            if (thParam === 'w' || thParam === 'passion') {
+              targetTheme = 'passion';
+            } else if (thParam === 'm' || thParam === 'male') {
+              targetTheme = 'male';
+            } else if (thParam === 'r' || thParam === 'romantic') {
+              targetTheme = 'romantic';
+            } else {
+              targetTheme = (targetRecipient === 'him') ? 'male' : 'romantic';
+            }
+
+            targetPeriod = (peParam === 'w' || peParam === 'week') ? 'week' : 'month';
+            targetPartnerTg = tgParam ? tgParam.replace(/^@/, '').trim() : "";
+            targetTitle = tParam ? tParam.trim() : (targetRecipient === 'him' ? "Для самого любимого" : "Для самой любимой");
+
+            if (mxParam) {
+              const parsedMx = parseInt(mxParam, 10);
+              if (!isNaN(parsedMx) && parsedMx >= 0) targetMaxCustom = parsedMx;
+            }
+
+            // Парсим стандартные купоны по ID через запятую
+            if (cParam) {
+              const ids = cParam.split(',').map(s => s.trim()).filter(Boolean);
+              ids.forEach((id, idx) => {
                 if (ALL_PRESETS_MAP[id]) {
                   incomingBaseCoupons.push({
                     ...JSON.parse(JSON.stringify(ALL_PRESETS_MAP[id])),
+                    code: `${targetTheme === 'passion' ? 'WINE' : (targetRecipient === 'him' ? 'VIP' : 'LOVE')}-${String(idx + 1).padStart(3, '0')}`,
                     isCustom: false,
                     isRevealed: false,
                     status: "available",
@@ -1797,31 +1878,99 @@
                   });
                 }
               });
-              cItems.forEach((item, idx) => {
-                incomingBaseCoupons.push({
-                  id: item.i || ("c_" + idx),
-                  code: "LOVE-" + String(incomingBaseCoupons.length + 1).padStart(3, '0'),
-                  title: item.t || "Желание",
-                  desc: item.d || "Особенное романтическое желание для двоих.",
-                  icon: item.ic || "💖",
-                  isCustom: false,
-                  isRevealed: false,
-                  status: "available",
-                  activatedDate: null,
-                  activatedDateRaw: null,
-                  selectedInGift: true
-                });
-              });
-            } else if (Array.isArray(decoded.baseCoupons)) {
-              incomingBaseCoupons = decoded.baseCoupons.map(c => ({
-                ...c,
-                selectedInGift: true
-              }));
             }
 
-            // ЗАЩИТА ПРОГРЕССА ПОЛУЧАТЕЛЯ:
-            // Если получатель уже открывал ЭТУ ЖЕ самую ссылку, не затираем стёртые и активированные купоны!
-            if (lastSavedGiftHash === giftHash && coupons && coupons.length > 0) {
+            // Парсим кастомные добавленные купоны при их наличии
+            if (custParam) {
+              try {
+                const decodedCust = JSON.parse(decodeURIComponent(escape(atob(custParam))));
+                if (Array.isArray(decodedCust)) {
+                  decodedCust.forEach((item, idx) => {
+                    incomingBaseCoupons.push({
+                      id: item.i || ("custom_gift_" + idx),
+                      code: "LOVE-" + String(incomingBaseCoupons.length + 1).padStart(3, '0'),
+                      title: item.t || "Особенное желание",
+                      desc: item.d || "Романтическое пожелание для двоих.",
+                      icon: item.ic || "💖",
+                      isCustom: false,
+                      isRevealed: false,
+                      status: "available",
+                      activatedDate: null,
+                      activatedDateRaw: null,
+                      selectedInGift: true
+                    });
+                  });
+                }
+              } catch(err) {
+                console.error("Ошибка парсинга кастомных купонов", err);
+              }
+            }
+          } else if (cfgParam) {
+            // Обратная совместимость с ранее сформированными Base64 ссылками
+            const decoded = JSON.parse(decodeURIComponent(escape(atob(cfgParam))));
+            if (decoded && typeof decoded === 'object') {
+              targetRecipient = decoded.r || decoded.recipient || "her";
+              targetTheme = decoded.th || decoded.theme || ((targetRecipient === 'him') ? 'male' : 'romantic');
+              targetPeriod = decoded.pe || decoded.period || "month";
+              targetPartnerTg = decoded.tg !== undefined ? decoded.tg : (decoded.partnerTg || "");
+              targetTitle = decoded.gt || decoded.girlTitle || ((targetRecipient === 'him') ? "Для самого любимого" : "Для самой любимой");
+              targetMaxCustom = decoded.mx !== undefined ? decoded.mx : (decoded.maxCustom !== undefined ? decoded.maxCustom : 3);
+
+              if (Array.isArray(decoded.p) || Array.isArray(decoded.c)) {
+                (decoded.p || []).forEach(id => {
+                  if (ALL_PRESETS_MAP[id]) {
+                    incomingBaseCoupons.push({
+                      ...JSON.parse(JSON.stringify(ALL_PRESETS_MAP[id])),
+                      isCustom: false,
+                      isRevealed: false,
+                      status: "available",
+                      activatedDate: null,
+                      activatedDateRaw: null,
+                      selectedInGift: true
+                    });
+                  }
+                });
+                (decoded.c || []).forEach((item, idx) => {
+                  incomingBaseCoupons.push({
+                    id: item.i || ("c_" + idx),
+                    code: "LOVE-" + String(incomingBaseCoupons.length + 1).padStart(3, '0'),
+                    title: item.t || "Желание",
+                    desc: item.d || "Особенное романтическое желание для двоих.",
+                    icon: item.ic || "💖",
+                    isCustom: false,
+                    isRevealed: false,
+                    status: "available",
+                    activatedDate: null,
+                    activatedDateRaw: null,
+                    selectedInGift: true
+                  });
+                });
+              } else if (Array.isArray(decoded.baseCoupons)) {
+                incomingBaseCoupons = decoded.baseCoupons.map(c => ({
+                  ...c,
+                  selectedInGift: true
+                }));
+              }
+            }
+          }
+
+          // Применяем настройки и загружаем купоны
+          if (incomingBaseCoupons.length > 0) {
+            appConfig = {
+              ...appConfig,
+              recipient: targetRecipient,
+              theme: targetTheme,
+              period: targetPeriod,
+              partnerTg: targetPartnerTg,
+              girlTitle: targetTitle,
+              maxCoupons: incomingBaseCoupons.length,
+              maxCustom: targetMaxCustom,
+              maxTotal: incomingBaseCoupons.length + targetMaxCustom
+            };
+            localStorage.setItem("love_coupons_config", JSON.stringify(appConfig));
+
+            // Защита прогресса получателя: если ссылка открывается повторно, сохраняем стёртые и использованные купоны
+            if (lastSavedSignature === giftSignature && coupons && coupons.length > 0) {
               const existingMap = {};
               coupons.forEach(c => { existingMap[c.id] = c; });
 
@@ -1842,24 +1991,23 @@
               const currentCustom = coupons.filter(c => c.isCustom);
               coupons = [...currentCustom, ...mergedBase];
             } else {
-              // Новый подарок — сохраняем хеш и инициализируем
+              // Новый подарок — сохраняем сигнатуру и инициализируем купоны
               const currentCustom = (coupons || []).filter(c => c.isCustom);
               coupons = [...currentCustom, ...incomingBaseCoupons];
-              localStorage.setItem("love_coupons_gift_hash", giftHash);
+              localStorage.setItem("love_coupons_gift_hash", giftSignature);
             }
 
             localStorage.setItem("love_coupons_v8", JSON.stringify(coupons));
           }
         } catch(e) {
-          console.error("Ошибка чтения конфига из ссылки", e);
+          console.error("Ошибка парсинга ссылки подарка", e);
         }
       } else {
-        // Если уже сохранён хеш подарка в браузере получателя — остаёмся в режиме получателя
         const hasReceivedGift = !!localStorage.getItem("love_coupons_gift_hash");
         isAdminMode = !hasReceivedGift;
       }
 
-      if (params.get('admin') === '1' || hash === '#admin') {
+      if (getParam('admin') === '1' || window.location.hash === '#admin') {
         isAdminMode = true;
       }
 
@@ -1884,7 +2032,7 @@
 
     function startNewGiftCreation() {
       localStorage.removeItem("love_coupons_gift_hash");
-      window.location.hash = '';
+      window.history.replaceState({}, document.title, window.location.pathname);
       isAdminMode = true;
       updateAdminUI();
       openAdminModal();
@@ -1984,7 +2132,7 @@
       if (resetLead) resetLead.innerText = `Все купоны снова будут скрыты защитным слоем, а счётчик ${isWeek ? 'недели' : 'месяца'} обнулится. Начать заново?`;
 
       const btnReset = document.getElementById("btnResetPeriod");
-      if (btnReset) btnReset.innerText = `Начать новый ${isWeek ? 'недельный' : 'месячный'} период (обновить)`;
+      if (btnReset) btnReset.innerText = `🔄 Начать новый ${isWeek ? 'недельный' : 'месячный'} период (обновить)`;
 
       const footerSub = document.getElementById("footerSubtitle");
       const povodWord = pluralize(appConfig.maxTotal, "особенный повод", "особенных повода", "особенных поводов");
@@ -3340,7 +3488,7 @@
       showToast("Настройки успешно сохранены! ✨");
     }
 
-    /* Умная упаковка ссылки в 10 раз короче (только ID неизменённых пресетов) */
+    /* Умная упаковка ультракороткой ссылки (50-75 символов): чистые query-параметры без длинного Base64 */
     function generateAndCopyGiftLink() {
       const cfg = readAdminForm();
       const baseCoupons = coupons.filter(c => !c.isCustom);
@@ -3358,7 +3506,7 @@
         return;
       }
 
-      // Разделяем купоны на неизменённые стандартные (передаём только короткий ID) и кастомные/отредактированные
+      // Разделяем купоны на неизменённые стандартные пресеты и кастомные/отредактированные
       const presetIds = [];
       const customModified = [];
 
@@ -3376,18 +3524,49 @@
         }
       });
 
-      const compactPayload = {
-        r: cfg.recipient,
-        th: cfg.theme,
-        pe: cfg.period,
-        mc: cfg.maxCoupons,
-        mx: cfg.maxCustom,
-        tg: cfg.partnerTg,
-        gt: cfg.girlTitle,
-        p: presetIds
-      };
+      // Формируем чистые query-параметры, пропуская все дефолтные значения
+      const urlParams = new URLSearchParams();
+
+      // 1. Получатель: добавляем 'to=b' только если парню ('him'). Если девушке — опускаем
+      if (cfg.recipient === 'him') {
+        urlParams.set('to', 'b');
+      }
+
+      // 2. Тема: добавляем 'th=w' только если выбрана винная. Базовые темы (розовая для неё, синяя для него) опускаем
+      if (cfg.theme === 'passion') {
+        urlParams.set('th', 'w');
+      }
+
+      // 3. Telegram партнера: добавляем только если указан
+      if (cfg.partnerTg) {
+        urlParams.set('tg', cfg.partnerTg);
+      }
+
+      // 4. Период: добавляем только если выбран недельный ('pe=w')
+      if (cfg.period === 'week') {
+        urlParams.set('pe', 'w');
+      }
+
+      // 5. Количество капризов: добавляем только если не дефолтное 3
+      if (cfg.maxCustom !== 3) {
+        urlParams.set('mx', cfg.maxCustom);
+      }
+
+      // 6. Нестандартный заголовок бейджа: добавляем только если пользователь поменял стандартный текст
+      const defaultBadgeTitle = cfg.recipient === 'him' ? 'Для самого любимого' : 'Для самой любимой';
+      if (cfg.girlTitle && cfg.girlTitle !== defaultBadgeTitle) {
+        urlParams.set('t', cfg.girlTitle);
+      }
+
+      // 7. Стандартные купоны: передаём только их короткие ID через запятую
+      if (presetIds.length > 0) {
+        urlParams.set('c', presetIds.join(','));
+      }
+
+      // 8. Если есть кастомные желания, передаём только их в компактном cust
       if (customModified.length > 0) {
-        compactPayload.c = customModified;
+        const jsonStr = JSON.stringify(customModified);
+        urlParams.set('cust', btoa(unescape(encodeURIComponent(jsonStr))));
       }
 
       appConfig = { ...appConfig, ...cfg };
@@ -3399,14 +3578,12 @@
       updateBalanceUI();
       renderCoupons();
 
-      const jsonStr = JSON.stringify(compactPayload);
-      const b64 = btoa(unescape(encodeURIComponent(jsonStr)));
-      
       const baseUrl = window.location.origin + window.location.pathname;
-      const giftLink = `${baseUrl}#cfg=${b64}`;
+      const queryString = urlParams.toString();
+      const giftLink = `${baseUrl}?${queryString}`;
 
       if (copyTextToClipboard(giftLink)) {
-        showToast(`Короткая ссылка скопирована (${giftLink.length} симв.)! 💌`);
+        showToast(`Ультракороткая ссылка скопирована (${giftLink.length} симв.)! 💌`);
       } else {
         showToast("Ссылка сформирована: " + giftLink);
       }
