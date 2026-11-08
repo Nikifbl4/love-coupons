@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -16,8 +15,11 @@
 
   <style>
     :root {
+      /* Классическая нежная тема (для девушки по умолчанию) */
       --bg-cream: #FFF7F9;
+      --bg-gradient: radial-gradient(circle at top, #FFF0F5 0%, #FFF7F9 100%);
       --card-bg: #FFFFFF;
+      --card-border: #F3E5EA;
       --accent-rose: #E75480;
       --accent-gold: #C5A059;
       --wine-dark: #3F1D2C;
@@ -27,6 +29,114 @@
       --green-stamp: #27AE60;
       --shadow-soft: 0 8px 24px rgba(63, 29, 44, 0.06);
       --shadow-hover: 0 14px 32px rgba(63, 29, 44, 0.12);
+      --scratch-bg: linear-gradient(180deg, #FFF9FA 0%, #FFF2F6 100%);
+      --mystery-bg: #FFF5F8;
+      --mystery-border: #F0D5DF;
+      --pill-bg: #F7EDF1;
+      --btn-sec-bg: #FFFFFF;
+      --btn-sec-border: #E8D6DC;
+      --btn-sec-hover: #FFF0F4;
+      --btn-quick-bg: #F8EDF1;
+      --btn-quick-hover: #F1E2E8;
+      --btn-activate-grad: linear-gradient(135deg, #E75480 0%, #D13E6B 100%);
+      --btn-activate-shadow: rgba(231, 84, 128, 0.28);
+      --progress-bg: #F4E8EC;
+      --petal-grad: linear-gradient(135deg, rgba(255, 183, 197, 0.8) 0%, rgba(255, 166, 185, 0.4) 100%);
+      --banner-grad: linear-gradient(90deg, #3F1D2C, #643147);
+      --desc-color: #554049;
+      /* Переменные для модальных окон и Мастерской */
+      --modal-bg: #FFFFFF;
+      --modal-border: #F3E5EA;
+      --input-bg: #FFFFFF;
+      --input-border: #E8D6DC;
+      --item-bg: #FFF9FA;
+      --item-unselected-bg: #FAFAFA;
+      --tab-active-bg: #FFE8F0;
+      --editor-bg: #FFF0F5;
+      --Focus-ring: rgba(231, 84, 128, 0.18);
+    }
+
+    /* Мужской дизайн (Стильный графитово-синий + золото) */
+    body.theme-male {
+      --bg-cream: #F2F5F9;
+      --bg-gradient: radial-gradient(circle at top, #E5ECF6 0%, #F2F5F9 100%);
+      --card-bg: #FFFFFF;
+      --card-border: #DCE4F0;
+      --accent-rose: #2563EB;
+      --accent-gold: #D97706;
+      --wine-dark: #1E293B;
+      --wine-light: #334155;
+      --text-muted: #64748B;
+      --border-dash: #CBD5E1;
+      --shadow-soft: 0 8px 24px rgba(15, 23, 42, 0.06);
+      --shadow-hover: 0 14px 32px rgba(15, 23, 42, 0.12);
+      --scratch-bg: linear-gradient(180deg, #F8FAFC 0%, #EFF6FF 100%);
+      --mystery-bg: #F8FAFC;
+      --mystery-border: #CBD5E1;
+      --pill-bg: #EFF6FF;
+      --btn-sec-bg: #FFFFFF;
+      --btn-sec-border: #CBD5E1;
+      --btn-sec-hover: #EFF6FF;
+      --btn-quick-bg: #F1F5F9;
+      --btn-quick-hover: #E2E8F0;
+      --btn-activate-grad: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
+      --btn-activate-shadow: rgba(37, 99, 235, 0.28);
+      --progress-bg: #E2E8F0;
+      --petal-grad: linear-gradient(135deg, rgba(147, 197, 253, 0.65) 0%, rgba(197, 160, 89, 0.35) 100%);
+      --banner-grad: linear-gradient(90deg, #0F172A, #1E3A8A);
+      --desc-color: #334155;
+      /* Переменные для модальных окон и Мастерской (Мужская тема) */
+      --modal-bg: #FFFFFF;
+      --modal-border: #DCE4F0;
+      --input-bg: #F8FAFC;
+      --input-border: #CBD5E1;
+      --item-bg: #F8FAFC;
+      --item-unselected-bg: #F1F5F9;
+      --tab-active-bg: #DBEAFE;
+      --editor-bg: #EFF6FF;
+      --Focus-ring: rgba(37, 99, 235, 0.18);
+    }
+
+    /* Вечерняя винная тема (Тёмно-винная с золотом — доступна для всех) */
+    body.theme-passion {
+      --bg-cream: #180910;
+      --bg-gradient: radial-gradient(circle at top, #351020 0%, #14070D 100%);
+      --card-bg: #25101A;
+      --card-border: #4A2033;
+      --accent-rose: #E5B869;
+      --accent-gold: #D4AF37;
+      --wine-dark: #FDF2F6;
+      --wine-light: #E8C5D4;
+      --text-muted: #B08899;
+      --border-dash: #59263D;
+      --green-stamp: #2ECC71;
+      --shadow-soft: 0 8px 28px rgba(0, 0, 0, 0.45);
+      --shadow-hover: 0 14px 36px rgba(229, 184, 105, 0.16);
+      --scratch-bg: linear-gradient(180deg, #2F1220 0%, #210B16 100%);
+      --mystery-bg: #1D0B14;
+      --mystery-border: #522338;
+      --pill-bg: #381726;
+      --btn-sec-bg: #2A121E;
+      --btn-sec-border: #57253B;
+      --btn-sec-hover: #3B192A;
+      --btn-quick-bg: #381726;
+      --btn-quick-hover: #4B1F33;
+      --btn-activate-grad: linear-gradient(135deg, #D4AF37 0%, #AA7C11 100%);
+      --btn-activate-shadow: rgba(212, 175, 55, 0.3);
+      --progress-bg: #381726;
+      --petal-grad: linear-gradient(135deg, rgba(212, 175, 55, 0.65) 0%, rgba(231, 84, 128, 0.45) 100%);
+      --banner-grad: linear-gradient(90deg, #2B0918, #54142E);
+      --desc-color: #E2C6D2;
+      /* Переменные для модальных окон и Мастерской (Винная тема) */
+      --modal-bg: #220D17;
+      --modal-border: #4A2033;
+      --input-bg: #190810;
+      --input-border: #57253B;
+      --item-bg: #2C121E;
+      --item-unselected-bg: #1B0A12;
+      --tab-active-bg: #3D1829;
+      --editor-bg: #2D121F;
+      --Focus-ring: rgba(212, 175, 55, 0.22);
     }
 
     * {
@@ -38,11 +148,12 @@
 
     body {
       font-family: 'Montserrat', sans-serif;
-      background: radial-gradient(circle at top, #FFF0F5 0%, #FFF7F9 100%);
+      background: var(--bg-gradient);
       color: var(--wine-dark);
       min-height: 100vh;
       overflow-x: hidden;
       padding-bottom: 70px;
+      transition: background 0.35s ease, color 0.35s ease;
     }
 
     /* Falling Petals */
@@ -58,7 +169,7 @@
     }
     .petal {
       position: absolute;
-      background: linear-gradient(135deg, rgba(255, 183, 197, 0.8) 0%, rgba(255, 166, 185, 0.4) 100%);
+      background: var(--petal-grad);
       border-radius: 150% 0 150% 0;
       animation-timing-function: linear;
       animation-iteration-count: infinite;
@@ -79,10 +190,42 @@
       100% { transform: translate3d(20px, 108vh, 0) rotate(410deg) scale(0.9); opacity: 0; }
     }
 
+    /* Верхняя панель Мастерской (видна создателю) */
+    .admin-banner {
+      background: var(--banner-grad);
+      color: #FFF;
+      padding: 10px 16px;
+      font-size: 12px;
+      display: none;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    .admin-banner.visible {
+      display: flex;
+    }
+    .btn-admin-gear {
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      color: #FFF;
+      padding: 5px 14px;
+      border-radius: 14px;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-admin-gear:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
     .container {
       max-width: 960px;
       margin: 0 auto;
-      padding: 24px 16px;
+      padding: 20px 16px;
       position: relative;
       z-index: 1;
     }
@@ -92,25 +235,54 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 16px;
+      margin-bottom: 12px;
+      gap: 10px;
+      flex-wrap: wrap;
     }
-    .sound-toggle, .partner-badge {
-      background: rgba(255, 255, 255, 0.85);
+    .theme-quick-switch {
+      display: inline-flex;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 3px;
+      gap: 4px;
+      box-shadow: var(--shadow-soft);
+    }
+    .theme-pill-btn {
+      background: transparent;
+      border: none;
+      padding: 5px 11px;
+      border-radius: 16px;
+      font-family: inherit;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .theme-pill-btn.active {
+      background: var(--btn-activate-grad);
+      color: #FFF;
+      box-shadow: 0 2px 8px var(--btn-activate-shadow);
+    }
+
+    .sound-toggle {
+      background: var(--card-bg);
       backdrop-filter: blur(8px);
-      border: 1px solid #EEDCE2;
+      border: 1px solid var(--card-border);
       border-radius: 20px;
       padding: 6px 14px;
       font-size: 12px;
       font-weight: 600;
       color: var(--wine-light);
-      cursor: pointer;
       display: inline-flex;
       align-items: center;
       gap: 6px;
       transition: all 0.2s;
+      cursor: pointer;
+      margin-left: auto;
     }
-    .sound-toggle:hover, .partner-badge:hover {
-      background: #FFF;
+    .sound-toggle:hover {
       border-color: var(--accent-rose);
       transform: translateY(-1px);
     }
@@ -122,7 +294,7 @@
     .badge {
       display: inline-block;
       padding: 6px 16px;
-      background: rgba(231, 84, 128, 0.12);
+      background: rgba(231, 84, 128, 0.14);
       color: var(--accent-rose);
       font-size: 12px;
       font-weight: 700;
@@ -130,13 +302,23 @@
       text-transform: uppercase;
       letter-spacing: 1.5px;
       margin-bottom: 10px;
+      user-select: none;
     }
+    body.theme-male .badge {
+      background: rgba(37, 99, 235, 0.12);
+    }
+    body.theme-passion .badge {
+      background: rgba(212, 175, 55, 0.18);
+    }
+
     h1 {
       font-family: 'Caveat', cursive;
       font-size: clamp(34px, 7vw, 48px);
       color: var(--wine-dark);
       margin-bottom: 8px;
       line-height: 1.1;
+      cursor: pointer;
+      user-select: none;
     }
     p.subtitle {
       font-size: 14px;
@@ -150,11 +332,11 @@
     .balance-box {
       max-width: 480px;
       margin: 0 auto 20px;
-      background: #FFFFFF;
+      background: var(--card-bg);
       padding: 14px 18px;
       border-radius: 18px;
-      box-shadow: 0 4px 16px rgba(63, 29, 44, 0.05);
-      border: 1px solid #F3E5EA;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid var(--card-border);
     }
     .balance-stats {
       display: flex;
@@ -176,14 +358,14 @@
     .progress-bar-bg {
       width: 100%;
       height: 8px;
-      background: #F4E8EC;
+      background: var(--progress-bg);
       border-radius: 8px;
       overflow: hidden;
     }
     .progress-bar-fill {
       height: 100%;
       width: 0%;
-      background: linear-gradient(90deg, #E75480, #C5A059);
+      background: linear-gradient(90deg, var(--accent-rose), var(--accent-gold));
       border-radius: 8px;
       transition: width 0.4s ease;
     }
@@ -197,10 +379,10 @@
       margin-bottom: 18px;
     }
     .btn-secondary {
-      background: #FFF;
-      border: 1px solid #E8D6DC;
+      background: var(--btn-sec-bg);
+      border: 1px solid var(--btn-sec-border);
       color: var(--wine-light);
-      padding: 9px 18px;
+      padding: 9px 16px;
       border-radius: 24px;
       font-size: 13px;
       font-weight: 600;
@@ -208,22 +390,39 @@
       box-shadow: 0 2px 8px rgba(0,0,0,0.03);
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
       transition: all 0.2s;
     }
     .btn-secondary:hover {
-      background: #FFF0F4;
+      background: var(--btn-sec-hover);
       border-color: var(--accent-rose);
       transform: translateY(-1px);
     }
     .btn-secondary:disabled {
       opacity: 0.6;
       cursor: not-allowed;
-      border-color: #E8D6DC;
-      background: #FDF9FA;
     }
 
-    /* Category Filter Tabs */
+    .slot-pill {
+      background: rgba(231, 84, 128, 0.14);
+      color: var(--accent-rose);
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    body.theme-male .slot-pill {
+      background: rgba(37, 99, 235, 0.14);
+    }
+    body.theme-passion .slot-pill {
+      background: rgba(212, 175, 55, 0.2);
+    }
+
+    /* Filters */
     .filters-wrapper {
       display: flex;
       justify-content: center;
@@ -244,10 +443,10 @@
     }
     .filter-btn.active {
       background: var(--wine-dark);
-      color: #FFF;
+      color: var(--bg-cream);
     }
     .filter-btn:not(.active):hover {
-      background: rgba(231, 84, 128, 0.08);
+      background: rgba(231, 84, 128, 0.1);
       color: var(--wine-dark);
     }
 
@@ -258,13 +457,13 @@
       gap: 22px;
     }
 
-    /* Card */
+    /* Ticket Card */
     .ticket-card {
       background: var(--card-bg);
       border-radius: 18px;
       position: relative;
       box-shadow: var(--shadow-soft);
-      border: 1px solid #F3E5EA;
+      border: 1px solid var(--card-border);
       display: flex;
       flex-direction: column;
       overflow: hidden;
@@ -292,7 +491,7 @@
     .scratch-area {
       height: 145px;
       position: relative;
-      background: linear-gradient(180deg, #FFF9FA 0%, #FFF2F6 100%);
+      background: var(--scratch-bg);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -343,16 +542,16 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: rgba(255, 240, 245, 0.15);
+      background: rgba(255, 240, 245, 0.12);
       cursor: pointer;
       user-select: none;
       transition: background 0.2s ease;
     }
     .scratch-lock-overlay:hover {
-      background: rgba(255, 240, 245, 0.35);
+      background: rgba(255, 240, 245, 0.25);
     }
     .scratch-lock-pill {
-      background: rgba(63, 29, 44, 0.88);
+      background: rgba(30, 15, 24, 0.88);
       color: #FFF;
       padding: 8px 16px;
       border-radius: 20px;
@@ -362,20 +561,20 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      box-shadow: 0 4px 14px rgba(63, 29, 44, 0.25);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
       border: 1px solid rgba(255, 255, 255, 0.25);
       animation: pulsePill 2.5s infinite;
       transition: transform 0.2s;
     }
     @keyframes pulsePill {
       0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.04); box-shadow: 0 6px 18px rgba(231, 84, 128, 0.35); }
+      50% { transform: scale(1.04); }
     }
     .scratch-lock-overlay:active .scratch-lock-pill {
       transform: scale(0.96);
     }
 
-    /* Body */
+    /* Ticket Body */
     .ticket-body {
       padding: 18px 20px;
       display: flex;
@@ -397,7 +596,7 @@
       font-size: 10px;
       padding: 2px 8px;
       border-radius: 12px;
-      background: #F7EDF1;
+      background: var(--pill-bg);
       color: var(--wine-light);
     }
     .badge-pill.custom-pill {
@@ -407,15 +606,15 @@
     .ticket-desc {
       font-size: 13px;
       line-height: 1.5;
-      color: #554049;
+      color: var(--desc-color);
       margin-bottom: 16px;
     }
     .ticket-desc.mystery {
       color: var(--text-muted);
-      background: #FFF5F8;
+      background: var(--mystery-bg);
       padding: 10px 12px;
       border-radius: 10px;
-      border: 1px dashed #F0D5DF;
+      border: 1px dashed var(--mystery-border);
       font-style: italic;
     }
 
@@ -442,19 +641,18 @@
       transition: all 0.2s;
     }
     .btn-quick-reveal {
-      background: #F8EDF1;
+      background: var(--btn-quick-bg);
       color: var(--wine-light);
     }
     .btn-quick-reveal:hover {
-      background: #F1E2E8;
+      background: var(--btn-quick-hover);
     }
     .btn-activate {
-      background: linear-gradient(135deg, #E75480 0%, #D13E6B 100%);
+      background: var(--btn-activate-grad);
       color: #FFF;
-      box-shadow: 0 4px 14px rgba(231, 84, 128, 0.28);
+      box-shadow: 0 4px 14px var(--btn-activate-shadow);
     }
     .btn-activate:hover {
-      box-shadow: 0 6px 18px rgba(231, 84, 128, 0.38);
       transform: translateY(-1px);
     }
     .btn-tg {
@@ -469,20 +667,20 @@
     }
 
     .btn-copy {
-      background: #FFF;
-      border: 1px solid #E8D6DC;
+      background: var(--btn-sec-bg);
+      border: 1px solid var(--btn-sec-border);
       color: var(--wine-light);
     }
     .btn-copy:hover {
-      background: #FFF0F4;
+      background: var(--btn-sec-hover);
       border-color: var(--accent-rose);
       transform: translateY(-1px);
     }
 
     .btn-cancel-activation {
-      background: #FFF7F9;
-      border: 1px dashed #E8B4C8;
-      color: #8E7A82;
+      background: var(--mystery-bg);
+      border: 1px dashed var(--mystery-border);
+      color: var(--text-muted);
       font-size: 12px;
       padding: 9px;
       border-radius: 12px;
@@ -494,7 +692,6 @@
       transition: all 0.2s;
     }
     .btn-cancel-activation:hover {
-      background: #FFF0F4;
       border-color: var(--accent-rose);
       color: var(--wine-dark);
       transform: translateY(-1px);
@@ -503,7 +700,7 @@
     .btn-delete-custom {
       background: transparent;
       border: none;
-      color: #B59FA7;
+      color: var(--text-muted);
       font-size: 11px;
       cursor: pointer;
       text-decoration: underline;
@@ -511,7 +708,7 @@
       padding: 4px;
     }
     .btn-delete-custom:hover {
-      color: #C0392B;
+      color: #E74C3C;
     }
 
     .stamp {
@@ -530,7 +727,7 @@
     .stamp-activated {
       border-color: var(--green-stamp);
       color: var(--green-stamp);
-      background: rgba(39, 174, 96, 0.06);
+      background: rgba(39, 174, 96, 0.08);
     }
     .stamp-date {
       display: block;
@@ -545,13 +742,13 @@
       100% { transform: scale(1) rotate(-5deg); opacity: 1; }
     }
 
-    /* Modals */
+    /* Modals (адаптируются под выбранную тему оформления) */
     .modal-overlay {
       position: fixed;
       top: 0; left: 0; width: 100vw; height: 100vh;
-      background: rgba(63, 29, 44, 0.45);
+      background: rgba(15, 8, 12, 0.65);
       backdrop-filter: blur(5px);
-      z-index: 100;
+      z-index: 1100;
       display: none;
       align-items: center;
       justify-content: center;
@@ -561,16 +758,19 @@
       display: flex;
     }
     .modal {
-      background: #FFF;
+      background: var(--modal-bg);
+      color: var(--wine-dark);
+      border: 1px solid var(--modal-border);
       width: 100%;
       max-width: 440px;
       border-radius: 22px;
       padding: 24px;
-      box-shadow: 0 20px 48px rgba(0,0,0,0.18);
+      box-shadow: 0 20px 48px rgba(0,0,0,0.32);
       position: relative;
       animation: modalUp 0.25s ease;
       max-height: 90vh;
       overflow-y: auto;
+      transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
     }
     @keyframes modalUp {
       from { transform: translateY(20px); opacity: 0; }
@@ -601,23 +801,278 @@
     .form-group input, .form-group textarea {
       width: 100%;
       padding: 12px;
-      border: 1px solid #E8D6DC;
+      border: 1px solid var(--input-border);
       border-radius: 12px;
       font-family: inherit;
       font-size: 14px;
       outline: none;
-      transition: border-color 0.2s, box-shadow 0.2s;
+      background: var(--input-bg);
+      color: var(--wine-dark);
+      transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
     }
     .form-group input:focus, .form-group textarea:focus {
       border-color: var(--accent-rose);
-      box-shadow: 0 0 0 3px rgba(231, 84, 128, 0.15);
+      box-shadow: 0 0 0 3px var(--Focus-ring);
     }
     .form-group textarea {
       resize: vertical;
       min-height: 80px;
     }
 
-    /* Сетка 4×2 для иконок */
+    /* Radio Group */
+    .radio-pill-group {
+      display: flex;
+      gap: 8px;
+    }
+    .Quick-presets {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+    .preset-chip {
+      background: var(--mystery-bg);
+      border: 1px solid var(--input-border);
+      color: var(--wine-light);
+      border-radius: 10px;
+      padding: 5px 10px;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .preset-chip:hover, .preset-chip.active {
+      background: var(--accent-rose);
+      color: #FFF;
+      border-color: var(--accent-rose);
+    }
+    .radio-pill-label {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      border: 1.5px solid var(--input-border);
+      background: var(--input-bg);
+      border-radius: 12px;
+      padding: 10px 8px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--wine-light);
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: center;
+    }
+    .radio-pill-label input {
+      display: none;
+    }
+    .radio-pill-label.active {
+      border-color: var(--accent-rose);
+      background: var(--tab-active-bg);
+      color: var(--accent-rose);
+      box-shadow: 0 0 0 2px var(--Focus-ring);
+    }
+
+    /* Вкладки Мастерской */
+    .admin-nav-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 18px;
+      border-bottom: 1.5px solid var(--modal-border);
+      padding-bottom: 8px;
+    }
+    .admin-tab-btn {
+      flex: 1;
+      background: transparent;
+      border: none;
+      padding: 8px 10px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .admin-tab-btn.active {
+      background: var(--tab-active-bg);
+      color: var(--accent-rose);
+    }
+    .admin-tab-content {
+      display: none;
+    }
+    .admin-tab-content.active {
+      display: block;
+    }
+
+    /* Список купонов в панели */
+    .admin-coupons-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 16px;
+      max-height: 340px;
+      overflow-y: auto;
+      padding-right: 6px;
+      padding-bottom: 8px;
+      scrollbar-width: thin;
+      scrollbar-color: var(--accent-rose) var(--mystery-bg);
+    }
+    .admin-coupons-list::-webkit-scrollbar {
+      width: 6px;
+    }
+    .admin-coupons-list::-webkit-scrollbar-track {
+      background: var(--mystery-bg);
+      border-radius: 10px;
+    }
+    .admin-coupons-list::-webkit-scrollbar-thumb {
+      background: var(--accent-rose);
+      border-radius: 10px;
+    }
+
+    .admin-coupon-item {
+      background: var(--item-bg);
+      border: 1px solid var(--modal-border);
+      border-radius: 14px;
+      padding: 12px 14px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      transition: all 0.2s ease;
+    }
+    .admin-coupon-item.unselected {
+      opacity: 0.55;
+      background: var(--item-unselected-bg);
+      border-color: var(--input-border);
+    }
+    .coupon-check-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      border: 2px solid var(--input-border);
+      background: var(--input-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      font-size: 16px;
+      font-weight: 700;
+      color: transparent;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      user-select: none;
+      margin-top: 2px;
+    }
+    .coupon-check-btn:hover {
+      border-color: var(--accent-rose);
+      background: var(--tab-active-bg);
+    }
+    .coupon-check-btn.checked {
+      background: var(--btn-activate-grad);
+      border-color: var(--accent-rose);
+      color: #FFF;
+      box-shadow: 0 3px 10px var(--btn-activate-shadow);
+      transform: scale(1.05);
+    }
+
+    .admin-coupon-info {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      min-width: 0;
+      flex: 1;
+      cursor: pointer;
+    }
+    .admin-coupon-icon {
+      font-size: 24px;
+      flex-shrink: 0;
+      line-height: 1.2;
+    }
+    .admin-coupon-text {
+      min-width: 0;
+      flex: 1;
+    }
+    .admin-coupon-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--wine-dark);
+      line-height: 1.35;
+      margin-bottom: 4px;
+      word-break: break-word;
+    }
+    .admin-coupon-desc {
+      font-size: 11px;
+      color: var(--text-muted);
+      line-height: 1.45;
+      word-break: break-word;
+    }
+    .admin-coupon-actions {
+      display: flex;
+      gap: 6px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .btn-item-action {
+      background: var(--input-bg);
+      border: 1px solid var(--input-border);
+      border-radius: 8px;
+      padding: 5px 8px;
+      font-size: 11px;
+      cursor: pointer;
+      font-weight: 600;
+      color: var(--wine-light);
+      transition: all 0.15s;
+    }
+    .btn-item-action:hover {
+      background: var(--tab-active-bg);
+      border-color: var(--accent-rose);
+      color: var(--accent-rose);
+    }
+    .btn-item-delete:hover {
+      background: rgba(231, 76, 60, 0.15);
+      border-color: #E74C3C;
+      color: #E74C3C;
+    }
+
+    /* Карточка добавления / редактирования желания */
+    .admin-editor-card {
+      background: var(--editor-bg);
+      border: 1.5px solid var(--modal-border);
+      border-radius: 14px;
+      padding: 14px;
+      margin-bottom: 14px;
+    }
+    .admin-editor-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--wine-dark);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .admin-emoji-select-row {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+    }
+    .admin-emoji-chip {
+      background: var(--input-bg);
+      border: 1px solid var(--input-border);
+      border-radius: 8px;
+      padding: 4px 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .admin-emoji-chip.active, .admin-emoji-chip:hover {
+      background: var(--tab-active-bg);
+      border-color: var(--accent-rose);
+      transform: scale(1.08);
+    }
+
+    /* Emoji Grid 4x2 */
     .emoji-row {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -625,8 +1080,8 @@
       margin-bottom: 16px;
     }
     .emoji-btn {
-      background: #FFF5F8;
-      border: 1.5px solid #F0D5DF;
+      background: var(--mystery-bg);
+      border: 1.5px solid var(--input-border);
       border-radius: 12px;
       padding: 10px 4px;
       font-size: 22px;
@@ -637,26 +1092,24 @@
       transition: all 0.2s;
     }
     .emoji-btn.active {
-      background: #FFE8F0;
+      background: var(--tab-active-bg);
       border-color: var(--accent-rose);
-      box-shadow: 0 0 0 2px rgba(231, 84, 128, 0.25);
+      box-shadow: 0 0 0 2px var(--Focus-ring);
     }
     .emoji-btn:hover {
-      background: #FFDEE9;
+      background: var(--tab-active-bg);
       border-color: var(--accent-rose);
     }
 
-    /* Симметричная мягкая плашка */
     .soft-notice {
-      background: #FFF7F9;
+      background: var(--mystery-bg);
       border-radius: 14px;
       padding: 14px 16px;
       font-size: 12px;
-      color: #6E4453;
+      color: var(--wine-light);
       margin-bottom: 18px;
       line-height: 1.5;
-      border: 1.5px solid #F2D2DE;
-      box-shadow: 0 2px 8px rgba(231, 84, 128, 0.04);
+      border: 1.5px solid var(--modal-border);
     }
 
     .rules-list {
@@ -671,80 +1124,28 @@
       line-height: 1.5;
       padding-left: 30px;
       position: relative;
-    }
-    .rules-list li::before {
-      content: '✨';
-      position: absolute;
-      left: 0;
-      top: 0;
-    }
-
-    /* Custom Toast */
-    .toast-container {
-      position: fixed;
-      bottom: 24px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 200;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      pointer-events: none;
-    }
-    .toast {
-      background: rgba(63, 29, 44, 0.95);
-      color: #FFF;
-      padding: 12px 20px;
-      border-radius: 30px;
-      font-size: 13px;
-      font-weight: 500;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-      backdrop-filter: blur(8px);
-      animation: toastIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-      pointer-events: auto;
-      text-align: center;
-      max-width: 90vw;
-    }
-    @keyframes toastIn {
-      from { transform: translateY(20px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
-    @keyframes toastOut {
-      from { transform: translateY(0); opacity: 1; }
-      to { transform: translateY(15px); opacity: 0; }
-    }
-
-    .page-footer {
-      text-align: center;
-      margin-top: 36px;
-      font-size: 12px;
-      color: var(--text-muted);
-    }
-    .btn-text-reset {
-      background: none;
-      border: none;
-      color: var(--text-muted);
-      cursor: pointer;
-      font-size: 12px;
-      text-decoration: underline;
-      margin-top: 6px;
-    }
-    .btn-text-reset:hover {
       color: var(--wine-dark);
     }
   </style>
 </head>
 <body>
 
-  <!-- Floating Falling Petals Background -->
+  <!-- Falling Petals Background -->
   <div class="petals-container" id="petals"></div>
 
+  <!-- Верхняя полоса Мастерской (видна создателю купонов) -->
+  <div class="admin-banner" id="adminBanner">
+    <span>✨ <strong>Мастерская желаний</strong></span>
+    <button class="btn-admin-gear" onclick="openAdminModal()">🪄 Управление купонами</button>
+  </div>
+
   <div class="container">
-    <!-- Utility header bar -->
-    <div class="utility-bar">
-      <button class="partner-badge" onclick="openPartnerModal()" id="partnerBadge">
-        💌 Любимый: <span id="partnerBadgeText">Не указан</span> ✏️
-      </button>
+    <!-- Utility bar: быстрое переключение между базовой темой (Нежной/Мужской) и Винной + звук -->
+    <div class="utility-bar" id="utilityBar">
+      <div class="theme-quick-switch" id="quickThemeSwitch">
+        <button type="button" class="theme-pill-btn active" id="quickThemeBase" onclick="switchVisualTheme('base')">🌸 Нежная</button>
+        <button type="button" class="theme-pill-btn" id="quickThemePassion" onclick="switchVisualTheme('passion')">🍷 Винная</button>
+      </div>
 
       <button class="sound-toggle" onclick="toggleSound()" id="soundToggleBtn">
         🔊 Звук: <span id="soundStatusText">Вкл</span>
@@ -753,16 +1154,16 @@
 
     <!-- Header Content -->
     <header>
-      <div class="badge">Для самой любимой</div>
-      <h1>Купоны Любви</h1>
-      <p class="subtitle">Стирай защитный слой пальчиком и выбирай то, чего хочется прямо сейчас ✨</p>
+      <div class="badge" id="headerBadge">Для самой любимой</div>
+      <h1 id="mainTitle" onclick="handleTitleTap()">Купоны Любви</h1>
+      <p class="subtitle">Стирай защитный слой и выбирай то, чего хочется прямо сейчас ✨</p>
 
-      <!-- Monthly Balance Tracker -->
+      <!-- Balance Tracker -->
       <div class="balance-box">
         <div class="balance-stats">
           <div>
             <span class="stat-number" id="usedCountText">0 / 8</span>
-            <span class="stat-label">Использовано в этом месяце</span>
+            <span class="stat-label" id="periodStatsLabel">Использовано в этом месяце</span>
           </div>
           <div>
             <span class="stat-number" id="customCountText">0 / 3</span>
@@ -779,7 +1180,8 @@
           📜 Правила
         </button>
         <button class="btn-secondary" onclick="openCustomWishModal()" id="customWishBtn">
-          🪄 Загадать свой каприз (<span id="customSlotsLeft">3</span>/3)
+          🪄 Загадать свой каприз
+          <span class="slot-pill" id="customSlotsBadge">3 из 3</span>
         </button>
       </div>
 
@@ -796,8 +1198,22 @@
     <div class="coupons-grid" id="couponsGrid"></div>
 
     <div class="page-footer">
-      <div>8 особенных поводов для улыбки в месяц ❤️</div>
-      <button class="btn-text-reset" onclick="openResetConfirmModal()">Начать новый месяц (сбросить)</button>
+      <div id="footerSubtitle">Особенные поводы для улыбки ❤️</div>
+      <button class="btn-text-reset" onclick="openResetConfirmModal()" id="btnResetPeriod">Начать новый период (обновить)</button>
+
+      <!-- Вирусный блок для публичного релиза (виден получателю подарка) -->
+      <div id="viralPromoBlock" style="display: none; margin-top: 24px; padding: 16px; background: var(--card-bg); border: 1.5px dashed var(--border-dash); border-radius: 18px; text-align: center;">
+        <div style="font-size: 13px; font-weight: 700; color: var(--wine-dark); margin-bottom: 4px;">Понравились купоны? 🎁</div>
+        <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px;">Создай такой же романтический сюрприз для своей половинки за 1 минуту</div>
+        <button type="button" class="btn-action btn-activate" style="width: auto; margin: 0 auto; padding: 9px 22px; font-size: 12px; border-radius: 20px;" onclick="startNewGiftCreation()">
+          ✨ Создать свои купоны
+        </button>
+      </div>
+
+      <!-- Дополнительная ссылка в футере для создателя -->
+      <div id="creatorFooterLink" style="display: none; margin-top: 12px;">
+        <button class="btn-text-reset" onclick="openAdminModal()">🪄 Редактировать или создать новые купоны</button>
+      </div>
     </div>
   </div>
 
@@ -819,11 +1235,23 @@
     </div>
   </div>
 
+  <!-- Modal: Rules -->
+  <div class="modal-overlay" id="rulesModal">
+    <div class="modal">
+      <h2>Правила купонов 📜</h2>
+      <p class="lead">Маленькие договорённости для самого уютного времени вместе</p>
+      
+      <ul class="rules-list" id="rulesListDynamic"></ul>
+
+      <button class="btn-action btn-activate" id="rulesAgreeBtn" onclick="closeRulesModal()">Понятно и согласна 🥰</button>
+    </div>
+  </div>
+
   <!-- Modal: Custom Wish -->
   <div class="modal-overlay" id="wishModal">
     <div class="modal">
       <h2>Твой персональный каприз 🪄</h2>
-      <p class="lead">У тебя есть ровно 3 особых желания на этот месяц, которые ты можешь придумать сама!</p>
+      <p class="lead" id="customWishIntroText">Придумай своё особенное желание на этот период!</p>
 
       <div class="form-group">
         <label>Выбери иконку настроения:</label>
@@ -832,165 +1260,314 @@
           <button type="button" class="emoji-btn" onclick="selectEmoji('🥂', this)">🥂</button>
           <button type="button" class="emoji-btn" onclick="selectEmoji('🍕', this)">🍕</button>
           <button type="button" class="emoji-btn" onclick="selectEmoji('🚗', this)">🚗</button>
-          <button type="button" class="emoji-btn" onclick="selectEmoji('🛁', this)">🛁</button>
-          <button type="button" class="emoji-btn" onclick="selectEmoji('🎁', this)">🎁</button>
-          <button type="button" class="emoji-btn" onclick="selectEmoji('☕', this)">☕</button>
-          <button type="button" class="emoji-btn" onclick="selectEmoji('🍓', this)">🍓</button>
+          <button type="button" class="emoji-btn" onclick="selectEmoji('🍷', this)">🍷</button>
+          <button type="button" class="emoji-btn" onclick="selectEmoji('🎮', this)">🎮</button>
+          <button type="button" class="emoji-btn" onclick="selectEmoji('💆‍♂️', this)">💆‍♂️</button>
+          <button type="button" class="emoji-btn" onclick="selectEmoji('🎬', this)">🎬</button>
         </div>
       </div>
 
       <div class="form-group">
-        <label for="wishTitle">Чего тебе хочется?</label>
+        <label>Чего тебе хочется?</label>
         <textarea id="wishTitle" placeholder="Например: Поехать смотреть на ночной город / Приготовить вместе пиццу..."></textarea>
       </div>
 
       <div class="soft-notice">
-        💬 <strong>Свобода выбора:</strong> Ты можешь активировать купоны в любом темпе — хоть несколько дней подряд, когда душе хочется праздника!
+        💬 <strong>Свобода выбора:</strong> Ты можешь активировать купоны в любом темпе — когда душе хочется праздника!
       </div>
 
-      <div style="display: flex; gap: 10px;">
-        <button class="btn-action btn-quick-reveal" style="flex:1;" onclick="closeWishModal()">Отмена</button>
-        <button class="btn-action btn-activate" style="flex:2;" onclick="saveCustomWish()">💫 Добавить каприз</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal: Telegram Username Settings -->
-  <div class="modal-overlay" id="partnerModal">
-    <div class="modal">
-      <h2>Telegram любимого 💌</h2>
-      <p class="lead">Укажи никнейм в Telegram (без @), чтобы купоны отправлялись сразу в личный диалог с ним!</p>
-
-      <div class="form-group">
-        <label for="partnerTgInput">Telegram Username любимого:</label>
-        <input type="text" id="partnerTgInput" placeholder="например: alex_love">
-      </div>
-
-      <div class="soft-notice">
-        💡 Если оставить поле пустым, при активации купона откроется стандартный выбор чата в Telegram.
-      </div>
-
-      <div style="display: flex; gap: 10px;">
-        <button class="btn-action btn-quick-reveal" style="flex:1;" onclick="closePartnerModal()">Закрыть</button>
-        <button class="btn-action btn-activate" style="flex:2;" onclick="savePartnerTg()">Сохранить</button>
+      <div style="display: flex; flex-direction: column; gap: 10px;">
+        <button class="btn-action btn-activate" onclick="saveCustomWish()">✨ Добавить в мои купоны</button>
+        <button class="btn-action btn-quick-reveal" onclick="closeWishModal()">Отмена</button>
       </div>
     </div>
   </div>
 
-  <!-- Modal: Rules -->
-  <div class="modal-overlay" id="rulesModal">
-    <div class="modal">
-      <h2>Правила купонов 📜</h2>
-      <p class="lead">Простые законы заботы и уюта:</p>
-
-      <ul class="rules-list">
-        <li><strong>Всё по любви и взаимности:</strong> Купоны созданы для радости, поэтому каждое желание делается искренне и с заботой друг о друге.</li>
-        <li><strong>1 желание в день:</strong> Чтобы каждое желание приносило максимум удовольствия и внимания, в один день активируется только один купон. Если активировала случайно или передумала — внизу купона всегда есть кнопка «↩️ Отменить активацию», чтобы вернуть его или выбрать другое желание!</li>
-        <li><strong>Всегда найдём альтернативу:</strong> Если любимый занят, нет сил и ресурсов или желание не по душе — без проблем, мы в любом случае перенесём его на потом или вместе подберём классную замену.</li>
-        <li><strong>Срок действия желаний:</strong> Обычные купоны действуют сегодня до 00:00. Но для желаний, которые физически невозможно исполнить прямо сегодня (например, <strong>«Завтрак в постель»</strong>, утренний кофе или любые похожие утренние капризы 🥐) — купон действует на следующее утро! А <strong>поездки</strong>, приключения и масштабные планы мы спокойно планируем на удобный совместный день или выходные 🚗.</li>
-        <li><strong>В пределах реальности:</strong> Капризы должны быть осуществимы в реальной жизни (полёт на Марс или достать звезду с неба пока отложим ✨).</li>
-        <li><strong>8 купонов на месяц:</strong> Всего в твоём распоряжении 8 купонов в месяц (5 готовых сюрпризов + 3 твоих личных каприза).</li>
-        <li><strong>В твоём темпе:</strong> Никаких ограничений по дням недели! Ты можешь тратить их хоть несколько дней подряд, когда душе хочется тепла и праздника.</li>
-        <li><strong>3 личных каприза:</strong> Ты можешь придумать любые 3 своих желания через кнопку «Загадать свой каприз».</li>
-        <li><strong>Без спешки с выбором:</strong> Не обязательно тратить купоны сразу — каждый купон спокойно дождётся своего уютного дня.</li>
-      </ul>
-
-      <button class="btn-action btn-activate" onclick="closeRulesModal()">Всё понятно, я согласна 🥰</button>
-    </div>
-  </div>
-
-  <!-- Modal: Confirm Reset -->
+  <!-- Modal: Reset Confirmation -->
   <div class="modal-overlay" id="confirmResetModal">
-    <div class="modal">
-      <h2>Начать новый месяц? 🔄</h2>
-      <p class="lead">Все 8 купонов снова будут скрыты защитным слоем, а счётчик месяца обнулится. Готова к новой порции заботы?</p>
+    <div class="modal" style="text-align: center;">
+      <div style="font-size: 42px; margin-bottom: 10px;">🔄</div>
+      <h2>Начать заново?</h2>
+      <p class="lead" id="resetModalLeadText" style="margin-bottom: 24px;">
+        Все купоны снова будут скрыты защитным слоем, а счётчик периода обнулится. Начать заново?
+      </p>
 
-      <div style="display: flex; gap: 10px;">
-        <button class="btn-action btn-quick-reveal" style="flex:1;" onclick="closeResetConfirmModal()">Отмена</button>
-        <button class="btn-action btn-activate" style="flex:1; background: #C0392B;" onclick="confirmResetAll()">Начать заново</button>
+      <div style="display: flex; flex-direction: column; gap: 10px;">
+        <button class="btn-action btn-activate" onclick="confirmResetAll()">Да, обновить период</button>
+        <button class="btn-action btn-quick-reveal" onclick="closeResetConfirmModal()">Отмена</button>
       </div>
     </div>
   </div>
 
-  <!-- Toast Notification Container -->
+  <!-- Modal: Admin Settings (Мастерская желаний) -->
+  <div class="modal-overlay" id="adminModal">
+    <div class="modal">
+      <h2>✨ Мастерская желаний</h2>
+      <p class="lead">Настрой получателя, тему, лимиты и отправь короткую ссылку половинке</p>
+
+      <div class="admin-nav-tabs">
+        <button type="button" class="admin-tab-btn active" id="tabBtnSettings" onclick="switchAdminTab('settings')">
+          ⚙️ 1. Настройки и тема
+        </button>
+        <button type="button" class="admin-tab-btn" id="tabBtnCoupons" onclick="switchAdminTab('coupons')">
+          🎟️ 2. Список желаний (<span id="adminCouponsTabCount">0/0</span>)
+        </button>
+      </div>
+
+      <!-- Вкладка 1: Настройки получателя, темы, периода, лимитов и Telegram -->
+      <div class="admin-tab-content active" id="tabContentSettings">
+        <div class="form-group">
+          <label>Кому подарок (автоматически подберёт базовую тему и купоны):</label>
+          <div class="radio-pill-group">
+            <label class="radio-pill-label active" id="radioRecipientHer" onclick="selectRecipientRadio('her')">
+              <input type="radio" name="adminRecipient" value="her" checked> 👩 Девушке
+            </label>
+            <label class="radio-pill-label" id="radioRecipientHim" onclick="selectRecipientRadio('him')">
+              <input type="radio" name="adminRecipient" value="him"> 👨 Парню
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Атмосфера оформления:</label>
+          <div class="radio-pill-group">
+            <label class="radio-pill-label active" id="radioThemeBase" onclick="selectAdminThemeRadio('base')">
+              <input type="radio" name="adminTheme" value="base" checked> <span id="radioThemeBaseText">🌸 Нежная (базовая)</span>
+            </label>
+            <label class="radio-pill-label" id="radioThemePassion" onclick="selectAdminThemeRadio('passion')">
+              <input type="radio" name="adminTheme" value="passion"> 🍷 Винная с золотом
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Обращение на бейдже вверху:</label>
+          <input type="text" id="adminGirlTitle" placeholder="Для самой любимой" value="Для самой любимой">
+        </div>
+
+        <div class="form-group">
+          <label>Твой Telegram (без @):</label>
+          <input type="text" id="adminTgInput" placeholder="например: alex_love">
+          <span style="font-size: 11px; color: var(--text-muted); display: block; margin-top: 4px;">Чтобы активированные купоны прилетали сразу в чат с тобой</span>
+        </div>
+
+        <div class="form-group">
+          <label>Период действия купонов:</label>
+          <div class="radio-pill-group">
+            <label class="radio-pill-label active" id="radioLabelMonth" onclick="selectPeriodRadio('month')">
+              <input type="radio" name="adminPeriod" value="month" checked> 📅 В месяц
+            </label>
+            <label class="radio-pill-label" id="radioLabelWeek" onclick="selectPeriodRadio('week')">
+              <input type="radio" name="adminPeriod" value="week"> 🗓️ В неделю
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label id="adminMaxTotalLabel">Купонов за период (готовых желаний):</label>
+          <input type="number" id="adminMaxTotal" min="0" max="31" placeholder="Например: 5" oninput="validateAdminTotalInput()">
+          <span id="adminTotalHint" style="font-size: 11px; color: var(--text-muted); display: block; margin-top: 4px;">Максимум: 31 в месяц (1 желание в день)</span>
+          <div class="Quick-presets" id="adminTotalPresets"></div>
+        </div>
+
+        <div class="form-group">
+          <label id="adminMaxCustomLabel">Сколько своих капризов можно загадать:</label>
+          <input type="number" id="adminMaxCustom" min="0" max="20" placeholder="Например: 3" oninput="validateAdminCustomInput()">
+          <span id="adminCustomHint" style="font-size: 11px; color: var(--text-muted); display: block; margin-top: 4px;">Максимум: 20 в месяц (1 желание в день)</span>
+          <div class="Quick-presets" id="adminCustomPresets"></div>
+        </div>
+
+        <div id="adminSummaryPill" class="soft-notice" style="margin-bottom: 16px; padding: 10px 14px; font-weight: 600; text-align: center;">
+          Всего желаний: 8 из 31 (1 желание в день)
+        </div>
+
+        <button type="button" class="btn-action btn-activate" style="margin-top: 8px;" onclick="goToCouponsTab()">
+          Далее: Выбрать активные купоны ➔
+        </button>
+      </div>
+
+      <!-- Вкладка 2: Управление и выбор купонов -->
+      <div class="admin-tab-content" id="tabContentCoupons">
+        <!-- Переключатель наборов шаблонов -->
+        <div style="margin-bottom: 12px;">
+          <label style="font-size: 11px; font-weight: 700; color: var(--wine-light); display: block; margin-bottom: 6px;">Загрузить готовый набор желаний:</label>
+          <div class="Quick-presets">
+            <button type="button" class="preset-chip" id="btnPresetBase" onclick="loadTemplatePreset('base')">🌸 Основной набор (Для неё)</button>
+            <button type="button" class="preset-chip" onclick="loadTemplatePreset('passion')">🍷 Особый вечер (Винный набор)</button>
+          </div>
+        </div>
+
+        <!-- Блок статуса выбора -->
+        <div id="adminCouponsStatusNotice" class="soft-notice" style="margin-bottom: 14px; font-size: 12px; line-height: 1.5;"></div>
+
+        <!-- Карточка добавления / редактирования желания -->
+        <div class="admin-editor-card" id="adminEditorCard" style="display: none;">
+          <div class="admin-editor-title">
+            <span id="adminEditorHeading">➕ Новое желание</span>
+            <button type="button" class="btn-item-action" onclick="closeCouponEditor()">✕ Закрыть</button>
+          </div>
+          <input type="hidden" id="editCouponId" value="">
+          
+          <div class="form-group" style="margin-bottom: 10px;">
+            <label style="font-size: 11px;">Иконка желания:</label>
+            <div class="admin-emoji-select-row" id="adminEmojiSelector">
+              <button type="button" class="admin-emoji-chip active" onclick="setEditorEmoji('💆‍♀️', this)">💆‍♀️</button>
+              <button type="button" class="admin-emoji-chip" onclick="setEditorEmoji('🥐', this)">🥐</button>
+              <button type="button" class="admin-emoji-chip" onclick="setEditorEmoji('🎬', this)">🎬</button>
+              <button type="button" class="admin-emoji-chip" onclick="setEditorEmoji('🛁', this)">🛁</button>
+              <button type="button" class="admin-emoji-chip" onclick="setEditorEmoji('🍰', this)">🍰</button>
+              <button type="button" class="admin-emoji-chip" onclick="setEditorEmoji('👑', this)">👑</button>
+              <button type="button" class="admin-emoji-chip" onclick="setEditorEmoji('🍷', this)">🍷</button>
+              <button type="button" class="admin-emoji-chip" onclick="setEditorEmoji('🎮', this)">🎮</button>
+              <button type="button" class="admin-emoji-chip" onclick="setEditorEmoji('🥩', this)">🥩</button>
+              <button type="button" class="admin-emoji-chip" onclick="setEditorEmoji('🍻', this)">🍻</button>
+              <button type="button" class="admin-emoji-chip" onclick="setEditorEmoji('🕯️', this)">🕯️</button>
+              <button type="button" class="admin-emoji-chip" onclick="setEditorEmoji('🥂', this)">🥂</button>
+              <button type="button" class="admin-emoji-chip" onclick="setEditorEmoji('💐', this)">💐</button>
+              <button type="button" class="admin-emoji-chip" onclick="setEditorEmoji('🚗', this)">🚗</button>
+              <button type="button" class="admin-emoji-chip" onclick="setEditorEmoji('🎲', this)">🎲</button>
+            </div>
+            <input type="text" id="editCouponIconCustom" placeholder="Или свой эмодзи (например: 🍓)" style="padding: 7px 10px; font-size: 13px;" oninput="onCustomEmojiInput(this.value)">
+          </div>
+
+          <div class="form-group" style="margin-bottom: 10px;">
+            <label style="font-size: 11px;">Название купона:</label>
+            <input type="text" id="editCouponTitle" placeholder="Например: Романтический ужин при свечах" style="padding: 9px 10px; font-size: 13px;">
+          </div>
+
+          <div class="form-group" style="margin-bottom: 12px;">
+            <label style="font-size: 11px;">Описание сюрприза:</label>
+            <textarea id="editCouponDesc" placeholder="Подробности сюрприза..." style="padding: 9px 10px; font-size: 12px; min-height: 60px;"></textarea>
+          </div>
+
+          <div style="display: flex; gap: 8px;">
+            <button type="button" class="btn-action btn-activate" style="padding: 9px; font-size: 12px;" onclick="saveCouponFromEditor()">💾 Сохранить желание</button>
+            <button type="button" class="btn-action btn-quick-reveal" style="padding: 9px; font-size: 12px;" onclick="closeCouponEditor()">Отмена</button>
+          </div>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 18px; margin-bottom: 16px; padding: 0 2px;">
+          <span style="font-size: 14px; font-weight: 700; color: var(--wine-dark); letter-spacing: 0.2px;">Купоны в библиотеке</span>
+          <button type="button" class="btn-action btn-activate" style="width: auto; padding: 8px 18px; font-size: 12px; border-radius: 20px;" onclick="openAddCouponEditor()">
+            ➕ Добавить купон
+          </button>
+        </div>
+
+        <!-- Контейнер списка купонов -->
+        <div class="admin-coupons-list" id="adminCouponsList"></div>
+
+        <div class="soft-notice" style="margin-top: 16px; text-align: center;">
+          💡 В подарок войдут только те купоны, которые отмечены галочкой
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 12px;">
+          <button class="btn-action btn-activate" id="btnCopyGiftLink" onclick="generateAndCopyGiftLink()">
+            📋 Скопировать короткую ссылку-подарок
+          </button>
+          <button class="btn-action btn-quick-reveal" onclick="saveAdminSettingsLocally()">
+            Сохранить и закрыть
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
   <div class="toast-container" id="toastContainer"></div>
 
   <script>
-    const MAX_TOTAL_COUPONS = 8;
-    const MAX_CUSTOM_WISHES = 3;
-
-    /* 5 готовых сбалансированных желаний */
-    const PRESET_COUPONS = [
-      {
-        id: "p1",
-        code: "LOVE-001",
-        title: "Массаж и полный релакс",
-        desc: "Заботливый массаж спины, плеч или ножек под спокойную музыку до полного расслабления.",
-        icon: "💆‍♀️",
-        isCustom: false,
-        isRevealed: false,
-        status: "available",
-        activatedDate: null,
-        activatedDateRaw: null
-      },
-      {
-        id: "p2",
-        code: "LOVE-002",
-        title: "Завтрак и кофе в постель",
-        desc: "Твой любимый горячий напиток и утренние вкусняшки с подачей прямо под одеяло.",
-        icon: "🥐",
-        isCustom: false,
-        isRevealed: false,
-        status: "available",
-        activatedDate: null,
-        activatedDateRaw: null
-      },
-      {
-        id: "p3",
-        code: "LOVE-003",
-        title: "Вечер твоего кино",
-        desc: "Ты выбираешь абсолютно любой фильм или сериал. Я смотрю с тобой, обнимаю и не комментирую сюжет!",
-        icon: "🎬",
-        isCustom: false,
-        isRevealed: false,
-        status: "available",
-        activatedDate: null,
-        activatedDateRaw: null
-      },
-      {
-        id: "p4",
-        code: "LOVE-004",
-        title: "Ванна при свечах и спа-релакс",
-        desc: "Я наберу для тебя горячую ванну с ароматной пеной, зажгу свечи, включу расслабляющую музыку и принесу любимый напиток или фрукты.",
-        icon: "🛁",
-        isCustom: false,
-        isRevealed: false,
-        status: "available",
-        activatedDate: null,
-        activatedDateRaw: null
-      },
-      {
-        id: "p5",
-        code: "LOVE-005",
-        title: "Сладкий каприз",
-        desc: "Твой любимый десерт, шоколад или эклеры с доставкой прямо в твои ручки в любое время.",
-        icon: "🍰",
-        isCustom: false,
-        isRevealed: false,
-        status: "available",
-        activatedDate: null,
-        activatedDateRaw: null
-      }
+    /* 1. ШАБЛОНЫ ДЛЯ ДЕВУШКИ (p1 - p15) */
+    const PRESET_HER = [
+      { id: "p1", code: "LOVE-001", title: "Массаж и полный релакс", desc: "Заботливый массаж спины, плеч или ножек под спокойную музыку до полного расслабления.", icon: "💆‍♀️" },
+      { id: "p2", code: "LOVE-002", title: "Завтрак и кофе в постель", desc: "Твой любимый горячий напиток и утренние вкусняшки с подачей прямо под одеяло.", icon: "🥐" },
+      { id: "p3", code: "LOVE-003", title: "Вечер твоего кино", desc: "Ты выбираешь абсолютно любой фильм или сериал. Я смотрю с тобой, обнимаю и не комментирую сюжет!", icon: "🎬" },
+      { id: "p4", code: "LOVE-004", title: "Ванна при свечах и спа-релакс", desc: "Я наберу для тебя горячую ванну с ароматной пеной, зажгу свечи, включу расслабляющую музыку и принесу любимый напиток или фрукты.", icon: "🛁" },
+      { id: "p5", code: "LOVE-005", title: "Сладкий каприз", desc: "Твой любимый десерт, шоколад или эклеры с доставкой прямо в твои ручки в любое время.", icon: "🍰" },
+      { id: "p6", code: "LOVE-006", title: "День без домашних хлопот", desc: "Сегодня посуда, уборка и любые бытовые заботы полностью на мне. Твоя задача — только отдыхать и наслаждаться днём!", icon: "👑" },
+      { id: "p7", code: "LOVE-007", title: "Свидание-сюрприз", desc: "Я сам продумываю весь вечер от локации до приятных мелочей. С тебя только красивый наряд и отличное настроение!", icon: "✨" },
+      { id: "p8", code: "LOVE-008", title: "Кулинарный вечер вдвоём", desc: "Включаем любимый плейлист, открываем напитки и вместе готовим что-то вкусное: домашнюю пиццу, пасту или суши.", icon: "🍝" },
+      { id: "p9", code: "LOVE-009", title: "Безлимитные объятия и нежности", desc: "Тёплые объятия, поцелуи и ласка по первому твоему требованию в течение всего сегодняшнего дня.", icon: "🤗" },
+      { id: "p10", code: "LOVE-010", title: "Прогулка с любимым кофе", desc: "Берём любимый кофе или авторский чай и идём неспешно гулять по красивым местам или парку, держась за руки.", icon: "☕" },
+      { id: "p11", code: "LOVE-011", title: "Романтический ужин от шефа", desc: "Я сам приготовлю для тебя вкусный ужин, зажгу свечи и красиво сервирую стол для нас двоих.", icon: "🍽️" },
+      { id: "p12", code: "LOVE-012", title: "Уютный разговор по душам", desc: "Вечер без телефонов и суеты: завариваем вкусный травяной чай, укутываемся в плед и искренне болтаем обо всём на свете.", icon: "🍵" },
+      { id: "p13", code: "LOVE-013", title: "Цветы или сюрприз без повода", desc: "Нежный букет твоих любимых цветов или милый сюрприз просто для того, чтобы ты улыбнулась.", icon: "💐" },
+      { id: "p14", code: "LOVE-014", title: "Мини-путешествие в новое место", desc: "Садимся в машину или транспорт и едем исследовать красивую смотровую площадку, уютный городок или новое атмосферное место.", icon: "🚗" },
+      { id: "p15", code: "LOVE-015", title: "Вечер настолок и веселья", desc: "Вечер совместных игр, вкусных снеков и смеха. Играем в любимую настолку или приставку в уютной домашней атмосфере.", icon: "🎲" }
     ];
+
+    /* 2. ШАБЛОНЫ ДЛЯ ПАРНЯ (m1 - m15) */
+    const PRESET_HIM = [
+      { id: "m1", code: "BRO-001", title: "Королевский массаж спины и шеи", desc: "Долгий расслабляющий массаж спины, плеч и головы после рабочего дня или тренировки.", icon: "💆‍♂️" },
+      { id: "m2", code: "BRO-002", title: "Любимое блюдо или сочный стейк", desc: "Приготовлю твоё самое любимое блюдо (или закажем лучшие бургеры/стейк) с любимым напитком.", icon: "🥩" },
+      { id: "m3", code: "BRO-003", title: "Вечер видеоигр или друзей без вопросов", desc: "Полный карт-бланш на вечер за приставкой, ПК или встречу с друзьями. Я только принесу вкусные снеки!", icon: "🎮" },
+      { id: "m4", code: "BRO-004", title: "Почесать спинку перед сном", desc: "Нежные почесушки спинки и головы под фильм или перед сном столько, сколько захочешь.", icon: "✨" },
+      { id: "m5", code: "BRO-005", title: "Завтрак чемпиона в постель", desc: "Сытный горячий завтрак и свежесваренный кофе прямо в кровать в твоё выходное утро.", icon: "🍳" },
+      { id: "m6", code: "BRO-006", title: "Киновечер твоего выбора", desc: "Смотрим любой боевик, фантастику, стендап или матч на твой выбор с чипсами и пенным.", icon: "🎬" },
+      { id: "m7", code: "BRO-007", title: "День полного чилла без быта", desc: "Никаких поручений, магазинов и уборок сегодня. Твоя единственная задача — кайфовать и отдыхать.", icon: "👑" },
+      { id: "m8", code: "BRO-008", title: "Ночная поездка по городу", desc: "Берём кофе на заправке, включаем твой любимый плейлист на полную и катаемся по ночному городу.", icon: "🚗" },
+      { id: "m9", code: "BRO-009", title: "Пивной / снековый сет к вечеру", desc: "Организую идеальный набор твоих любимых закусок, сыров, орешков и напитков к вечеру.", icon: "🍻" },
+      { id: "m10", code: "BRO-010", title: "Победа в любом споре («Ты прав!»)", desc: "В любой дискуссии сегодня я безоговорочно соглашаюсь с твоим аргументом и признаю твою правоту.", icon: "🏆" },
+      { id: "m11", code: "BRO-011", title: "Совместная катка или настолка", desc: "С удовольствием сыграю с тобой в кооперативную игру на приставке, ПК или в настолку на желание.", icon: "🎲" },
+      { id: "m12", code: "BRO-012", title: "Сладкий десерт к чаю", desc: "Испеку или куплю твой любимый тортик, выпечку или десерт специально для тебя.", icon: "🍰" },
+      { id: "m13", code: "BRO-013", title: "Свидание по твоему сценарию", desc: "Идём туда, куда давно хотел ты: картинг, бар, бильярд, тир или просто уютный паб.", icon: "🔥" },
+      { id: "m14", code: "BRO-014", title: "Объятия и перезагрузка", desc: "Крепкие объятия, поддержка и тишина без лишних расспросов, когда нужно просто выдохнуть.", icon: "🤗" },
+      { id: "m15", code: "BRO-015", title: "Особенное желание для двоих", desc: "Исполню твоё самое сокровенное романтическое пожелание сегодня вечером.", icon: "🍷" }
+    ];
+
+    /* 3. ВЕЧЕРНИЕ РОМАНТИЧЕСКИЕ ШАБЛОНЫ («Особый вечер», s1 - s10, доступны всем, без пошлостей) */
+    const PRESET_PASSION = [
+      { id: "s1", code: "WINE-001", title: "Расслабляющий массаж при свечах", desc: "Отключаем телефоны, зажигаем свечи и включаем красивую музыку. Долгий нежный массаж с тёплым маслом без спешки.", icon: "🕯️" },
+      { id: "s2", code: "WINE-002", title: "Вечер твоих желаний", desc: "Сегодня правила вечера создаёшь только ты. Любая атмосфера, музыка или романтический каприз — всё для тебя.", icon: "✨" },
+      { id: "s3", code: "WINE-003", title: "Медленный танец вдвоём", desc: "Приглушённый свет, любимая мелодия, бокал любимого напитка и только мы вдвоём в объятиях друг друга.", icon: "🥂" },
+      { id: "s4", code: "WINE-004", title: "Тёплая ванна с пеной вдвоём", desc: "Ароматная пена, свечи, приятная музыка и полное расслабление в тёплой воде наедине.", icon: "🛁" },
+      { id: "s5", code: "WINE-005", title: "Секретная дегустация с закрытыми глазами", desc: "Вечер чувств и доверия: ты закрываешь глаза и угадываешь вкусы ягод, десертов, напитков и нежных прикосновений.", icon: "🍓" },
+      { id: "s6", code: "WINE-006", title: "Спонтанное ночное свидание", desc: "Срываемся вечером гулять под звёздами, пить горячий кофе или любоваться огнями ночного города.", icon: "🌙" },
+      { id: "s7", code: "WINE-007", title: "Нежное утреннее пробуждение", desc: "Разбужу тебя самыми тёплыми объятиями, поцелуями и ароматом свежего утреннего кофе.", icon: "☀️" },
+      { id: "s8", code: "WINE-008", title: "Вечер «Без телефонов и суеты»", desc: "С этой минуты и до самого утра все гаджеты отложены. Только разговоры по душам, настольная игра или музыка.", icon: "🍷" },
+      { id: "s9", code: "WINE-009", title: "Свидание как в первый раз", desc: "Наряжаемся красиво и встречаемся в уютном месте так, словно мы только что познакомились и хотим очаровать друг друга.", icon: "🌹" },
+      { id: "s10", code: "WINE-010", title: "Вечер полного внимания только для тебя", desc: "Весь сегодняшний вечер посвящён исключительно твоему отдыху, уюту, заботе и исполнению маленьких прихотей.", icon: "👑" }
+    ];
+
+    /* Единый словарь всех стандартных пресетов для 10-кратного сжатия ссылок */
+    const ALL_PRESETS_MAP = {};
+    [...PRESET_HER, ...PRESET_HIM, ...PRESET_PASSION].forEach(item => {
+      ALL_PRESETS_MAP[item.id] = item;
+    });
+
+    /* Конфигурация */
+    let appConfig = {
+      recipient: "her",     // "her" | "him"
+      theme: "romantic",    // "romantic" | "male" | "passion"
+      period: "month",      // "month" | "week"
+      maxCoupons: 5,
+      maxCustom: 3,
+      maxTotal: 8,
+      partnerTg: "",
+      girlTitle: "Для самой любимой"
+    };
 
     let coupons = [];
     let currentFilter = 'all';
     let selectedEmoji = '💖';
-    let partnerTelegram = "";
     let isSoundEnabled = true;
     let audioCtx = null;
     const scratchTimers = {};
-    let pendingCouponIdForTg = null;
+    let isAdminMode = false;
+    let titleTapCount = 0;
+    let titleTapTimeout = null;
+    let currentEditorEmoji = '💆‍♀️';
+
+    function makePresetInstances(presetList, targetSelectedCount) {
+      return presetList.map((item, idx) => ({
+        ...JSON.parse(JSON.stringify(item)),
+        isCustom: false,
+        isRevealed: false,
+        status: "available",
+        activatedDate: null,
+        activatedDateRaw: null,
+        selectedInGift: idx < targetSelectedCount
+      }));
+    }
 
     function getTodayKey() {
       const now = new Date();
@@ -1001,7 +1578,26 @@
       return new Date().toLocaleDateString('ru-RU', { day: 'numeric', month: 'short' });
     }
 
-    /* Audio system */
+    function pluralize(n, one, few, many) {
+      const abs = Math.abs(n) % 100;
+      const n1 = abs % 10;
+      if (abs > 10 && abs < 20) return many;
+      if (n1 > 1 && n1 < 5) return few;
+      if (n1 === 1) return one;
+      return many;
+    }
+
+    /* Простая функция хеширования строки подарка для защиты прогресса от перезаписи */
+    function computeGiftHash(str) {
+      let h = 2166136261 >>> 0;
+      for (let i = 0; i < str.length; i++) {
+        h ^= str.charCodeAt(i);
+        h = Math.imul(h, 16777619);
+      }
+      return "gift_" + (h >>> 0).toString(36) + "_" + str.length;
+    }
+
+    /* Звуковая подсистема */
     function initAudio() {
       if (!audioCtx) {
         const AudioContextClass = window.AudioContext || window.webkitAudioContext;
@@ -1103,29 +1699,252 @@
       }, 2600);
     }
 
-    /* Storage */
+    function getBaseThemeForRecipient(recipient) {
+      return (recipient || appConfig.recipient) === 'him' ? 'male' : 'romantic';
+    }
+
+    /* Применение визуальной темы (Базовая [Нежная / Мужская] или Винная) */
+    function applyThemeUI() {
+      document.body.classList.remove('theme-male', 'theme-passion');
+
+      const isHim = appConfig.recipient === 'him';
+      if (appConfig.theme === 'passion') {
+        document.body.classList.add('theme-passion');
+      } else if (appConfig.theme === 'male' || isHim) {
+        document.body.classList.add('theme-male');
+      }
+
+      const btnBase = document.getElementById('quickThemeBase');
+      const btnPas = document.getElementById('quickThemePassion');
+      if (btnBase) {
+        btnBase.innerText = isHim ? '🎩 Мужская' : '🌸 Нежная';
+        btnBase.classList.toggle('active', appConfig.theme !== 'passion');
+      }
+      if (btnPas) {
+        btnPas.classList.toggle('active', appConfig.theme === 'passion');
+      }
+
+      const radioThemeBaseText = document.getElementById('radioThemeBaseText');
+      if (radioThemeBaseText) {
+        radioThemeBaseText.innerText = isHim ? '🎩 Мужская (базовая)' : '🌸 Нежная (базовая)';
+      }
+
+      const btnPresetBase = document.getElementById('btnPresetBase');
+      if (btnPresetBase) {
+        btnPresetBase.innerText = isHim ? '👨 Основной набор (Для него)' : '🌸 Основной набор (Для неё)';
+      }
+    }
+
+    function switchVisualTheme(mode) {
+      const targetTheme = (mode === 'passion') ? 'passion' : getBaseThemeForRecipient();
+      appConfig.theme = targetTheme;
+      localStorage.setItem("love_coupons_config", JSON.stringify(appConfig));
+      applyThemeUI();
+      selectAdminThemeRadio(mode === 'passion' ? 'passion' : 'base');
+      renderCoupons();
+      const names = {
+        romantic: "🌸 Нежная классика",
+        male: "🎩 Мужской стиль",
+        passion: "🍷 Винная с золотом"
+      };
+      showToast(`Тема: ${names[targetTheme] || targetTheme}`);
+    }
+
+    /* Распаковка как компактного (#cfg=...), так и старого формата ссылки + защита прогресса! */
+    function checkAdminMode() {
+      const params = new URLSearchParams(window.location.search);
+      const hash = window.location.hash;
+
+      const cfgParam = params.get('cfg') || (hash.startsWith('#cfg=') ? hash.slice(5) : null);
+
+      if (cfgParam) {
+        isAdminMode = false;
+        try {
+          const giftHash = computeGiftHash(cfgParam);
+          const lastSavedGiftHash = localStorage.getItem("love_coupons_gift_hash");
+          const decoded = JSON.parse(decodeURIComponent(escape(atob(cfgParam))));
+
+          if (decoded && typeof decoded === 'object') {
+            // Восстанавливаем настройки (компактные ключи или полные)
+            const newConfig = {
+              recipient: decoded.r || decoded.recipient || "her",
+              theme: decoded.th || decoded.theme || ((decoded.r === 'him') ? 'male' : 'romantic'),
+              period: decoded.pe || decoded.period || "month",
+              maxCoupons: decoded.mc !== undefined ? decoded.mc : (decoded.maxCoupons !== undefined ? decoded.maxCoupons : 5),
+              maxCustom: decoded.mx !== undefined ? decoded.mx : (decoded.maxCustom !== undefined ? decoded.maxCustom : 3),
+              partnerTg: decoded.tg !== undefined ? decoded.tg : (decoded.partnerTg || ""),
+              girlTitle: decoded.gt || decoded.girlTitle || ((decoded.r === 'him') ? "Для самого любимого" : "Для самой любимой")
+            };
+            newConfig.maxTotal = newConfig.maxCoupons + newConfig.maxCustom;
+            appConfig = { ...appConfig, ...newConfig };
+            localStorage.setItem("love_coupons_config", JSON.stringify(appConfig));
+
+            // Собираем базовые купоны из компактных ID (`p`) и кастомных/изменённых (`c`)
+            let incomingBaseCoupons = [];
+            if (Array.isArray(decoded.p) || Array.isArray(decoded.c)) {
+              const pIds = decoded.p || [];
+              const cItems = decoded.c || [];
+              pIds.forEach(id => {
+                if (ALL_PRESETS_MAP[id]) {
+                  incomingBaseCoupons.push({
+                    ...JSON.parse(JSON.stringify(ALL_PRESETS_MAP[id])),
+                    isCustom: false,
+                    isRevealed: false,
+                    status: "available",
+                    activatedDate: null,
+                    activatedDateRaw: null,
+                    selectedInGift: true
+                  });
+                }
+              });
+              cItems.forEach((item, idx) => {
+                incomingBaseCoupons.push({
+                  id: item.i || ("c_" + idx),
+                  code: "LOVE-" + String(incomingBaseCoupons.length + 1).padStart(3, '0'),
+                  title: item.t || "Желание",
+                  desc: item.d || "Особенное романтическое желание для двоих.",
+                  icon: item.ic || "💖",
+                  isCustom: false,
+                  isRevealed: false,
+                  status: "available",
+                  activatedDate: null,
+                  activatedDateRaw: null,
+                  selectedInGift: true
+                });
+              });
+            } else if (Array.isArray(decoded.baseCoupons)) {
+              incomingBaseCoupons = decoded.baseCoupons.map(c => ({
+                ...c,
+                selectedInGift: true
+              }));
+            }
+
+            // ЗАЩИТА ПРОГРЕССА ПОЛУЧАТЕЛЯ:
+            // Если получатель уже открывал ЭТУ ЖЕ самую ссылку, не затираем стёртые и активированные купоны!
+            if (lastSavedGiftHash === giftHash && coupons && coupons.length > 0) {
+              const existingMap = {};
+              coupons.forEach(c => { existingMap[c.id] = c; });
+
+              const mergedBase = incomingBaseCoupons.map(inc => {
+                const prev = existingMap[inc.id];
+                if (prev) {
+                  return {
+                    ...inc,
+                    isRevealed: prev.isRevealed,
+                    status: prev.status,
+                    activatedDate: prev.activatedDate,
+                    activatedDateRaw: prev.activatedDateRaw,
+                    selectedInGift: true
+                  };
+                }
+                return inc;
+              });
+              const currentCustom = coupons.filter(c => c.isCustom);
+              coupons = [...currentCustom, ...mergedBase];
+            } else {
+              // Новый подарок — сохраняем хеш и инициализируем
+              const currentCustom = (coupons || []).filter(c => c.isCustom);
+              coupons = [...currentCustom, ...incomingBaseCoupons];
+              localStorage.setItem("love_coupons_gift_hash", giftHash);
+            }
+
+            localStorage.setItem("love_coupons_v8", JSON.stringify(coupons));
+          }
+        } catch(e) {
+          console.error("Ошибка чтения конфига из ссылки", e);
+        }
+      } else {
+        // Если уже сохранён хеш подарка в браузере получателя — остаёмся в режиме получателя
+        const hasReceivedGift = !!localStorage.getItem("love_coupons_gift_hash");
+        isAdminMode = !hasReceivedGift;
+      }
+
+      if (params.get('admin') === '1' || hash === '#admin') {
+        isAdminMode = true;
+      }
+
+      updateAdminUI();
+    }
+
+    function updateAdminUI() {
+      const adminBanner = document.getElementById("adminBanner");
+      const viralBlock = document.getElementById("viralPromoBlock");
+      const creatorLink = document.getElementById("creatorFooterLink");
+
+      if (isAdminMode) {
+        if (adminBanner) adminBanner.classList.add("visible");
+        if (viralBlock) viralBlock.style.display = "none";
+        if (creatorLink) creatorLink.style.display = "none";
+      } else {
+        if (adminBanner) adminBanner.classList.remove("visible");
+        if (viralBlock) viralBlock.style.display = "block";
+        if (creatorLink) creatorLink.style.display = "block";
+      }
+    }
+
+    function startNewGiftCreation() {
+      localStorage.removeItem("love_coupons_gift_hash");
+      window.location.hash = '';
+      isAdminMode = true;
+      updateAdminUI();
+      openAdminModal();
+      showToast("✨ Добро пожаловать в Мастерскую желаний!");
+    }
+
+    function handleTitleTap() {
+      titleTapCount++;
+      clearTimeout(titleTapTimeout);
+      titleTapTimeout = setTimeout(() => {
+        titleTapCount = 0;
+      }, 900);
+
+      if (titleTapCount >= 3) {
+        titleTapCount = 0;
+        isAdminMode = true;
+        updateAdminUI();
+        showToast("✨ Мастерская желаний открыта");
+        openAdminModal();
+      }
+    }
+
+    /* Загрузка данных */
     function loadAppData() {
       const soundPref = localStorage.getItem("love_coupons_sound");
       if (soundPref !== null) isSoundEnabled = soundPref === "true";
       updateSoundUI();
 
-      partnerTelegram = localStorage.getItem("love_coupons_tg") || "";
-      updatePartnerUI();
-
-      const saved = localStorage.getItem("love_coupons_v8");
-      if (saved) {
+      const savedConfig = localStorage.getItem("love_coupons_config");
+      if (savedConfig) {
         try {
-          coupons = JSON.parse(saved);
+          appConfig = { ...appConfig, ...JSON.parse(savedConfig) };
+        } catch(e) {}
+      }
+
+      const savedCoupons = localStorage.getItem("love_coupons_v8");
+      if (savedCoupons) {
+        try {
+          coupons = JSON.parse(savedCoupons);
         } catch(e) {
-          coupons = JSON.parse(JSON.stringify(PRESET_COUPONS));
+          coupons = makePresetInstances(PRESET_HER, 5);
         }
       } else {
-        coupons = JSON.parse(JSON.stringify(PRESET_COUPONS));
+        coupons = makePresetInstances(PRESET_HER, 5);
       }
 
       if (!Array.isArray(coupons) || coupons.length === 0) {
-        coupons = JSON.parse(JSON.stringify(PRESET_COUPONS));
+        coupons = makePresetInstances(PRESET_HER, 5);
       }
+
+      checkAdminMode();
+      applyThemeUI();
+      updateDynamicTexts();
+    }
+
+    function getGiftCoupons() {
+      const targetBase = appConfig.maxCoupons !== undefined ? appConfig.maxCoupons : 5;
+      const baseCoupons = coupons.filter(c => !c.isCustom && c.selectedInGift).slice(0, targetBase);
+      const customCoupons = coupons.filter(c => c.isCustom);
+      return [...customCoupons, ...baseCoupons];
     }
 
     function saveToStorage() {
@@ -1133,41 +1952,113 @@
       updateBalanceUI();
     }
 
-    function updatePartnerUI() {
-      const badgeText = document.getElementById("partnerBadgeText");
-      if (badgeText) badgeText.innerText = partnerTelegram ? `@${partnerTelegram}` : "Не указан";
-      const input = document.getElementById("partnerTgInput");
-      if (input) input.value = partnerTelegram;
+    /* Динамическая смена окончаний и обращений (Девушке / Парню) */
+    function updateDynamicTexts() {
+      const isWeek = appConfig.period === 'week';
+      const isHim = appConfig.recipient === 'him';
+      const periodWord = isWeek ? 'в эту неделю' : 'в этом месяце';
+      const periodTitle = isWeek ? 'на эту неделю' : 'на этот месяц';
+
+      const headerBadge = document.getElementById("headerBadge");
+      if (headerBadge) {
+        headerBadge.innerText = appConfig.girlTitle || (isHim ? "Для самого любимого" : "Для самой любимой");
+      }
+
+      const statsLabel = document.getElementById("periodStatsLabel");
+      if (statsLabel) statsLabel.innerText = isWeek ? "Использовано на этой неделе" : "Использовано в этом месяце";
+
+      const intro = document.getElementById("customWishIntroText");
+      const wishWord = pluralize(appConfig.maxCustom, "особое желание", "особых желания", "особых желаний");
+      if (intro) {
+        intro.innerText = isHim
+          ? `У тебя есть ${appConfig.maxCustom} ${wishWord} ${periodTitle}, которые ты можешь придумать сам!`
+          : `У тебя есть ${appConfig.maxCustom} ${wishWord} ${periodTitle}, которые ты можешь придумать сама!`;
+      }
+
+      const rulesAgreeBtn = document.getElementById("rulesAgreeBtn");
+      if (rulesAgreeBtn) {
+        rulesAgreeBtn.innerText = isHim ? "Понятно и согласен 😎" : "Понятно и согласна 🥰";
+      }
+
+      const resetLead = document.getElementById("resetModalLeadText");
+      if (resetLead) resetLead.innerText = `Все купоны снова будут скрыты защитным слоем, а счётчик ${isWeek ? 'недели' : 'месяца'} обнулится. Начать заново?`;
+
+      const btnReset = document.getElementById("btnResetPeriod");
+      if (btnReset) btnReset.innerText = `Начать новый ${isWeek ? 'недельный' : 'месячный'} период (обновить)`;
+
+      const footerSub = document.getElementById("footerSubtitle");
+      const povodWord = pluralize(appConfig.maxTotal, "особенный повод", "особенных повода", "особенных поводов");
+      if (footerSub) footerSub.innerText = `${appConfig.maxTotal} ${povodWord} для улыбки ${periodWord} ❤️`;
+
+      const btnCopyLink = document.getElementById("btnCopyGiftLink");
+      if (btnCopyLink) {
+        btnCopyLink.innerText = isHim
+          ? "📋 Скопировать короткую ссылку для парня"
+          : "📋 Скопировать короткую ссылку для девушки";
+      }
+
+      renderRulesList();
+    }
+
+    function renderRulesList() {
+      const list = document.getElementById("rulesListDynamic");
+      if (!list) return;
+
+      const isWeek = appConfig.period === 'week';
+      const isHim = appConfig.recipient === 'him';
+      const periodStr = isWeek ? 'в неделю' : 'в месяц';
+      const couponWord = pluralize(appConfig.maxTotal, 'купон', 'купона', 'купонов');
+      const customWord = pluralize(appConfig.maxCustom, 'своё личное желание', 'своих личных желания', 'своих личных желаний');
+      const partnerNoun = isHim ? 'любимая занята' : 'любимый занят';
+      const pressVerb = isHim ? 'нажал случайно' : 'нажала случайно';
+
+      list.innerHTML = `
+        <li><strong>Всё по любви и взаимности:</strong> Купоны созданы для радости, поэтому каждое желание делается искренне и с заботой друг о друге.</li>
+        <li><strong>1 желание в день:</strong> Чтобы каждый момент приносил максимум удовольствия и внимания, в один день активируется только один купон. Смаковать по одному намного приятнее!</li>
+        <li><strong>Всегда найдём альтернативу:</strong> Если ${partnerNoun}, нет сил и ресурсов или желание не по душе — без проблем, мы перенесём его или вместе подберём приятную замену.</li>
+        <li><strong>Срок действия желаний:</strong> Обычные купоны действуют сегодня до 00:00. Для утренних сюрпризов (<strong>«Завтрак в постель»</strong> 🥐) купон действует на следующее утро, а <strong>поездки</strong> и свидания мы спокойно планируем на удобный общий день 🚗.</li>
+        <li><strong>Если ${pressVerb}:</strong> Внизу купона всегда есть кнопка «↩️ Отменить активацию», которая вернёт купон обратно.</li>
+        <li><strong>Лимит на период:</strong> До <strong>${appConfig.maxTotal} ${couponWord} ${periodStr}</strong>.</li>
+        <li><strong>Твои капризы:</strong> Ты можешь придумать до <strong>${appConfig.maxCustom} ${customWord}</strong> через волшебную кнопку.</li>
+      `;
     }
 
     function updateBalanceUI() {
-      const totalActivated = coupons.filter(c => c.status === 'activated').length;
+      const activeCoupons = getGiftCoupons();
+      const totalActivated = activeCoupons.filter(c => c.status === 'activated').length;
       const customCreated = coupons.filter(c => c.isCustom).length;
-      const slotsLeft = MAX_CUSTOM_WISHES - customCreated;
+      const slotsLeft = Math.max(0, appConfig.maxCustom - customCreated);
 
       const usedCountEl = document.getElementById("usedCountText");
-      if (usedCountEl) usedCountEl.innerText = `${totalActivated} / ${MAX_TOTAL_COUPONS}`;
+      if (usedCountEl) usedCountEl.innerText = `${totalActivated} / ${appConfig.maxTotal}`;
 
       const customCountEl = document.getElementById("customCountText");
-      if (customCountEl) customCountEl.innerText = `${customCreated} / ${MAX_CUSTOM_WISHES}`;
+      if (customCountEl) customCountEl.innerText = `${customCreated} / ${appConfig.maxCustom}`;
 
       const progressBar = document.getElementById("progressBar");
       if (progressBar) {
-        const percent = (totalActivated / MAX_TOTAL_COUPONS) * 100;
+        const percent = appConfig.maxTotal > 0 ? (totalActivated / appConfig.maxTotal) * 100 : 0;
         progressBar.style.width = `${Math.min(percent, 100)}%`;
       }
 
-      const slotsLeftEl = document.getElementById("customSlotsLeft");
-      if (slotsLeftEl) slotsLeftEl.innerText = Math.max(0, slotsLeft);
+      const badge = document.getElementById("customSlotsBadge");
+      if (badge) {
+        badge.innerText = `${slotsLeft} из ${appConfig.maxCustom}`;
+      }
 
       const customWishBtn = document.getElementById("customWishBtn");
       if (customWishBtn) {
-        if (slotsLeft <= 0) {
-          customWishBtn.disabled = true;
-          customWishBtn.title = "Все 3 персональных каприза уже добавлены!";
+        if (appConfig.maxCustom <= 0) {
+          customWishBtn.style.display = "none";
         } else {
-          customWishBtn.disabled = false;
-          customWishBtn.title = "";
+          customWishBtn.style.display = "inline-flex";
+          if (slotsLeft <= 0) {
+            customWishBtn.disabled = true;
+            customWishBtn.title = "Все персональные капризы уже добавлены!";
+          } else {
+            customWishBtn.disabled = false;
+            customWishBtn.title = "";
+          }
         }
       }
     }
@@ -1185,19 +2076,21 @@
       if (!grid) return;
       grid.innerHTML = "";
 
-      let filtered = coupons;
+      const activeCoupons = getGiftCoupons();
+
+      let filtered = activeCoupons;
       if (currentFilter === 'available') {
-        filtered = coupons.filter(c => c.status === 'available');
+        filtered = activeCoupons.filter(c => c.status === 'available');
       } else if (currentFilter === 'activated') {
-        filtered = coupons.filter(c => c.status === 'activated');
+        filtered = activeCoupons.filter(c => c.status === 'activated');
       } else if (currentFilter === 'custom') {
-        filtered = coupons.filter(c => c.isCustom);
+        filtered = activeCoupons.filter(c => c.isCustom);
       }
 
       if (filtered.length === 0) {
         grid.innerHTML = `
           <div style="grid-column: 1 / -1; text-align: center; padding: 40px 16px; color: var(--text-muted);">
-            <div style="font-size: 36px; margin-bottom: 8px;">🌸</div>
+            <div style="font-size: 36px; margin-bottom: 8px;">✨</div>
             <p style="font-size: 14px;">В этой категории пока пусто</p>
           </div>
         `;
@@ -1216,12 +2109,18 @@
         const displayTitle = coupon.isRevealed ? escapeHtml(coupon.title) : "Купон-сюрприз 💫";
         const displayDesc = coupon.isRevealed 
           ? `<p class="ticket-desc">${escapeHtml(coupon.desc)}</p>` 
-          : `<p class="ticket-desc mystery">🔒 Желание засекречено! Сотри защитный слой пальчиком, чтобы узнать сюрприз...</p>`;
+          : `<p class="ticket-desc mystery">🔒 Желание засекречено! Сотри защитный слой, чтобы узнать сюрприз...</p>`;
         
         const badgeClass = coupon.isCustom ? 'badge-pill custom-pill' : 'badge-pill';
         const displayBadge = coupon.isRevealed 
           ? (coupon.isCustom ? 'МОЙ КАПРИЗ ⭐' : 'ОФИЦИАЛЬНЫЙ БИЛЕТ') 
           : 'ТАЙНОЕ ЖЕЛАНИЕ 🔒';
+
+        const baseIndex = activeCoupons.filter(c => !c.isCustom).findIndex(c => c.id === coupon.id);
+        const prefix = appConfig.theme === 'passion' ? 'WINE' : (appConfig.recipient === 'him' ? 'VIP' : 'LOVE');
+        const displayCode = (!coupon.isCustom && baseIndex !== -1)
+          ? `${prefix}-${String(baseIndex + 1).padStart(3, '0')}`
+          : coupon.code;
 
         if (coupon.status === "activated") {
           const expiry = getCouponExpiryInfo(coupon);
@@ -1258,7 +2157,7 @@
           <div class="ticket-body">
             <div>
               <div class="ticket-meta">
-                <span>№ ${coupon.code}</span>
+                <span>№ ${displayCode}</span>
                 <span class="${badgeClass}">${displayBadge}</span>
               </div>
               ${displayDesc}
@@ -1281,7 +2180,7 @@
       updateBalanceUI();
     }
 
-    /* Scratch Lock Management */
+    /* Scratch Canvas */
     function unlockScratch(couponId) {
       initAudio();
       Object.keys(scratchTimers).forEach(id => {
@@ -1298,7 +2197,7 @@
         try { navigator.vibrate(25); } catch (e) {}
       }
 
-      showToast("Стирай защитный слой пальчиком 👆");
+      showToast("Стирай защитный слой 👆");
       resetScratchTimer(couponId);
     }
 
@@ -1325,11 +2224,9 @@
       }, 7000);
     }
 
-    /* Определение срока действия конкретного купона */
     function getCouponExpiryInfo(coupon) {
       const lower = ((coupon.title || '') + ' ' + (coupon.desc || '')).toLowerCase();
 
-      // Утренние желания или то, что невозможно исполнить сегодня вечером
       if (
         lower.includes('завтрак') || 
         lower.includes('утр') || 
@@ -1344,7 +2241,6 @@
         };
       }
 
-      // Поездки, выезды, события по договорённости
       if (
         lower.includes('поездк') || 
         lower.includes('за город') || 
@@ -1368,6 +2264,10 @@
 
     function getCouponMessage(coupon) {
       const expiry = getCouponExpiryInfo(coupon);
+      const isHim = appConfig.recipient === 'him';
+      if (isHim) {
+        return `Любимая! Я активировал купон: «${coupon.title}»! ${expiry.textPhrase}, жду исполнения! 😎🔥`;
+      }
       return `Любимый! Я активировала купон: «${coupon.title}»! ${expiry.textPhrase}, жду исполнения! 🥰✨`;
     }
 
@@ -1375,7 +2275,7 @@
       return `
         <button type="button" class="btn-action btn-tg" onclick="handleTelegramClick(event, '${coupon.id}')">💌 Отправить в Telegram</button>
         <button type="button" class="btn-action btn-copy" onclick="copyCouponText('${coupon.id}')">📋 Скопировать текст</button>
-        <button type="button" class="btn-cancel-activation" onclick="cancelActivation('${coupon.id}')">↩️ Отменить активацию (выбрать другое)</button>
+        <button type="button" class="btn-cancel-activation" onclick="cancelActivation('${coupon.id}')">↩️ Отменить активацию (нажато случайно)</button>
       `;
     }
 
@@ -1389,25 +2289,21 @@
       showToast("Открываю Telegram 💌");
 
       const encoded = encodeURIComponent(message);
+      const partnerTg = appConfig.partnerTg;
 
-      if (partnerTelegram) {
-        // Очищаем никнейм от лишних знаков @ или ссылок
-        const cleanNick = partnerTelegram.replace(/.*t\.me\//, '').replace(/^@/, '').replace(/[^a-zA-Z0-9_]/g, '').trim();
-        
-        // Передаём текст в сам запрос к Telegram
+      if (partnerTg) {
+        const cleanNick = partnerTg.replace(/.*t\.me\//, '').replace(/^@/, '').replace(/[^a-zA-Z0-9_]/g, '').trim();
         const tgDeepLink = `tg://resolve?domain=${cleanNick}&text=${encoded}`;
         const tgWebLink = `https://t.me/${cleanNick}?text=${encoded}`;
 
         window.location.href = tgDeepLink;
 
-        // Если приложение не открылось в течение 1.2 сек, открываем web-ссылку
         setTimeout(() => {
           if (!document.hidden) {
             window.location.href = tgWebLink;
           }
         }, 1200);
       } else {
-        // Если ник любимого не указан — открываем выбор чата с чистым текстом (без лишних ссылок https://t.me)
         const tgShareDeep = `tg://msg_url?text=${encoded}`;
         const tgShareWeb = `https://t.me/share/url?text=${encoded}`;
 
@@ -1453,7 +2349,6 @@
       }
     }
 
-    /* Scratch Canvas Logic */
     function initScratchCanvas(couponId) {
       requestAnimationFrame(() => {
         const canvas = document.getElementById(`canvas-${couponId}`);
@@ -1473,10 +2368,22 @@
         ctx.scale(dpr, dpr);
 
         const grad = ctx.createLinearGradient(0, 0, rect.width, rect.height);
-        grad.addColorStop(0, '#EBB5C7');
-        grad.addColorStop(0.3, '#FEE3EC');
-        grad.addColorStop(0.6, '#DC9CB3');
-        grad.addColorStop(1, '#F3CAD9');
+        if (appConfig.theme === 'male') {
+          grad.addColorStop(0, '#94A3B8');
+          grad.addColorStop(0.3, '#E2E8F0');
+          grad.addColorStop(0.6, '#64748B');
+          grad.addColorStop(1, '#CBD5E1');
+        } else if (appConfig.theme === 'passion') {
+          grad.addColorStop(0, '#B38728');
+          grad.addColorStop(0.3, '#FBF5B7');
+          grad.addColorStop(0.6, '#AA771C');
+          grad.addColorStop(1, '#D4AF37');
+        } else {
+          grad.addColorStop(0, '#EBB5C7');
+          grad.addColorStop(0.3, '#FEE3EC');
+          grad.addColorStop(0.6, '#DC9CB3');
+          grad.addColorStop(1, '#F3CAD9');
+        }
         ctx.fillStyle = grad;
         ctx.fillRect(0, 0, rect.width, rect.height);
 
@@ -1489,7 +2396,7 @@
           ctx.fill();
         }
 
-        ctx.fillStyle = "#6E384D";
+        ctx.fillStyle = appConfig.theme === 'male' ? "#1E293B" : (appConfig.theme === 'passion' ? "#2B0918" : "#6E384D");
         ctx.font = "bold 13px Montserrat, sans-serif";
         ctx.textAlign = "center";
         ctx.fillText("✨ СОТРИ ЗАЩИТНЫЙ СЛОЙ ✨", rect.width / 2, rect.height / 2 + 5);
@@ -1644,6 +2551,15 @@
       const coupon = coupons.find(c => c.id === couponId);
       if (!coupon) return;
 
+      const activeCoupons = getGiftCoupons();
+      const totalActivated = activeCoupons.filter(c => c.status === 'activated').length;
+
+      if (totalActivated >= appConfig.maxTotal) {
+        const isWeek = appConfig.period === 'week';
+        showToast(`Лимит (${appConfig.maxTotal}) ${isWeek ? 'на эту неделю' : 'на этот месяц'} уже исчерпан! ✨`);
+        return;
+      }
+
       const todayKey = getTodayKey();
       const todayDisplay = getTodayDisplayDate();
 
@@ -1654,7 +2570,7 @@
       );
 
       if (alreadyActiveToday) {
-        showToast(`На сегодня уже активирован купон «${alreadyActiveToday.title}»! Отмени его внизу карточки, если хочешь поменять 🌸`);
+        showToast(`На сегодня уже активирован купон «${alreadyActiveToday.title}»! Отмени его внизу карточки, если хочешь поменять ✨`);
         return;
       }
 
@@ -1696,14 +2612,14 @@
       saveToStorage();
 
       renderCoupons();
-      showToast(`Активация «${coupon.title}» отменена! Можно выбрать любое другое желание 🌸`);
+      showToast(`Активация «${coupon.title}» отменена! ✨`);
     }
 
-    /* Custom Wish Management */
+    /* Персональные капризы */
     function openCustomWishModal() {
       const customCount = coupons.filter(c => c.isCustom).length;
-      if (customCount >= MAX_CUSTOM_WISHES) {
-        showToast("Ты уже использовала все 3 личных каприза на этот месяц! ⭐");
+      if (customCount >= appConfig.maxCustom) {
+        showToast(`Все ${appConfig.maxCustom} личных каприза уже добавлены! ⭐`);
         return;
       }
       document.getElementById('wishModal').classList.add('active');
@@ -1721,8 +2637,8 @@
 
     function saveCustomWish() {
       const customCount = coupons.filter(c => c.isCustom).length;
-      if (customCount >= MAX_CUSTOM_WISHES) {
-        showToast("Лимит в 3 каприза на этот месяц исчерпан ✨");
+      if (customCount >= appConfig.maxCustom) {
+        showToast(`Лимит в ${appConfig.maxCustom} каприза исчерпан ✨`);
         closeWishModal();
         return;
       }
@@ -1740,7 +2656,7 @@
         id: "custom_" + Date.now(),
         code: "WISH-00" + (customCount + 1),
         title: title,
-        desc: "Персональное пожелание любимой. Обсуждаем вместе и выбираем идеальный момент!",
+        desc: "Персональное пожелание. Обсуждаем вместе и выбираем идеальный момент!",
         icon: selectedEmoji || "💖",
         isCustom: true,
         isRevealed: true,
@@ -1755,7 +2671,8 @@
       closeWishModal();
 
       input.value = "";
-      showToast(`Каприз добавлен в начало! (Осталось слотов: ${MAX_CUSTOM_WISHES - customCount - 1}) ⭐`);
+      const left = appConfig.maxCustom - customCount - 1;
+      showToast(`Каприз добавлен в начало! (Осталось слотов: ${left}) ⭐`);
 
       const grid = document.getElementById('couponsGrid');
       if (grid) {
@@ -1770,29 +2687,9 @@
       showToast("Каприз удалён. Слот снова свободен! 🔄");
     }
 
-    /* Partner Modal */
-    function openPartnerModal() {
-      document.getElementById('partnerModal').classList.add('active');
-      const input = document.getElementById('partnerTgInput');
-      input.value = partnerTelegram;
-      input.focus();
-    }
-    function closePartnerModal() {
-      document.getElementById('partnerModal').classList.remove('active');
-    }
-
-    function savePartnerTg() {
-      const raw = document.getElementById('partnerTgInput').value.trim();
-      partnerTelegram = raw.replace(/.*t\.me\//, '').replace(/^@/, '').replace(/[^a-zA-Z0-9_]/g, '').trim();
-      localStorage.setItem("love_coupons_tg", partnerTelegram);
-      updatePartnerUI();
-      closePartnerModal();
-      renderCoupons();
-      showToast(partnerTelegram ? `Любимый сохранён: @${partnerTelegram} 💌` : "Стандартный диалог Telegram");
-    }
-
-    /* Rules & Reset */
+    /* Модалки правил и сброса */
     function openRulesModal() {
+      renderRulesList();
       document.getElementById('rulesModal').classList.add('active');
     }
     function closeRulesModal() {
@@ -1807,11 +2704,713 @@
     }
 
     function confirmResetAll() {
-      coupons = JSON.parse(JSON.stringify(PRESET_COUPONS));
+      coupons.forEach(c => {
+        c.isRevealed = false;
+        c.status = "available";
+        c.activatedDate = null;
+        c.activatedDateRaw = null;
+      });
+      coupons = coupons.filter(c => !c.isCustom);
       saveToStorage();
       closeResetConfirmModal();
       renderCoupons();
-      showToast("Новый месяц открыт! Все купоны обновлены 🌸");
+      showToast("Новый период открыт! Все купоны снова скрыты и готовы ✨");
+    }
+
+    /* Переключение получателя и тем в Мастерской */
+    function selectRecipientRadio(recipient, skipTemplateReload) {
+      const labelHer = document.getElementById('radioRecipientHer');
+      const labelHim = document.getElementById('radioRecipientHim');
+      const titleInput = document.getElementById('adminGirlTitle');
+
+      appConfig.recipient = recipient;
+
+      if (recipient === 'him') {
+        labelHim.classList.add('active');
+        labelHer.classList.remove('active');
+        labelHim.querySelector('input').checked = true;
+        if (titleInput && (titleInput.value === 'Для самой любимой' || !titleInput.value.trim())) {
+          titleInput.value = 'Для самого любимого';
+        }
+        if (!skipTemplateReload) {
+          // Автоматически включаем базовую мужскую тему, если не была выбрана винная (или переключаем на базовую для парня)
+          selectAdminThemeRadio('base');
+          loadTemplatePreset('base', true);
+        } else if (appConfig.theme !== 'passion') {
+          appConfig.theme = 'male';
+        }
+      } else {
+        labelHer.classList.add('active');
+        labelHim.classList.remove('active');
+        labelHer.querySelector('input').checked = true;
+        if (titleInput && (titleInput.value === 'Для самого любимого' || !titleInput.value.trim())) {
+          titleInput.value = 'Для самой любимой';
+        }
+        if (!skipTemplateReload) {
+          selectAdminThemeRadio('base');
+          loadTemplatePreset('base', true);
+        } else if (appConfig.theme !== 'passion') {
+          appConfig.theme = 'romantic';
+        }
+      }
+      applyThemeUI();
+      updateDynamicTexts();
+    }
+
+    function selectAdminThemeRadio(themeMode) {
+      const rBase = document.getElementById('radioThemeBase');
+      const rPas = document.getElementById('radioThemePassion');
+
+      [rBase, rPas].forEach(el => { if (el) el.classList.remove('active'); });
+
+      if (themeMode === 'passion' && rPas) {
+        rPas.classList.add('active');
+        rPas.querySelector('input').checked = true;
+        appConfig.theme = 'passion';
+      } else if (rBase) {
+        rBase.classList.add('active');
+        rBase.querySelector('input').checked = true;
+        appConfig.theme = getBaseThemeForRecipient();
+      }
+
+      applyThemeUI();
+    }
+
+    function loadTemplatePreset(presetType, silent) {
+      const target = getAdminTargetCoupons();
+      const customCoupons = coupons.filter(c => c.isCustom);
+
+      if (presetType === 'passion') {
+        coupons = [...customCoupons, ...makePresetInstances(PRESET_PASSION, target)];
+        selectAdminThemeRadio('passion');
+        if (!silent) showToast("🍷 Загружен вечерний винный набор купонов!");
+      } else if (appConfig.recipient === 'him' || presetType === 'him') {
+        coupons = [...customCoupons, ...makePresetInstances(PRESET_HIM, target)];
+        if (!silent) showToast("👨 Загружен основной мужской набор купонов!");
+      } else {
+        coupons = [...customCoupons, ...makePresetInstances(PRESET_HER, target)];
+        if (!silent) showToast("🌸 Загружен основной нежный набор для девушки!");
+      }
+
+      saveToStorage();
+      renderCoupons();
+      renderAdminCouponsList();
+      updateAdminCouponsStatus();
+    }
+
+    /* Вкладки Мастерской желаний */
+    function switchAdminTab(tab) {
+      const btnCoupons = document.getElementById('tabBtnCoupons');
+      const btnSettings = document.getElementById('tabBtnSettings');
+      const contentCoupons = document.getElementById('tabContentCoupons');
+      const contentSettings = document.getElementById('tabContentSettings');
+
+      if (tab === 'coupons') {
+        btnCoupons.classList.add('active');
+        btnSettings.classList.remove('active');
+        contentCoupons.classList.add('active');
+        contentSettings.classList.remove('active');
+        updateAdminCouponsStatus();
+        renderAdminCouponsList();
+      } else {
+        btnSettings.classList.add('active');
+        btnCoupons.classList.remove('active');
+        contentSettings.classList.add('active');
+        contentCoupons.classList.remove('active');
+        updateAdminCouponsStatus();
+      }
+    }
+
+    function goToCouponsTab() {
+      switchAdminTab('coupons');
+    }
+
+    function getAdminTargetCoupons() {
+      const inp = document.getElementById('adminMaxTotal');
+      if (inp) {
+        const val = parseInt(inp.value, 10);
+        if (!isNaN(val)) return val;
+      }
+      return appConfig.maxCoupons !== undefined ? appConfig.maxCoupons : 5;
+    }
+
+    function updateAdminCouponsStatus() {
+      const target = getAdminTargetCoupons();
+      const baseCoupons = coupons.filter(c => !c.isCustom);
+      const selectedCoupons = baseCoupons.filter(c => c.selectedInGift);
+      const noticeEl = document.getElementById('adminCouponsStatusNotice');
+      const tabCountEl = document.getElementById('adminCouponsTabCount');
+
+      if (tabCountEl) {
+        tabCountEl.innerText = `${selectedCoupons.length}/${target}`;
+      }
+
+      if (!noticeEl) return;
+
+      if (baseCoupons.length < target) {
+        const diff = target - baseCoupons.length;
+        noticeEl.innerHTML = `⚠️ <strong>Не хватает желаний в библиотеке!</strong><br>В лимите указано <strong>${target}</strong> купонов, а создано всего <strong>${baseCoupons.length}</strong>.<br>👉 Добавь ещё <strong>${diff}</strong> ${pluralize(diff, 'желание', 'желания', 'желаний')} кнопкой ниже.`;
+      } else if (selectedCoupons.length === target) {
+        noticeEl.innerHTML = `✅ <strong>Идеально настроено!</strong><br>Выбрано ровно <strong>${selectedCoupons.length} из ${target}</strong> купонов. Готово к отправке!`;
+      } else if (selectedCoupons.length < target) {
+        const diff = target - selectedCoupons.length;
+        noticeEl.innerHTML = `👉 <strong>Нужно выбрать желания:</strong> отмечено <strong>${selectedCoupons.length} из ${target}</strong>.<br>Поставь галочку ещё на <strong>${diff}</strong> ${pluralize(diff, 'купон', 'купона', 'купонов')} из списка ниже.`;
+      } else {
+        const diff = selectedCoupons.length - target;
+        noticeEl.innerHTML = `⚠️ <strong>Выбрано больше, чем в лимите:</strong> отмечено <strong>${selectedCoupons.length} из ${target}</strong>.<br>Сними отметку с лишних <strong>${diff}</strong> ${pluralize(diff, 'купона', 'купонов', 'купонов')}.`;
+      }
+    }
+
+    function toggleCouponSelection(couponId) {
+      const coupon = coupons.find(c => c.id === couponId);
+      if (!coupon) return;
+
+      const target = getAdminTargetCoupons();
+      const currentSelectedCount = coupons.filter(c => !c.isCustom && c.selectedInGift).length;
+
+      if (!coupon.selectedInGift && currentSelectedCount >= target) {
+        showToast(`Уже выбрано максимум (${target} из ${target})! Сними галочку с другого купона, если хочешь заменить ✨`);
+        renderAdminCouponsList();
+        return;
+      }
+
+      coupon.selectedInGift = !coupon.selectedInGift;
+      saveToStorage();
+      renderAdminCouponsList();
+      updateAdminCouponsStatus();
+    }
+
+    function renderAdminCouponsList() {
+      const listEl = document.getElementById('adminCouponsList');
+      if (!listEl) return;
+
+      const baseCoupons = coupons.filter(c => !c.isCustom);
+
+      if (baseCoupons.length === 0) {
+        listEl.innerHTML = `
+          <div style="text-align: center; padding: 20px; color: #8E7A82; font-size: 12px;">
+            Нет купонов в библиотеке. Нажми «➕ Добавить купон» выше!
+          </div>
+        `;
+        return;
+      }
+
+      listEl.innerHTML = baseCoupons.map((c) => {
+        const isSelected = !!c.selectedInGift;
+        return `
+          <div class="admin-coupon-item ${isSelected ? '' : 'unselected'}">
+            <button type="button" class="coupon-check-btn ${isSelected ? 'checked' : ''}" onclick="toggleCouponSelection('${c.id}')" title="${isSelected ? 'Выбрано в подарок' : 'Включить в подарок'}">
+              ✓
+            </button>
+            <div class="admin-coupon-info" onclick="toggleCouponSelection('${c.id}')">
+              <span class="admin-coupon-icon">${c.icon || '🎁'}</span>
+              <div class="admin-coupon-text">
+                <div class="admin-coupon-title">${escapeHtml(c.title)}</div>
+                <div class="admin-coupon-desc">${escapeHtml(c.desc)}</div>
+              </div>
+            </div>
+            <div class="admin-coupon-actions">
+              <button type="button" class="btn-item-action" onclick="openEditCouponEditor('${c.id}')" title="Редактировать">✏️</button>
+              <button type="button" class="btn-item-action btn-item-delete" onclick="deleteCouponByAdmin('${c.id}')" title="Удалить купон">🗑️</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function setEditorEmoji(emoji, btn) {
+      currentEditorEmoji = emoji;
+      document.querySelectorAll('#adminEmojiSelector .admin-emoji-chip').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      const customInp = document.getElementById('editCouponIconCustom');
+      if (customInp) customInp.value = '';
+    }
+
+    function onCustomEmojiInput(val) {
+      if (val.trim()) {
+        currentEditorEmoji = val.trim();
+        document.querySelectorAll('#adminEmojiSelector .admin-emoji-chip').forEach(b => b.classList.remove('active'));
+      }
+    }
+
+    function openAddCouponEditor() {
+      const card = document.getElementById('adminEditorCard');
+      const heading = document.getElementById('adminEditorHeading');
+      const idInp = document.getElementById('editCouponId');
+      const titleInp = document.getElementById('editCouponTitle');
+      const descInp = document.getElementById('editCouponDesc');
+      const customEmojiInp = document.getElementById('editCouponIconCustom');
+
+      if (idInp) idInp.value = '';
+      if (heading) heading.innerText = '➕ Новое желание';
+      if (titleInp) titleInp.value = '';
+      if (descInp) descInp.value = '';
+      if (customEmojiInp) customEmojiInp.value = '';
+
+      setEditorEmoji('🔥', document.querySelector('#adminEmojiSelector .admin-emoji-chip'));
+      if (card) {
+        card.style.display = 'block';
+        titleInp.focus();
+      }
+    }
+
+    function openEditCouponEditor(couponId) {
+      const coupon = coupons.find(c => c.id === couponId);
+      if (!coupon) return;
+
+      const card = document.getElementById('adminEditorCard');
+      const heading = document.getElementById('adminEditorHeading');
+      const idInp = document.getElementById('editCouponId');
+      const titleInp = document.getElementById('editCouponTitle');
+      const descInp = document.getElementById('editCouponDesc');
+      const customEmojiInp = document.getElementById('editCouponIconCustom');
+
+      if (idInp) idInp.value = coupon.id;
+      if (heading) heading.innerText = `✏️ Редактирование: ${coupon.title}`;
+      if (titleInp) titleInp.value = coupon.title;
+      if (descInp) descInp.value = coupon.desc;
+
+      currentEditorEmoji = coupon.icon || '💖';
+      let foundChip = false;
+      document.querySelectorAll('#adminEmojiSelector .admin-emoji-chip').forEach(chip => {
+        if (chip.innerText.trim() === currentEditorEmoji) {
+          chip.classList.add('active');
+          foundChip = true;
+        } else {
+          chip.classList.remove('active');
+        }
+      });
+      if (!foundChip && customEmojiInp) {
+        customEmojiInp.value = currentEditorEmoji;
+      } else if (customEmojiInp) {
+        customEmojiInp.value = '';
+      }
+
+      if (card) {
+        card.style.display = 'block';
+        titleInp.focus();
+      }
+    }
+
+    function closeCouponEditor() {
+      const card = document.getElementById('adminEditorCard');
+      if (card) card.style.display = 'none';
+    }
+
+    function saveCouponFromEditor() {
+      const id = document.getElementById('editCouponId').value;
+      const title = document.getElementById('editCouponTitle').value.trim();
+      const desc = document.getElementById('editCouponDesc').value.trim();
+      const icon = currentEditorEmoji || '💖';
+
+      if (!title) {
+        showToast("Пожалуйста, введи название купона ✨");
+        document.getElementById('editCouponTitle').focus();
+        return;
+      }
+
+      if (id) {
+        const coupon = coupons.find(c => c.id === id);
+        if (coupon) {
+          coupon.title = title;
+          coupon.desc = desc || "Особенное романтическое желание для двоих.";
+          coupon.icon = icon;
+          showToast(`Купон «${title}» обновлён! ✨`);
+        }
+      } else {
+        const baseCount = coupons.filter(c => !c.isCustom).length;
+        const newCode = "LOVE-" + String(baseCount + 1).padStart(3, '0');
+        const target = getAdminTargetCoupons();
+        const currentSelected = coupons.filter(c => !c.isCustom && c.selectedInGift).length;
+
+        const newCoupon = {
+          id: "cp_" + Date.now(),
+          code: newCode,
+          title: title,
+          desc: desc || "Особенное романтическое желание для двоих.",
+          icon: icon,
+          isCustom: false,
+          isRevealed: false,
+          status: "available",
+          activatedDate: null,
+          activatedDateRaw: null,
+          selectedInGift: currentSelected < target
+        };
+        coupons.push(newCoupon);
+        showToast(`Купон «${title}» добавлен в библиотеку! 🎁`);
+      }
+
+      saveToStorage();
+      renderCoupons();
+      renderAdminCouponsList();
+      updateAdminCouponsStatus();
+      closeCouponEditor();
+    }
+
+    function deleteCouponByAdmin(couponId) {
+      const baseCoupons = coupons.filter(c => !c.isCustom);
+      if (baseCoupons.length <= 1) {
+        showToast("В списке должен остаться хотя бы 1 купон! ✨");
+        return;
+      }
+
+      const coupon = coupons.find(c => c.id === couponId);
+      const title = coupon ? coupon.title : 'Купон';
+
+      coupons = coupons.filter(c => c.id !== couponId);
+      saveToStorage();
+      renderCoupons();
+      renderAdminCouponsList();
+      updateAdminCouponsStatus();
+      closeCouponEditor();
+      showToast(`Купон «${title}» удалён 🗑️`);
+    }
+
+    /* Лимиты и валидация */
+    function setNumericPreset(inputId, val) {
+      const inp = document.getElementById(inputId);
+      if (inp) {
+        inp.value = val;
+        if (inputId === 'adminMaxTotal') validateAdminTotalInput();
+        if (inputId === 'adminMaxCustom') validateAdminCustomInput();
+      }
+    }
+
+    function getMaxDaysForPeriod() {
+      const isWeek = document.getElementById('radioLabelWeek')?.classList.contains('active');
+      return isWeek ? 7 : 31;
+    }
+
+    function getMaxCustomCap() {
+      const isWeek = document.getElementById('radioLabelWeek')?.classList.contains('active');
+      return isWeek ? 7 : 20;
+    }
+
+    function updateAdminSummary() {
+      const pill = document.getElementById('adminSummaryPill');
+      if (!pill) return;
+      const isWeek = document.getElementById('radioLabelWeek')?.classList.contains('active');
+      const maxDays = isWeek ? 7 : 31;
+      const periodWord = isWeek ? 'в неделю' : 'в месяц';
+
+      const totalVal = parseInt(document.getElementById('adminMaxTotal')?.value, 10) || 0;
+      const customVal = parseInt(document.getElementById('adminMaxCustom')?.value, 10) || 0;
+      const sum = totalVal + customVal;
+
+      pill.innerHTML = `✨ Всего желаний: <strong>${sum} из ${maxDays} ${periodWord}</strong> (${totalVal} купонов + ${customVal} капризов)`;
+      updateAdminCouponsStatus();
+    }
+
+    function updateCustomPresetsAndHint() {
+      const isWeek = document.getElementById('radioLabelWeek')?.classList.contains('active');
+      const maxDays = getMaxDaysForPeriod();
+      const customCap = getMaxCustomCap();
+      const totalInput = document.getElementById('adminMaxTotal');
+      const customInput = document.getElementById('adminMaxCustom');
+      const customHint = document.getElementById('adminCustomHint');
+      const customPresets = document.getElementById('adminCustomPresets');
+
+      const totalVal = parseInt(totalInput?.value, 10) || 0;
+      const allowedCustom = Math.max(0, Math.min(customCap, maxDays - totalVal));
+
+      if (customInput) {
+        customInput.max = String(allowedCustom);
+        if (parseInt(customInput.value, 10) > allowedCustom) {
+          customInput.value = String(allowedCustom);
+        }
+      }
+
+      if (customHint) {
+        const periodStr = isWeek ? 'в неделю' : 'в месяц';
+        if (allowedCustom === 0) {
+          customHint.innerText = `Максимум: 0 (все ${maxDays} дней заняты купонами)`;
+        } else if (allowedCustom < customCap) {
+          customHint.innerText = `Максимум: ${allowedCustom} ${periodStr} (осталось до ${maxDays} дней)`;
+        } else {
+          customHint.innerText = `Максимум: ${customCap} ${periodStr} (1 желание в день)`;
+        }
+      }
+
+      if (customPresets) {
+        const standardList = isWeek ? [0, 1, 2, 3, 5, 7] : [0, 3, 5, 10, 15, 20];
+        const validPresets = standardList.filter(n => n <= allowedCustom);
+        if (!validPresets.includes(allowedCustom) && allowedCustom > 0) {
+          validPresets.push(allowedCustom);
+          validPresets.sort((a, b) => a - b);
+        }
+
+        customPresets.innerHTML = validPresets.map(n => 
+          `<button type="button" class="preset-chip" onclick="setNumericPreset('adminMaxCustom', ${n})">${n}${n === allowedCustom && n > 0 ? ' (макс)' : ''}</button>`
+        ).join('');
+      }
+
+      updateAdminSummary();
+    }
+
+    function validateAdminTotalInput() {
+      const input = document.getElementById('adminMaxTotal');
+      if (!input) return;
+      const maxLimit = getMaxDaysForPeriod();
+      let val = parseInt(input.value, 10);
+
+      if (isNaN(val)) val = 0;
+
+      if (val > maxLimit) {
+        input.value = maxLimit;
+        val = maxLimit;
+        showToast(`⚠️ В периоде максимум ${maxLimit} дней (1 желание в день)!`);
+      } else if (val < 0) {
+        input.value = 0;
+      }
+
+      updateCustomPresetsAndHint();
+    }
+
+    function validateAdminCustomInput() {
+      const input = document.getElementById('adminMaxCustom');
+      const totalInput = document.getElementById('adminMaxTotal');
+      if (!input) return;
+
+      const maxDays = getMaxDaysForPeriod();
+      const customCap = getMaxCustomCap();
+      const totalVal = parseInt(totalInput?.value, 10) || 0;
+      const allowedCustom = Math.max(0, Math.min(customCap, maxDays - totalVal));
+
+      let val = parseInt(input.value, 10);
+      if (isNaN(val)) val = 0;
+
+      if (val > allowedCustom) {
+        input.value = allowedCustom;
+        if (allowedCustom === 0) {
+          showToast(`⚠️ Все ${maxDays} дней уже заняты купонами! Для капризов осталось 0`);
+        } else {
+          showToast(`⚠️ Всего не больше ${maxDays} желаний. Для капризов максимум: ${allowedCustom}!`);
+        }
+      } else if (val < 0) {
+        input.value = 0;
+      }
+
+      updateAdminSummary();
+    }
+
+    function openAdminModal() {
+      const modal = document.getElementById('adminModal');
+      const girlTitleInput = document.getElementById('adminGirlTitle');
+      const tgInput = document.getElementById('adminTgInput');
+      const maxTotal = document.getElementById('adminMaxTotal');
+      const maxCustom = document.getElementById('adminMaxCustom');
+
+      selectRecipientRadio(appConfig.recipient || 'her', true);
+      selectAdminThemeRadio(appConfig.theme === 'passion' ? 'passion' : 'base');
+
+      if (girlTitleInput) girlTitleInput.value = appConfig.girlTitle || (appConfig.recipient === 'him' ? 'Для самого любимого' : 'Для самой любимой');
+      if (tgInput) tgInput.value = appConfig.partnerTg || '';
+      
+      const currentCoupons = appConfig.maxCoupons !== undefined ? appConfig.maxCoupons : 5;
+      if (maxTotal) maxTotal.value = String(currentCoupons);
+      if (maxCustom) maxCustom.value = String(appConfig.maxCustom !== undefined ? appConfig.maxCustom : 3);
+
+      selectPeriodRadio(appConfig.period || 'month');
+      switchAdminTab('settings');
+      modal.classList.add('active');
+    }
+
+    function closeAdminModal() {
+      document.getElementById('adminModal').classList.remove('active');
+      closeCouponEditor();
+    }
+
+    function updatePresetButtons(period) {
+      const container = document.getElementById('adminTotalPresets');
+      const input = document.getElementById('adminMaxTotal');
+      const totalHint = document.getElementById('adminTotalHint');
+
+      if (period === 'week') {
+        if (input) input.max = "7";
+        if (totalHint) totalHint.innerText = "Максимум: 7 в неделю (1 желание в день)";
+        
+        if (container) {
+          container.innerHTML = `
+            <button type="button" class="preset-chip" onclick="setNumericPreset('adminMaxTotal', 1)">1</button>
+            <button type="button" class="preset-chip" onclick="setNumericPreset('adminMaxTotal', 2)">2</button>
+            <button type="button" class="preset-chip" onclick="setNumericPreset('adminMaxTotal', 3)">3</button>
+            <button type="button" class="preset-chip" onclick="setNumericPreset('adminMaxTotal', 5)">5</button>
+            <button type="button" class="preset-chip" onclick="setNumericPreset('adminMaxTotal', 7)">7 (каждый день)</button>
+          `;
+        }
+        if (input && parseInt(input.value, 10) > 7) input.value = "4";
+      } else {
+        if (input) input.max = "31";
+        if (totalHint) totalHint.innerText = "Максимум: 31 в месяц (1 желание в день)";
+
+        if (container) {
+          container.innerHTML = `
+            <button type="button" class="preset-chip" onclick="setNumericPreset('adminMaxTotal', 3)">3</button>
+            <button type="button" class="preset-chip" onclick="setNumericPreset('adminMaxTotal', 5)">5</button>
+            <button type="button" class="preset-chip" onclick="setNumericPreset('adminMaxTotal', 10)">10</button>
+            <button type="button" class="preset-chip" onclick="setNumericPreset('adminMaxTotal', 15)">15</button>
+            <button type="button" class="preset-chip" onclick="setNumericPreset('adminMaxTotal', 20)">20</button>
+            <button type="button" class="preset-chip" onclick="setNumericPreset('adminMaxTotal', 31)">31 (на каждый день)</button>
+          `;
+        }
+      }
+
+      updateCustomPresetsAndHint();
+    }
+
+    function selectPeriodRadio(period) {
+      const labelMonth = document.getElementById('radioLabelMonth');
+      const labelWeek = document.getElementById('radioLabelWeek');
+      if (period === 'week') {
+        labelWeek.classList.add('active');
+        labelMonth.classList.remove('active');
+      } else {
+        labelMonth.classList.add('active');
+        labelWeek.classList.remove('active');
+      }
+      labelMonth.querySelector('input').checked = (period === 'month');
+      labelWeek.querySelector('input').checked = (period === 'week');
+
+      updatePresetButtons(period);
+    }
+
+    function readAdminForm() {
+      const recipient = document.getElementById('radioRecipientHim').classList.contains('active') ? 'him' : 'her';
+      let theme = recipient === 'him' ? 'male' : 'romantic';
+      if (document.getElementById('radioThemePassion').classList.contains('active')) {
+        theme = 'passion';
+      }
+
+      const defaultBadge = recipient === 'him' ? 'Для самого любимого' : 'Для самой любимой';
+      const girlTitle = document.getElementById('adminGirlTitle').value.trim() || defaultBadge;
+      const tg = document.getElementById('adminTgInput').value.trim()
+        .replace(/.*t\.me\//, '').replace(/^@/, '').replace(/[^a-zA-Z0-9_]/g, '').trim();
+      const period = document.getElementById('radioLabelWeek').classList.contains('active') ? 'week' : 'month';
+      const maxPeriodDays = (period === 'week') ? 7 : 31;
+      const customCap = (period === 'week') ? 7 : 20;
+      
+      let rawCoupons = parseInt(document.getElementById('adminMaxTotal').value, 10);
+      if (isNaN(rawCoupons) || rawCoupons < 0) rawCoupons = (period === 'week' ? 3 : 5);
+      if (rawCoupons > maxPeriodDays) rawCoupons = maxPeriodDays;
+
+      const allowedCustom = Math.max(0, Math.min(customCap, maxPeriodDays - rawCoupons));
+
+      let rawCustom = parseInt(document.getElementById('adminMaxCustom').value, 10);
+      if (isNaN(rawCustom) || rawCustom < 0) rawCustom = 0;
+      if (rawCustom > allowedCustom) rawCustom = allowedCustom;
+
+      const totalSum = Math.min(maxPeriodDays, rawCoupons + rawCustom);
+
+      return {
+        recipient: recipient,
+        theme: theme,
+        girlTitle: girlTitle,
+        partnerTg: tg,
+        period: period,
+        maxCoupons: rawCoupons,
+        maxCustom: rawCustom,
+        maxTotal: totalSum
+      };
+    }
+
+    function saveAdminSettingsLocally() {
+      const form = readAdminForm();
+      const baseCoupons = coupons.filter(c => !c.isCustom);
+      const selected = baseCoupons.filter(c => c.selectedInGift);
+
+      if (baseCoupons.length < form.maxCoupons) {
+        showToast(`⚠️ Не хватает желаний! В лимите ${form.maxCoupons}, а создано всего ${baseCoupons.length}. Добавь ещё купоны во 2-й вкладке!`);
+        switchAdminTab('coupons');
+        return;
+      }
+      if (selected.length !== form.maxCoupons) {
+        showToast(`⚠️ Во 2-й вкладке нужно выбрать ровно ${form.maxCoupons} купонов (сейчас выбрано ${selected.length})!`);
+        switchAdminTab('coupons');
+        return;
+      }
+
+      appConfig = { ...appConfig, ...form };
+      localStorage.setItem("love_coupons_config", JSON.stringify(appConfig));
+      applyThemeUI();
+      updateAdminUI();
+      updateDynamicTexts();
+      updateBalanceUI();
+      renderCoupons();
+      closeAdminModal();
+      showToast("Настройки успешно сохранены! ✨");
+    }
+
+    /* Умная упаковка ссылки в 10 раз короче (только ID неизменённых пресетов) */
+    function generateAndCopyGiftLink() {
+      const cfg = readAdminForm();
+      const baseCoupons = coupons.filter(c => !c.isCustom);
+      const selectedCoupons = baseCoupons.filter(c => c.selectedInGift);
+
+      if (baseCoupons.length < cfg.maxCoupons) {
+        showToast(`⚠️ Не хватает желаний! В лимите указано ${cfg.maxCoupons}, а создано только ${baseCoupons.length}. Добавь ещё!`);
+        switchAdminTab('coupons');
+        return;
+      }
+
+      if (selectedCoupons.length !== cfg.maxCoupons) {
+        showToast(`⚠️ Выбери ровно ${cfg.maxCoupons} купонов (сейчас отмечено ${selectedCoupons.length})!`);
+        switchAdminTab('coupons');
+        return;
+      }
+
+      // Разделяем купоны на неизменённые стандартные (передаём только короткий ID) и кастомные/отредактированные
+      const presetIds = [];
+      const customModified = [];
+
+      selectedCoupons.forEach(c => {
+        const orig = ALL_PRESETS_MAP[c.id];
+        if (orig && orig.title === c.title && orig.desc === c.desc && orig.icon === c.icon) {
+          presetIds.push(c.id);
+        } else {
+          customModified.push({
+            i: c.id,
+            t: c.title,
+            d: c.desc,
+            ic: c.icon
+          });
+        }
+      });
+
+      const compactPayload = {
+        r: cfg.recipient,
+        th: cfg.theme,
+        pe: cfg.period,
+        mc: cfg.maxCoupons,
+        mx: cfg.maxCustom,
+        tg: cfg.partnerTg,
+        gt: cfg.girlTitle,
+        p: presetIds
+      };
+      if (customModified.length > 0) {
+        compactPayload.c = customModified;
+      }
+
+      appConfig = { ...appConfig, ...cfg };
+      localStorage.setItem("love_coupons_config", JSON.stringify(appConfig));
+      saveToStorage();
+      applyThemeUI();
+      updateAdminUI();
+      updateDynamicTexts();
+      updateBalanceUI();
+      renderCoupons();
+
+      const jsonStr = JSON.stringify(compactPayload);
+      const b64 = btoa(unescape(encodeURIComponent(jsonStr)));
+      
+      const baseUrl = window.location.origin + window.location.pathname;
+      const giftLink = `${baseUrl}#cfg=${b64}`;
+
+      if (copyTextToClipboard(giftLink)) {
+        showToast(`Короткая ссылка скопирована (${giftLink.length} симв.)! 💌`);
+      } else {
+        showToast("Ссылка сформирована: " + giftLink);
+      }
+      closeAdminModal();
     }
 
     function escapeHtml(str) {
@@ -1853,3 +3452,4 @@
     });
   </script>
 </body>
+</html>
